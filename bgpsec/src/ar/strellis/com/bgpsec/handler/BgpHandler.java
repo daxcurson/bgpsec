@@ -1,6 +1,12 @@
 package ar.strellis.com.bgpsec.handler;
 
+import org.apache.mina.statemachine.annotation.IoHandlerTransition;
 import org.apache.mina.statemachine.annotation.State;
+import static org.apache.mina.statemachine.event.IoHandlerEvents.*;
+
+import org.apache.mina.core.session.IoSession;
+
+import ar.strellis.com.bgpsec.model.BgpSession;
 
 /**
  * MINA BGP handler
@@ -17,4 +23,12 @@ public class BgpHandler
 	@State(ROOT) public static final String OPEN_CONFIRM="Open Confirm";
 	@State(ROOT) public static final String ESTABLISHED="Established";
 	
+	/*
+	 * State changes
+	 */
+	@IoHandlerTransition(on=MESSAGE_RECEIVED,in=IDLE)
+	public void refuse_connection(BgpSession context,IoSession session)
+	{
+		
+	}
 }

@@ -1,11 +1,13 @@
 package ar.strellis.com.bgpsec.model;
 
+import org.apache.mina.statemachine.context.AbstractStateContext;
+
 /**
  * A BGP Session. Uses the session attributes specifed in the RFC 4271
  * @author daxcurson
  *
  */
-public class BgpSession 
+public class BgpSession extends AbstractStateContext
 {
 	private String state;
 	private int connect_retry_counter;
