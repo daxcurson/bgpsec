@@ -1,9 +1,11 @@
 package ar.strellis.com.bgpsec.controller;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.statemachine.StateMachine;
 import org.apache.mina.statemachine.StateMachineFactory;
 import org.apache.mina.statemachine.StateMachineProxyBuilder;
@@ -60,13 +62,15 @@ public class BgpServer
 			e.printStackTrace();
 		}
 	}
-	private void openListener()
+	private void openListener() throws IOException
 	{
 		acceptor=new NioSocketAcceptor();
 		acceptor.setReuseAddress(true);
 		ProtocolCodecFilter pcf=new ProtocolCodecFilter(new BgpCoder(),new BgpDecoder());
+		acceptor.getFilterChain().addLast("logger", new LoggingFilter());
 		acceptor.getFilterChain().addLast("codec", pcf);
 		acceptor.setHandler(createIoHandler());
 		acceptor.setDefaultLocalAddress(new InetSocketAddress(179));
+		acceptor.bind();
 	}
 }
