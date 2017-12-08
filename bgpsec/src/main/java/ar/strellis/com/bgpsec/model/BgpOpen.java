@@ -9,7 +9,6 @@ import java.util.List;
  * - hold_time: the proposed number of seconds for the hold timer proposed by this sender.
  * - bgp_identifier: BGP identifier of the sender
  * - optional_parameters: BGP capabilities per RFC 3392
- * @author Agustín Villafañe
  *
  */
 public class BgpOpen extends BgpMessage

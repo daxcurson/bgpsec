@@ -10,6 +10,7 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 import ar.strellis.com.bgpsec.model.BgpCapability;
 import ar.strellis.com.bgpsec.model.BgpMessage;
+import ar.strellis.com.bgpsec.model.BgpNotification;
 import ar.strellis.com.bgpsec.model.BgpOpen;
 
 public class BgpDecoder extends CumulativeProtocolDecoder
@@ -75,6 +76,17 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 				break;
 			case 3:
 				// NOTIFICATION
+				message=new BgpNotification();
+				message.setMarker(marker);
+				message.setLength(length);
+				// Error code: 1 octet unsigned
+				// Error subcode: 1 octet unsigned
+				// Data: length-21 octets.
+				((BgpNotification)message).setError_code(in.getUnsigned());
+				((BgpNotification)message).setError_subcode(in.getUnsigned());
+				byte[] data=new byte[length-21];
+				in.get(data);
+				((BgpNotification)message).setData(new String(data));
 				break;
 			case 4:
 				// KEEPALIVE

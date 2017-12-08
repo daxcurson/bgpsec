@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 
 /**
  * A BGP message. 
- * @author Agustín Villafañe
  *
  */
 public abstract class BgpMessage 
