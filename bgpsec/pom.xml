@@ -49,26 +49,26 @@
 				    </execution>
 				</executions>
 			</plugin>
-			<plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>native-maven-plugin</artifactId>
-                <version>1.0-alpha-8</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <sources>
-                        <source>
-                            <directory>../src/main/native</directory>
-                        </source>
-                    </sources>
-                    <!-- trigger javah execution -->         
-                    <javahClassNames>
-                        <javahClassName>ar.strellis.com.bgpsec.routingconfig.RoutingConfigurer</javahClassName>              
-                    </javahClassNames>
-                    <!-- enable additional javah interface in dependencies list -->
-                    <javahSearchJNIFromDependencies>true</javahSearchJNIFromDependencies>
-                    <javahOS>linux</javahOS>
-		        </configuration>
-		    </plugin>
+            <plugin>
+                <groupId>com.alexkasko.maven</groupId>
+                <artifactId>jni-headers-maven-plugin</artifactId>
+                <version>1.0.6</version>
+                <executions>
+                    <!-- generate header for native methods -->
+                    <execution>
+                        <id>javah</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>javah</goal>
+                        </goals>
+                        <configuration>
+                            <javahClass>ar.strellis.com.bgpsec.routingconfig.RoutingConfigurer</javahClass>
+                            <javahOutputFilePath>${project.basedir}/src/main/native/include/my_header_jni.h</javahOutputFilePath>
+                        </configuration>
+                    </execution>
+                    <!-- generate header for java methods -->
+                </executions>
+            </plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
