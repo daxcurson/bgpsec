@@ -63,7 +63,7 @@
                         </goals>
                         <configuration>
                             <javahClass>ar.strellis.com.bgpsec.routingconfig.RoutingConfigurer</javahClass>
-                            <javahOutputFilePath>${project.basedir}/src/main/native/include/my_header_jni.h</javahOutputFilePath>
+                            <javahOutputFilePath>${project.basedir}/src/main/native/include/routing_configurer.h</javahOutputFilePath>
                         </configuration>
                     </execution>
                     <!-- generate header for java methods -->
@@ -97,7 +97,26 @@
 										<ignore></ignore>
 									</action>
 								</pluginExecution>
-                            </pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											com.alexkasko.maven
+										</groupId>
+										<artifactId>
+											jni-headers-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.0.6,)
+										</versionRange>
+										<goals>
+											<goal>javah</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
@@ -127,7 +146,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <workingDirectory>${basedir}/src/native</workingDirectory>
+                        <workingDirectory>${basedir}/src/main/native</workingDirectory>
                         <executable>make</executable>
                     </configuration>
                 </plugin>
