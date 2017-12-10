@@ -49,6 +49,26 @@
 				    </execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>1.0-alpha-8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <sources>
+                        <source>
+                            <directory>../src/main/native</directory>
+                        </source>
+                    </sources>
+                    <!-- trigger javah execution -->         
+                    <javahClassNames>
+                        <javahClassName>RoutingConfigurer</javahClassName>              
+                    </javahClassNames>
+                    <!-- enable additional javah interface in dependencies list -->
+                    <javahSearchJNIFromDependencies>true</javahSearchJNIFromDependencies>
+                    <javahOS>linux</javahOS>
+		        </configuration>
+		    </plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -77,11 +97,41 @@
 										<ignore></ignore>
 									</action>
 								</pluginExecution>
-							</pluginExecutions>
+                            </pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-			</plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                    <executions>
+                        <execution>
+                            <id>make</id>
+                            <phase>process-classes</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>make-clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>
+                                    <argument>clean</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <workingDirectory>${basedir}/src/native</workingDirectory>
+                        <executable>make</executable>
+                    </configuration>
+                </plugin>
+    		</plugins>
 		</pluginManagement>
 	</build>
 	<dependencies>
