@@ -1,19 +1,23 @@
 package ar.strellis.com.bgpsec.handler;
 
+import org.apache.mina.statemachine.StateControl;
 import org.apache.mina.statemachine.annotation.IoHandlerTransition;
 import org.apache.mina.statemachine.annotation.State;
 import static org.apache.mina.statemachine.event.IoHandlerEvents.*;
 
 import org.apache.mina.core.session.IoSession;
 
+import ar.strellis.com.bgpsec.event.EventTransitionListener;
+import ar.strellis.com.bgpsec.model.BgpMessage;
 import ar.strellis.com.bgpsec.model.BgpSession;
+import ar.strellis.com.bgpsec.routingconfig.RoutingConfigurer;
 
 /**
  * MINA BGP handler
  * @author daxcurson
  *
  */
-public class BgpHandler 
+public class BgpHandler implements EventTransitionListener
 {
 	@State public static final String ROOT="Root";
 	@State(ROOT) public static final String IDLE="Idle";
@@ -29,6 +33,17 @@ public class BgpHandler
 	@IoHandlerTransition(on=MESSAGE_RECEIVED,in=IDLE)
 	public void refuse_connection(BgpSession context,IoSession session)
 	{
-		
+		// Nothing to do here.
+	}
+	@IoHandlerTransition(on=MESSAGE_RECEIVED,in=CONNECT)
+	public void dispatchMessage(BgpSession bgpSession,IoSession ioSession,BgpMessage message)
+	{
+		RoutingConfigurer c=new RoutingConfigurer();
+		c.add_network("Hello world");
+	}
+	@Override
+	public void start() 
+	{
+		StateControl.breakAndGotoNext(CONNECT);
 	}
 }

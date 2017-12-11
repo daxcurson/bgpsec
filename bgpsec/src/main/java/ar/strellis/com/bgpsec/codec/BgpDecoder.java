@@ -70,6 +70,8 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 					}
 					((BgpOpen)message).setOptional_parameters(parameters);
 				}
+				// Done, event consumed, now I send it to the output
+				out.write(message);
 				break;
 			case 2:
 				// UPDATE
@@ -87,6 +89,8 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 				byte[] data=new byte[length-21];
 				in.get(data);
 				((BgpNotification)message).setData(new String(data));
+				// Done, event consumed, now I send it to the output
+				out.write(message);
 				break;
 			case 4:
 				// KEEPALIVE

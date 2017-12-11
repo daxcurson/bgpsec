@@ -8,4 +8,11 @@ public class RoutingConfigurer
 	}
 	
 	private native void add_network_via_nml(String network);
+	
+	public void add_network(String network)
+	{
+		// According to a selected implementation for message-passing,
+		// we'll choose the native method to execute.
+		add_network_via_nml(network);
+	}
 }

@@ -2,6 +2,8 @@ package ar.strellis.com.bgpsec.controller;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
@@ -18,6 +20,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import ar.strellis.com.bgpsec.codec.BgpCoder;
 import ar.strellis.com.bgpsec.codec.BgpDecoder;
+import ar.strellis.com.bgpsec.event.EventTransitionListener;
 import ar.strellis.com.bgpsec.handler.BgpHandler;
 import ar.strellis.com.bgpsec.model.BgpSession;
 
@@ -29,9 +32,17 @@ import ar.strellis.com.bgpsec.model.BgpSession;
 public class BgpServer 
 {
 	private SocketAcceptor acceptor;
+	private List<EventTransitionListener> listeners;
+	
+	public BgpServer()
+	{
+		listeners=new LinkedList<EventTransitionListener>();
+	}
 	private IoHandler createIoHandler() 
 	{
-		StateMachine sm = StateMachineFactory.getInstance(IoHandlerTransition.class).create(BgpHandler.IDLE, new BgpHandler());
+		BgpHandler b=new BgpHandler();
+		addTransitionListener(b);
+		StateMachine sm = StateMachineFactory.getInstance(IoHandlerTransition.class).create(BgpHandler.IDLE, b);
 
 		return new StateMachineProxyBuilder().setStateContextLookup(
 				new IoSessionStateContextLookup(new StateContextFactory() {
@@ -39,6 +50,17 @@ public class BgpServer
 						return new BgpSession();
 					}
 				})).create(IoHandler.class, sm);
+	}
+	public void addTransitionListener(EventTransitionListener candidate)
+	{
+		listeners.add(candidate);
+	}
+	public void fireStartEvent()
+	{
+		for(EventTransitionListener l:listeners)
+		{
+			l.start();
+		}
 	}
 	public static void main(String[] args) 
 	{
@@ -56,6 +78,9 @@ public class BgpServer
 		try
 		{
 			openListener();
+			// Now I send a message to change to the Connect state,
+			// we're accepting connections.
+			
 		}
 		catch(Exception e)
 		{

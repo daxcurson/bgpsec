@@ -1,6 +1,6 @@
 package ar.strellis.com.bgpsec.event;
 
-public class BgpEvent 
+public class BgpStartEvent extends BgpEvent
 {
 
 }
