@@ -39,27 +39,27 @@ public class BgpHandler implements EventTransitionListener
 	public void session_created(BgpSession context,IoSession session)
 	{
 		RoutingConfigurer c=new RoutingConfigurer();
-		c.add_network("Hello world, session created");
+		c.add_network("Test", "Test", "Test", "Test");
 		StateControl.breakAndCallNext(CONNECT);
 	}
 	@IoHandlerTransition(on=SESSION_OPENED,in=IDLE)
 	public void forced_start(BgpSession context,IoSession session)
 	{
 		RoutingConfigurer c=new RoutingConfigurer();
-		c.add_network("Hello world, forced_start");
+		c.add_network("Test", "Test", "Test", "Test");
 		StateControl.breakAndGotoNext(CONNECT);
 	}
 	@IoHandlerTransition(on=SESSION_OPENED,in=CONNECT)
 	public void openSession(BgpSession bgpSession,IoSession ioSession)
 	{
 		RoutingConfigurer c=new RoutingConfigurer();
-		c.add_network("Hello world, open session");
+		c.add_network("Test", "Test", "Test", "Test");
 	}
 	@IoHandlerTransition(on=MESSAGE_RECEIVED,in=CONNECT)
 	public void dispatchMessage(BgpSession bgpSession,IoSession ioSession,BgpMessage message)
 	{
 		RoutingConfigurer c=new RoutingConfigurer();
-		c.add_network("Hello world, dispatchMessage");
+		c.add_network("Test", "Test", "Test", "Test");
 	}
 	@Override
 	public void start() 
