@@ -44,6 +44,7 @@ public class BgpServer
 		addTransitionListener(b);
 		StateMachine sm = StateMachineFactory.getInstance(IoHandlerTransition.class).create(BgpHandler.IDLE, b);
 
+		b.start();
 		return new StateMachineProxyBuilder().setStateContextLookup(
 				new IoSessionStateContextLookup(new StateContextFactory() {
 					public StateContext create() {
@@ -78,9 +79,6 @@ public class BgpServer
 		try
 		{
 			openListener();
-			// Now I send a message to change to the Connect state,
-			// we're accepting connections.
-			
 		}
 		catch(Exception e)
 		{
