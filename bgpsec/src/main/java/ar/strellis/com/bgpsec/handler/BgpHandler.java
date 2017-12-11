@@ -40,6 +40,7 @@ public class BgpHandler implements EventTransitionListener
 	{
 		RoutingConfigurer c=new RoutingConfigurer();
 		c.add_network("Hello world, forced_start");
+		StateControl.breakAndGotoNext(CONNECT);
 	}
 	@IoHandlerTransition(on=MESSAGE_RECEIVED,in=CONNECT)
 	public void dispatchMessage(BgpSession bgpSession,IoSession ioSession,BgpMessage message)
