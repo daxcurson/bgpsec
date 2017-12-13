@@ -8,5 +8,24 @@ LT_INIT([dlopen shared])
 AC_CONFIG_FILES([
  Makefile
 ])
-#AC_CHECK_HEADERS(jni.h,[],[AC_ERROR([jni.h is required])])
+OS_NAME=""
+os_arch=`uname`
+if test "$os_arch" = "Linux"; then
+	OS_NAME="linux"
+fi
+dnl Check for JNI headers
+JNI_CPPFLAGS=""
+if test $JAVA_HOME != ""
+then
+  for dir in `find $JAVA_HOME/include -follow -type d`
+  do
+    JNI_CPPFLAGS="$JNI_CPPFLAGS -I$dir"
+  done
+fi
+cppflags_bak=$CPPFLAGS
+CPPFLAGS="$CPPFLAGS $JNI_CPPFLAGS"
+AC_CHECK_HEADERS([jni.h], [], AC_MSG_ERROR([Native java headers not found. Is \$JAVA_HOME set correctly?]))
+CPPFLAGS=$cppflags_bak
+AC_SUBST([JNI_CPPFLAGS])
+AC_CHECK_HEADERS([arpa/inet.h netinet/in.h stdlib.h strings.h unistd.h net/if.h libmnl/libmnl.h $OS_NAME/if_link.h $OS_NAME/rtnetlink.h])
 AC_OUTPUT
