@@ -24,7 +24,12 @@ import java.util.Map;
 //from include <linux/if_arp.h>
 public final class if_arp {
     public static final Map<Integer, String> ARPHDR_NAMES =
-            Collections.unmodifiableMap(new IndexNameMap<Integer, String>() {{
+            Collections.unmodifiableMap(new IndexNameMap<Integer, String>() {/**
+				 * 
+				 */
+				private static final long serialVersionUID = -3172035089151440879L;
+
+			{
                 put(ARPHRD_NETROM, "netrom");
                 put(ARPHRD_ETHER, "ether");
                 put(ARPHRD_EETHER, "eether");

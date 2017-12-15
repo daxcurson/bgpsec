@@ -163,7 +163,12 @@ public final class rtnetlink {
         /* Routing message attributes */
         public static final Map<Integer, String> RTA_NAMES =
            Collections.unmodifiableMap(new IndexNameMap<Integer, String>() {
-               {
+               /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7592636024021708996L;
+
+			{
                         put(RTA_UNSPEC, "unspec");
                         put(RTA_DST,"dst");
                         put(RTA_SRC,"src");
@@ -207,7 +212,12 @@ public final class rtnetlink {
 
                     public static final Map<Integer, String> RTN_NAMES =
                             Collections.unmodifiableMap(new IndexNameMap<Integer, String>() {
-                                {
+                                /**
+								 * 
+								 */
+								private static final long serialVersionUID = 6526205699830166235L;
+
+								{
                                 put(RTN_UNSPEC,"unspec");
                                 put(RTN_UNICAST,"unicast");
                                 put(RTN_LOCAL,"local");

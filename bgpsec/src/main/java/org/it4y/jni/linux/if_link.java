@@ -25,7 +25,12 @@ import java.util.Map;
 public final class if_link {
     public static final Map<Integer, String> IFLA_NAMES =
             Collections.unmodifiableMap(new IndexNameMap<Integer, String>() {
-                {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -902272191020698793L;
+
+				{
                     put(IFLA_UNSPEC,"unspec");
                     put(IFLA_ADDRESS, "address");
                     put(IFLA_BROADCAST,"broadcast");

@@ -34,7 +34,12 @@ public class IPFactory {
         IpPacket create(ByteBuffer buffer, int size);
     }
 
-    public static final Map<Byte, ipv4Factory> ipv4FactoryMap = Collections.unmodifiableMap(new HashMap<Byte, ipv4Factory>() {{
+    public static final Map<Byte, ipv4Factory> ipv4FactoryMap = Collections.unmodifiableMap(new HashMap<Byte, ipv4Factory>() {/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+	{
         put(ICMPPacket.PROTOCOL, new ipv4Factory() {
             public IpPacket create(final ByteBuffer buffer, final int size) {
                 return new ICMPPacket(buffer, size);

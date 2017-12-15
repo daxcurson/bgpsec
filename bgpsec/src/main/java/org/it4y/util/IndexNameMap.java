@@ -19,7 +19,12 @@ import java.util.HashMap;
 
 public class IndexNameMap<K,V> extends HashMap<K,V>{
 
-    @SuppressWarnings("unchecked")
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8015472694067085032L;
+
+	@SuppressWarnings("unchecked")
     public V get(final Object k) {
         final V s=super.get(k);
         return s==null ? (V) String.format("[%s]", k.toString()) : s;

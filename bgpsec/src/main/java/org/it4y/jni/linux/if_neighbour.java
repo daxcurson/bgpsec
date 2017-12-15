@@ -28,7 +28,12 @@ import java.util.Map;
 public final class if_neighbour {
     public static final Map<Integer, String> NDA_NAMES =
             Collections.unmodifiableMap(new IndexNameMap<Integer, String>() {
-                {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 5809488503772957760L;
+
+				{
                     put(NDA_UNSPEC,"unspec");
                     put(NDA_DST,"dst");
                     put(NDA_LLADDR,"lladdr");

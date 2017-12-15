@@ -21,7 +21,12 @@ package org.it4y.net;
  */
 public class JVMException extends RuntimeException {
 
-    public JVMException(final Throwable cause) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4902732629845040991L;
+
+	public JVMException(final Throwable cause) {
         super(cause);
     }
 }

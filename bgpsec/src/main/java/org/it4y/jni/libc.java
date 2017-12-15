@@ -449,7 +449,11 @@ public final class libc {
      */
     public static class ErrnoException extends Exception {
 
-        private final int errno;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1648884136651632049L;
+		private final int errno;
 
         public ErrnoException(final int errno) {
             this.errno = errno;

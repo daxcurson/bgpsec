@@ -26,7 +26,12 @@ public final class if_address {
 
     public static final Map<Integer, String> IFA_NAMES =
             Collections.unmodifiableMap(new IndexNameMap<Integer, String>() {
-                {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 4715000376102668318L;
+
+				{
                     put(IFA_UNSPEC, "unspec");
                     put(IFA_ADDRESS, "address");
                     put(IFA_LOCAL, "local");

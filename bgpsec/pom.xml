@@ -154,6 +154,11 @@
 		</pluginManagement>
 	</build>
 	<dependencies>
+	   <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>16.0.1</version>
+        </dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.mina/mina-parent -->
 		<dependency>
 			<groupId>org.apache.mina</groupId>

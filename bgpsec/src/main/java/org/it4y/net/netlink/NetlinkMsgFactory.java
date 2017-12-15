@@ -80,7 +80,7 @@ public class NetlinkMsgFactory {
                 break;
             default:
                 if (log.isDebugEnabled()) {
-                    log.debug("UNKNOWN Netlink message type: {} len:{} [{}]",nlmsg_type,nlmsg_len,Hexdump.bytesToHex(buffer, nlmsg_len));
+                    log.debug("UNKNOWN Netlink message type: "+nlmsg_type+" len:"+nlmsg_len+" ["+Hexdump.bytesToHex(buffer, nlmsg_len)+"]");
                 }
         }
         return result;
