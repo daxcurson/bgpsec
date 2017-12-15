@@ -10,31 +10,32 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-class TestNetworkInterface {
+public class TestNetworkInterface {
 
 	@BeforeClass
-	static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {
 	}
 
 	@AfterClass
-	static void tearDownAfterClass() throws Exception {
+	public static void tearDownAfterClass() throws Exception {
 	}
 
 	@Before
-	void setUp() throws Exception {
+	public void setUp() throws Exception {
 	}
 
 	@After
-	void tearDown() throws Exception {
+	public void tearDown() throws Exception {
 	}
 
 	@Test
-	void test01ListNetworkInterfaces() 
+	public void test01ListNetworkInterfaces() 
 	{
 		LinkManager linkManager=new LinkManager();
 		linkManager.ReadLock();
 		System.out.println("Interfaces in this system:");
 		try {
+			System.out.println("Interfaces discovered: "+linkManager.getInterfaceList().size());
 			for (String name:linkManager.getInterfaceList()) 
 			{
 				NetworkInterface x=linkManager.findByInterfaceName(name);

@@ -21,7 +21,7 @@ endif
 INCLUDES = -I$(JDK_HOME)/include/linux -I$(JDK_HOME)/include
 LFLAGS = -shared -fPIC
 JAVAH=javah
-CLASSPATH=../../target/classes
+CLASSPATH=../../../target/classes
 
 all: javah build maven
 
@@ -55,7 +55,7 @@ libjnilinuxutils.so: org_it4y_jni_linuxutils.c
 	$(CC) $(CFLAGS) $(INCLUDES) $(LFLAGS) -o libjnilinuxutils-$(ARCH).so org_it4y_jni_linuxutils.c -lrt
 
 libjninetlink3.so: org_it4y_jni_libnetlink3.c
-	$(CC) $(CFLAGS)  $(INCLUDES) `pkg-config --cflags --libs libnl-3.0` $(LFLAGS) \
+	$(CC) $(CFLAGS)  $(INCLUDES) `pkg-config --cflags --libs libnl-1` $(LFLAGS) \
 	 -o libjninetlink3-$(ARCH).so -Wl,-whole-archive $(LIBNETLINKDIR)/libnetlink.a -Wl,-no-whole-archive org_it4y_jni_libnetlink3.c
 
 libjnipcap.so: org_it4y_jni_libpcap.c
