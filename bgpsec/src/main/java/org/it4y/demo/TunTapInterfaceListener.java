@@ -40,7 +40,6 @@ public class TunTapInterfaceListener extends TestRunner {
     private final int mtu;
     private long cnt;
     private final AtomicLong bytes = new AtomicLong(0L);
-    private static final boolean debug=false;
     private long pktcnt;
 
     //private BPFProgram program;
