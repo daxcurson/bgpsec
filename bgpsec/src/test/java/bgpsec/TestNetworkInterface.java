@@ -32,6 +32,7 @@ public class TestNetworkInterface {
 	public void test01ListNetworkInterfaces() 
 	{
 		LinkManager linkManager=new LinkManager();
+		linkManager.start();
 		linkManager.ReadLock();
 		System.out.println("Interfaces in this system:");
 		try {

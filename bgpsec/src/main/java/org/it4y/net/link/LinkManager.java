@@ -111,6 +111,7 @@ public class LinkManager extends Thread {
         listeners=new ArrayList<NotificationRegister>(10);
         handle = new libnetlink3.rtnl_handle();
         setDaemon(true);
+	log.debug("init completed");
     }
 
     /**

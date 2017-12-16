@@ -18,10 +18,12 @@
 package org.it4y.jni;
 
 import java.nio.ByteBuffer;
+import org.apache.log4j.Logger;
 
 public class libnetlink3 {
 
     //some errorcodes from our jni methods
+    public static Logger log=Logger.getLogger(libnetlink3.class);
     public static final int JNI_OK=0;
     public static final int JNI_ERROR=-1;
     public static final int JNI_ERR_FIND_CLASS_FAILED=-2;
@@ -33,6 +35,7 @@ public class libnetlink3 {
 
     //Load our native JNI lib
     static {
+	log.debug("Loading JNI library libjninetlink3");
         //THIS requires libnl3 !!!!
         JNILoader.loadLibrary("libjninetlink3");
         final int initResult=initlib();
