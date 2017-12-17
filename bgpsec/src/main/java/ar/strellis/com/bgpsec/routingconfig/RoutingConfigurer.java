@@ -43,6 +43,7 @@ public class RoutingConfigurer
 			StringTokenizer t=new StringTokenizer(iff);
 			i.setIndex(Integer.parseInt(t.nextToken(":").trim()));
 			i.setName(t.nextToken(":").trim());
+			l.add(i);
 		}
 		return l;
 	}
