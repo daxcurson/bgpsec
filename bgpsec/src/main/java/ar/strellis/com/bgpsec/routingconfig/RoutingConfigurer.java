@@ -31,7 +31,8 @@ public class RoutingConfigurer
 	 */
 	public List<BgpInterface> list_interfaces()
 	{
-		String command="ip link|grep ^[0-9]";
+		System.out.println("Getting ip link information");
+		String command="/usr/sbin/ip link|grep ^[0-9]";
 		List<String> output=this.execute(command);
 		// Now, separate the string members.
 		// The output format is:
@@ -39,6 +40,7 @@ public class RoutingConfigurer
 		// 2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
 		for(String iff:output)
 		{
+			System.out.println("Interface: "+iff);
 			BgpInterface i=new BgpInterface();
 			StringTokenizer t=new StringTokenizer(iff);
 			i.setIndex(Integer.parseInt(t.nextToken(":").trim()));
@@ -50,7 +52,7 @@ public class RoutingConfigurer
 	private void add_network_via_iproute2(String iface, String network, String cidr,String gateway) throws BgpException
 	{
 		// To add a route , I invoke the command:
-		String command="ip add "+network+"/"+cidr+" via "+gateway+" dev "+iface;
+		String command="/usr/sbin/ip route add "+network+"/"+cidr+" via "+gateway+" dev "+iface;
 		List<String> output=this.execute(command);
 		// Now I process the output. If it gives an error, I should fire an exception.
 		if(!output.isEmpty())
@@ -63,18 +65,21 @@ public class RoutingConfigurer
 
 		Process p;
 		try {
+			System.out.println("Executing command: "+command);
 			p = Runtime.getRuntime().exec(command);
 			p.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
 			String line = "";
 			while ((line = reader.readLine())!= null) {
+				System.out.println("Output: "+line);
 				output.add(line);
 			}
 
 		} 
 		catch (Exception e) 
 		{
+			System.out.println("Exception while executing command");
 			e.printStackTrace();
 		}
 		return output;
