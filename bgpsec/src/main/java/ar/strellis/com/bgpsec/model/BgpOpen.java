@@ -1,5 +1,6 @@
 package ar.strellis.com.bgpsec.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,6 +19,14 @@ public class BgpOpen extends BgpMessage
 	private int hold_time;
 	private long bgp_identifier;
 	private List<BgpCapability> optional_parameters;
+	
+	public BgpOpen()
+	{
+		super();
+		version=4;
+		optional_parameters=new LinkedList<BgpCapability>();
+		this.setType(1);
+	}
 	public int getVersion() {
 		return version;
 	}

@@ -1,25 +1,32 @@
 package ar.strellis.com.bgpsec.model;
 
-import java.nio.ByteBuffer;
-
 /**
  * A BGP message. 
  *
  */
 public abstract class BgpMessage 
 {
-	protected ByteBuffer marker;
+	protected byte[] marker;
 	protected int length;
 	protected int type;
 	
 	public BgpMessage()
 	{
-		marker=ByteBuffer.allocate(16);
+		marker=new byte[16];
 		length=0;
+		// Initialize the marker
+		for(int i=0;i<16;i++)
+			marker[i]=(byte) 0xff;
+	}
+	public byte[] getMarker()
+	{
+		return marker;
 	}
 	public void setMarker(byte[] newmarker)
 	{
-		marker.put(newmarker);
+		if(marker!=null)
+			for(int i=0;i<16;i++)
+				marker[i]=newmarker[i];
 	}
 	public void setLength(int l)
 	{

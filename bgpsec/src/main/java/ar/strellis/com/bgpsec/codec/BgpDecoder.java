@@ -9,9 +9,11 @@ import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 import ar.strellis.com.bgpsec.model.BgpCapability;
+import ar.strellis.com.bgpsec.model.BgpKeepAlive;
 import ar.strellis.com.bgpsec.model.BgpMessage;
 import ar.strellis.com.bgpsec.model.BgpNotification;
 import ar.strellis.com.bgpsec.model.BgpOpen;
+import ar.strellis.com.bgpsec.model.BgpUpdate;
 
 public class BgpDecoder extends CumulativeProtocolDecoder
 {
@@ -36,7 +38,6 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 			case 1:
 				// OPEN
 				message=new BgpOpen();
-				message.setMarker(marker);
 				message.setLength(length);
 				// Version: 1 octet.
 				((BgpOpen)message).setVersion(in.getUnsigned());
@@ -70,11 +71,10 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 					}
 					((BgpOpen)message).setOptional_parameters(parameters);
 				}
-				// Done, event consumed, now I send it to the output
-				out.write(message);
 				break;
 			case 2:
 				// UPDATE
+				message=new BgpUpdate();
 				break;
 			case 3:
 				// NOTIFICATION
@@ -89,11 +89,13 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 				byte[] data=new byte[length-21];
 				in.get(data);
 				((BgpNotification)message).setData(new String(data));
-				// Done, event consumed, now I send it to the output
-				out.write(message);
 				break;
 			case 4:
 				// KEEPALIVE
+				message=new BgpKeepAlive();
+				// No data is expected after the marker, length and type.
+				message.setMarker(marker);
+				message.setLength(length);
 				break;
 			}
 			// Place the decoded message in the output
