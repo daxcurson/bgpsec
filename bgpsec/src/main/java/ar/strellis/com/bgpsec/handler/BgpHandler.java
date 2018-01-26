@@ -13,6 +13,7 @@ import ar.strellis.com.bgpsec.model.BgpMessage;
 import ar.strellis.com.bgpsec.model.BgpNotification;
 import ar.strellis.com.bgpsec.model.BgpOpen;
 import ar.strellis.com.bgpsec.model.BgpSession;
+import ar.strellis.com.bgpsec.model.BgpUpdate;
 import ar.strellis.com.bgpsec.routingconfig.RoutingConfigurer;
 
 /**
@@ -130,7 +131,7 @@ public class BgpHandler implements EventTransitionListener
 	{
 		if(message instanceof BgpKeepAlive)
 		{
-			// Keepalive received.
+			// Keepalive received. Moving to the Established mode.
 		}
 		if(message instanceof BgpNotification)
 		{
@@ -157,5 +158,28 @@ public class BgpHandler implements EventTransitionListener
 	public void messageSentConfirmed(BgpSession bgpSession,IoSession ioSession,BgpMessage message)
 	{
 		// When a message is sent, I get here.
+	}
+	@IoHandlerTransition(on=MESSAGE_RECEIVED,in=ESTABLISHED)
+	public void messageReceivedEstablished(BgpSession bgpSession,IoSession ioSession,BgpMessage message)
+	{
+		if(message instanceof BgpUpdate)
+		{
+			// Do something with the update.
+		}
+	}
+	@IoHandlerTransition(on=SESSION_CLOSED,in=ESTABLISHED)
+	public void sessionClosedEstablished(BgpSession bgpSession,IoSession ioSession)
+	{
+		
+	}
+	@IoHandlerTransition(on=EXCEPTION_CAUGHT,in=ESTABLISHED)
+	public void exceptionCaughtEstablished(BgpSession bgpSession,IoSession ioSession)
+	{
+		
+	}
+	@IoHandlerTransition(on=MESSAGE_SENT,in=ESTABLISHED)
+	public void messageSentEstablished(BgpSession bgpSession,IoSession ioSession,BgpMessage message)
+	{
+		
 	}
 }
