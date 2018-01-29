@@ -28,4 +28,5 @@ AC_CHECK_HEADERS([jni.h], [], AC_MSG_ERROR([Native java headers not found. Is \$
 CPPFLAGS=$cppflags_bak
 AC_SUBST([JNI_CPPFLAGS])
 AC_CHECK_HEADERS([arpa/inet.h netinet/in.h stdlib.h strings.h unistd.h net/if.h libmnl/libmnl.h $OS_NAME/if_link.h $OS_NAME/rtnetlink.h])
+PKG_CHECK_MODULES(MNL,libmnl)
 AC_OUTPUT

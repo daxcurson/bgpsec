@@ -15,7 +15,7 @@
 
 #include "include/routing_configurer.h"
 
-JNIEXPORT void JNICALL Java_ar_strellis_com_bgpsec_routingconfig_RoutingConfigurer_add_1network_1via_1nml(JNIEnv *env, jobject object, jstring iface_java, jstring network_java, jstring cidr_java, jstring gateway_java)
+JNIEXPORT void JNICALL Java_ar_strellis_com_bgpsec_routingconfig_RoutingConfigurerNml_add_1network_1via_1nml(JNIEnv *env, jobject object, jstring iface_java, jstring network_java, jstring cidr_java, jstring gateway_java)
 {
 	// Get parameters
 	const char *iface = (*env)->GetStringUTFChars(env, iface_java, 0);
@@ -99,10 +99,10 @@ JNIEXPORT void JNICALL Java_ar_strellis_com_bgpsec_routingconfig_RoutingConfigur
 		exit(EXIT_FAILURE);
 	}
 	mnl_socket_close(nl);
-	return 0;
 	// Release memory
 	(*env)->ReleaseStringUTFChars(env, iface_java, iface);
 	(*env)->ReleaseStringUTFChars(env, network_java, network);
 	(*env)->ReleaseStringUTFChars(env, cidr_java, cidr);
 	(*env)->ReleaseStringUTFChars(env, gateway_java, gateway);
+	return;
 }
