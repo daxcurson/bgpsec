@@ -75,27 +75,32 @@ JNIEXPORT void JNICALL Java_ar_strellis_com_bgpsec_routingconfig_RoutingConfigur
 	nl = mnl_socket_open(NETLINK_ROUTE);
 	if(nl==NULL)
 	{
+		perror("mnl_socket_open");
 		// failure
 		exit(EXIT_FAILURE);
 	}
 	if(mnl_socket_bind(nl,0,MNL_SOCKET_AUTOPID) < 0)
 	{
 		// failure
+		perror("mnl_socket_bind");
 		exit(EXIT_FAILURE);
 	}
 	portid=mnl_socket_get_portid(nl);
 	if(mnl_socket_sendto(nl,nlh,nlh->nlmsg_len)<0)
 	{
+		perror("mnl_socket_sendto");
 		exit(EXIT_FAILURE);
 	}
 	ret=mnl_socket_recvfrom(nl,buf,sizeof(buf));
 	if(ret<0)
 	{
+		perror("mnl_socket_recvfrom");
 		exit(EXIT_FAILURE);
 	}
 	ret=mnl_cb_run(buf,ret,seq,portid,NULL,NULL);
 	if(ret<0)
 	{
+		perror("mnl_cb_run");
 		exit(EXIT_FAILURE);
 	}
 	mnl_socket_close(nl);
