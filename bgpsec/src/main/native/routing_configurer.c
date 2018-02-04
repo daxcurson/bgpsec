@@ -13,6 +13,7 @@
 #include <linux/rtnetlink.h>
 #include <jni.h>
 
+#include "include/base_functions.h"
 #include "include/routing_configurer.h"
 
 JNIEXPORT void JNICALL Java_ar_strellis_com_bgpsec_routingconfig_RoutingConfigurerNml_add_1network_1via_1nml(JNIEnv *env, jobject object, jstring iface_java, jstring network_java, jstring cidr_java, jstring gateway_java)
@@ -109,5 +110,55 @@ JNIEXPORT void JNICALL Java_ar_strellis_com_bgpsec_routingconfig_RoutingConfigur
 	(*env)->ReleaseStringUTFChars(env, network_java, network);
 	(*env)->ReleaseStringUTFChars(env, cidr_java, cidr);
 	(*env)->ReleaseStringUTFChars(env, gateway_java, gateway);
+	return;
+}
+JNIEXPORT jobject JNICALL Java_ar_strellis_com_bgpsec_routingconfig_RoutingConfigurerNml_list_1interfaces_1via_1nml(JNIEnv *env, jobject object)
+{
+	struct mnl_socket *nl;
+	char buf[MNL_SOCKET_BUFFER_SIZE];
+	struct nlmsghdr *nlh;
+	struct rtgenmsg *rt;
+	int ret;
+	unsigned int seq, portid;
+	nlh = mnl_nlmsg_put_header(buf);
+	nlh->nlmsg_type	= RTM_GETLINK;
+	nlh->nlmsg_flags = NLM_F_REQUEST | NLM_F_DUMP;
+	nlh->nlmsg_seq = seq = time(NULL);
+	rt = mnl_nlmsg_put_extra_header(nlh, sizeof(struct rtgenmsg));
+	rt->rtgen_family = AF_PACKET;
+
+	nl = mnl_socket_open(NETLINK_ROUTE);
+	if (nl == NULL) {
+		perror("mnl_socket_open");
+		exit(EXIT_FAILURE);
+	}
+
+	if (mnl_socket_bind(nl, 0, MNL_SOCKET_AUTOPID) < 0) {
+		perror("mnl_socket_bind");
+		exit(EXIT_FAILURE);
+	}
+	portid = mnl_socket_get_portid(nl);
+
+	if (mnl_socket_sendto(nl, nlh, nlh->nlmsg_len) < 0) {
+		perror("mnl_socket_sendto");
+		exit(EXIT_FAILURE);
+	}
+
+	/*
+	 * data_cb is a callback function which does the actual reading of data parameters from netlink.
+	 */
+	ret = mnl_socket_recvfrom(nl, buf, sizeof(buf));
+	while (ret > 0) {
+		ret = mnl_cb_run(buf, ret, seq, portid, data_cb, NULL);
+		if (ret <= MNL_CB_STOP)
+			break;
+		ret = mnl_socket_recvfrom(nl, buf, sizeof(buf));
+	}
+	if (ret == -1) {
+		perror("error");
+		exit(EXIT_FAILURE);
+	}
+	mnl_socket_close(nl);
+
 	return;
 }

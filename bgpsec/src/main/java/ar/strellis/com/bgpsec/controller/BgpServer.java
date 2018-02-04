@@ -1,5 +1,6 @@
 package ar.strellis.com.bgpsec.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.LinkedList;
@@ -23,6 +24,7 @@ import ar.strellis.com.bgpsec.codec.BgpDecoder;
 import ar.strellis.com.bgpsec.event.EventTransitionListener;
 import ar.strellis.com.bgpsec.handler.BgpHandler;
 import ar.strellis.com.bgpsec.model.BgpSession;
+import ar.strellis.com.bgpsec.model.MyConfiguration;
 
 /**
  * Launcher class for the BGP server
@@ -33,6 +35,7 @@ public class BgpServer
 {
 	private SocketAcceptor acceptor;
 	private List<EventTransitionListener> listeners;
+	private MyConfiguration configuration;
 	
 	public BgpServer()
 	{
@@ -40,7 +43,7 @@ public class BgpServer
 	}
 	private IoHandler createIoHandler() 
 	{
-		BgpHandler b=new BgpHandler();
+		BgpHandler b=new BgpHandler(this.configuration);
 		addTransitionListener(b);
 		StateMachine sm = StateMachineFactory.getInstance(IoHandlerTransition.class).create(BgpHandler.IDLE, b);
 
@@ -77,12 +80,17 @@ public class BgpServer
 	{
 		try
 		{
+			readConfiguration();
 			openListener();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
+	}
+	private void readConfiguration() throws FileNotFoundException, IOException
+	{
+		this.configuration=new MyConfiguration();
 	}
 	private void openListener() throws IOException
 	{

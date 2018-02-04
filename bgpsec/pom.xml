@@ -82,7 +82,7 @@
                             <goal>javah</goal>
                         </goals>
                         <configuration>
-                            <javahClass>ar.strellis.com.bgpsec.routingconfig.RoutingConfigurer</javahClass>
+                            <javahClass>ar.strellis.com.bgpsec.routingconfig.RoutingConfigurerNml</javahClass>
                             <javahOutputFilePath>${project.basedir}/src/main/native/include/routing_configurer.h</javahOutputFilePath>
                         </configuration>
                     </execution>

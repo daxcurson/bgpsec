@@ -232,9 +232,18 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 				{
 					// Add the byte to the route and read one byte from the message
 					route=(route << 8)+byte_route;
-					byte_route=in.getUnsigned();
-					count--;
 					route_length_count-=8;
+					// If after decreasing the route_length_count, something remains, 
+					// read it; otherwise, skip, because if the route_length_count reaches 0
+					// and we read this byte, we'll actually lose it because the count
+					// below will reach -1 and terminate the loop, and there will be a read
+					// of a byte that is never processed, disrupting the flow of the following
+					// messages in the byte stream.
+					if(route_length_count>0)
+					{
+						byte_route=in.getUnsigned();
+						count--;
+					}
 				}
 			}
 			Route r=new Route();

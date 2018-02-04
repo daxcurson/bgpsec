@@ -81,13 +81,12 @@ host_triplet = x86_64-unknown-linux-gnu
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in depcomp ar-lib config.guess config.sub \
-	install-sh missing ltmain.sh
+	$(srcdir)/config.h.in depcomp COPYING INSTALL ar-lib \
+	config.guess config.sub install-sh missing ltmain.sh
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -126,7 +125,8 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 librouting_configurer_la_LIBADD =
-am_librouting_configurer_la_OBJECTS = routing_configurer.lo
+am_librouting_configurer_la_OBJECTS = base_functions.lo \
+	routing_configurer.lo
 librouting_configurer_la_OBJECTS =  \
 	$(am_librouting_configurer_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
@@ -239,17 +239,17 @@ DUMPBIN =
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
-EGREP = /bin/grep -E
+EGREP = /usr/bin/grep -E
 EXEEXT = 
-FGREP = /bin/grep -F
-GREP = /bin/grep
-INSTALL = /bin/install -c
+FGREP = /usr/bin/grep -F
+GREP = /usr/bin/grep
+INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 JNI_CPPFLAGS =  -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64/include -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64/include/linux
-LD = /bin/ld -m elf_x86_64
+LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
 LIBOBJS = 
 LIBS = 
@@ -259,10 +259,10 @@ LN_S = ln -s
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/agustin/git/bgpsec/bgpsec/src/main/native/missing makeinfo
 MANIFEST_TOOL = :
-MKDIR_P = /bin/mkdir -p
+MKDIR_P = /usr/bin/mkdir -p
 MNL_CFLAGS =  
 MNL_LIBS = -lmnl  
-NM = /bin/nm -B
+NM = /usr/bin/nm -B
 NMEDIT = 
 OBJDUMP = objdump
 OBJEXT = o
@@ -276,11 +276,11 @@ PACKAGE_TARNAME = libroute_configurer
 PACKAGE_URL = 
 PACKAGE_VERSION = 0.1.0
 PATH_SEPARATOR = :
-PKG_CONFIG = /bin/pkg-config
+PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
 PKG_CONFIG_PATH = 
 RANLIB = ranlib
-SED = /bin/sed
+SED = /usr/bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
@@ -339,7 +339,7 @@ top_builddir = .
 top_srcdir = .
 AM_CFLAGS =  -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64/include -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64/include/linux -g -Wall -O2 -fPIC -I$(JAVA_HOME)/include $(MNL_CFLAGS)
 lib_LTLIBRARIES = librouting_configurer.la
-librouting_configurer_la_SOURCES = routing_configurer.c
+librouting_configurer_la_SOURCES = base_functions.c routing_configurer.c
 librouting_configurer_la_LDFLAGS = -shared $(MNL_LIBS)
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -440,6 +440,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/base_functions.Plo
 include ./$(DEPDIR)/routing_configurer.Plo
 
 .c.o:
