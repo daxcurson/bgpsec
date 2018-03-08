@@ -1,0 +1,33 @@
+grammar Configuration;
+
+prog: statement+ ;
+statement: (statement_interface|statement_router);
+statement_interface: interface_desc OPENBRACE option_interface+ CLOSEBRACE ;
+interface_desc: 'interface';
+option_interface: (option_interface_description|option_interface_ip|option_interface_negotiation);
+option_interface_description: 'description' STRING;
+option_interface_ip: 'ip' IPV4;
+option_interface_negotiation: 'negotiation' (auto|full_duplex|half_duplex);
+statement_router: router OPENBRACE option_router+ CLOSEBRACE;
+option_router: (kind|asnumber|log|neighbor) ;
+kind: 'kind' STRING;
+log: 'log-neighbor-changes';
+neighbor: 'neighbor' neighbor_description;
+neighbor_description: OPENBRACE (neighbor_ip|remote_as|neighbor_description_string)+ CLOSEBRACE ;
+neighbor_description_string: 'description' ID_LETTER+;
+neighbor_ip: 'ip' IPV4;
+remote_as: 'remote_as' DIGIT+;
+router: 'router';
+auto: 'auto';
+full_duplex: 'full_duplex';
+half_duplex: 'half_duplex';
+asnumber: DIGIT+;
+IPV4: INT '.' INT '.' INT '.' INT ;
+value : ID_LETTER (ID_LETTER | DIGIT)* ; // From C language
+STRING: ID_LETTER+;
+ID_LETTER : 'a'..'z'|'A'..'Z'|'_' ;
+INT: DIGIT+;
+DIGIT : [0-9] ;
+OPENBRACE: '{';
+CLOSEBRACE: '}';
+WS : [ \t\n\r] + -> skip;

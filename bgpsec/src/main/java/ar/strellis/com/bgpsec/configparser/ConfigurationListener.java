@@ -1,0 +1,240 @@
+// Generated from ar\strellis\com\bgpsec\configparser\Configuration.g4 by ANTLR 4.7
+package ar.strellis.com.bgpsec.configparser;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+
+/**
+ * This interface defines a complete listener for a parse tree produced by
+ * {@link ConfigurationParser}.
+ */
+public interface ConfigurationListener extends ParseTreeListener {
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#prog}.
+	 * @param ctx the parse tree
+	 */
+	void enterProg(ConfigurationParser.ProgContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#prog}.
+	 * @param ctx the parse tree
+	 */
+	void exitProg(ConfigurationParser.ProgContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement(ConfigurationParser.StatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement(ConfigurationParser.StatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#statement_interface}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement_interface(ConfigurationParser.Statement_interfaceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#statement_interface}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement_interface(ConfigurationParser.Statement_interfaceContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#interface_desc}.
+	 * @param ctx the parse tree
+	 */
+	void enterInterface_desc(ConfigurationParser.Interface_descContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#interface_desc}.
+	 * @param ctx the parse tree
+	 */
+	void exitInterface_desc(ConfigurationParser.Interface_descContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_interface}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption_interface(ConfigurationParser.Option_interfaceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_interface}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption_interface(ConfigurationParser.Option_interfaceContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_interface_description}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption_interface_description(ConfigurationParser.Option_interface_descriptionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_interface_description}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption_interface_description(ConfigurationParser.Option_interface_descriptionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_interface_ip}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption_interface_ip(ConfigurationParser.Option_interface_ipContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_interface_ip}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption_interface_ip(ConfigurationParser.Option_interface_ipContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_interface_negotiation}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption_interface_negotiation(ConfigurationParser.Option_interface_negotiationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_interface_negotiation}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption_interface_negotiation(ConfigurationParser.Option_interface_negotiationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#statement_router}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement_router(ConfigurationParser.Statement_routerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#statement_router}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement_router(ConfigurationParser.Statement_routerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_router}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption_router(ConfigurationParser.Option_routerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_router}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption_router(ConfigurationParser.Option_routerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#kind}.
+	 * @param ctx the parse tree
+	 */
+	void enterKind(ConfigurationParser.KindContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#kind}.
+	 * @param ctx the parse tree
+	 */
+	void exitKind(ConfigurationParser.KindContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#log}.
+	 * @param ctx the parse tree
+	 */
+	void enterLog(ConfigurationParser.LogContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#log}.
+	 * @param ctx the parse tree
+	 */
+	void exitLog(ConfigurationParser.LogContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeighbor(ConfigurationParser.NeighborContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#neighbor}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeighbor(ConfigurationParser.NeighborContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor_description}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeighbor_description(ConfigurationParser.Neighbor_descriptionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#neighbor_description}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeighbor_description(ConfigurationParser.Neighbor_descriptionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor_description_string}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeighbor_description_string(ConfigurationParser.Neighbor_description_stringContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#neighbor_description_string}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeighbor_description_string(ConfigurationParser.Neighbor_description_stringContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor_ip}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeighbor_ip(ConfigurationParser.Neighbor_ipContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#neighbor_ip}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeighbor_ip(ConfigurationParser.Neighbor_ipContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#remote_as}.
+	 * @param ctx the parse tree
+	 */
+	void enterRemote_as(ConfigurationParser.Remote_asContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#remote_as}.
+	 * @param ctx the parse tree
+	 */
+	void exitRemote_as(ConfigurationParser.Remote_asContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#router}.
+	 * @param ctx the parse tree
+	 */
+	void enterRouter(ConfigurationParser.RouterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#router}.
+	 * @param ctx the parse tree
+	 */
+	void exitRouter(ConfigurationParser.RouterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#auto}.
+	 * @param ctx the parse tree
+	 */
+	void enterAuto(ConfigurationParser.AutoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#auto}.
+	 * @param ctx the parse tree
+	 */
+	void exitAuto(ConfigurationParser.AutoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#full_duplex}.
+	 * @param ctx the parse tree
+	 */
+	void enterFull_duplex(ConfigurationParser.Full_duplexContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#full_duplex}.
+	 * @param ctx the parse tree
+	 */
+	void exitFull_duplex(ConfigurationParser.Full_duplexContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#half_duplex}.
+	 * @param ctx the parse tree
+	 */
+	void enterHalf_duplex(ConfigurationParser.Half_duplexContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#half_duplex}.
+	 * @param ctx the parse tree
+	 */
+	void exitHalf_duplex(ConfigurationParser.Half_duplexContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#asnumber}.
+	 * @param ctx the parse tree
+	 */
+	void enterAsnumber(ConfigurationParser.AsnumberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#asnumber}.
+	 * @param ctx the parse tree
+	 */
+	void exitAsnumber(ConfigurationParser.AsnumberContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterValue(ConfigurationParser.ValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitValue(ConfigurationParser.ValueContext ctx);
+}
