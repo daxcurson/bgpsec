@@ -227,14 +227,4 @@ public interface ConfigurationListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAsnumber(ConfigurationParser.AsnumberContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ConfigurationParser#value}.
-	 * @param ctx the parse tree
-	 */
-	void enterValue(ConfigurationParser.ValueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ConfigurationParser#value}.
-	 * @param ctx the parse tree
-	 */
-	void exitValue(ConfigurationParser.ValueContext ctx);
 }

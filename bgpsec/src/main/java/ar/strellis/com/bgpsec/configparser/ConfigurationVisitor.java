@@ -142,10 +142,4 @@ public interface ConfigurationVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAsnumber(ConfigurationParser.AsnumberContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ConfigurationParser#value}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitValue(ConfigurationParser.ValueContext ctx);
 }

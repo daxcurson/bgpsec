@@ -275,18 +275,6 @@ public class ConfigurationBaseListener implements ConfigurationListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAsnumber(ConfigurationParser.AsnumberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterValue(ConfigurationParser.ValueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitValue(ConfigurationParser.ValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

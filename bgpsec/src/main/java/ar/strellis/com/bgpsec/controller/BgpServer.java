@@ -21,6 +21,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import ar.strellis.com.bgpsec.codec.BgpCoder;
 import ar.strellis.com.bgpsec.codec.BgpDecoder;
+import ar.strellis.com.bgpsec.configparser.RouterConfigurationReader;
 import ar.strellis.com.bgpsec.event.EventTransitionListener;
 import ar.strellis.com.bgpsec.handler.BgpHandler;
 import ar.strellis.com.bgpsec.model.BgpSession;
@@ -33,9 +34,11 @@ import ar.strellis.com.bgpsec.model.MyConfiguration;
  */
 public class BgpServer 
 {
+	private String configurationFilename="/etc/bgpsec/bgpsec.conf";
 	private SocketAcceptor acceptor;
 	private List<EventTransitionListener> listeners;
 	private MyConfiguration configuration;
+	private RouterConfigurationReader configurationReader;
 	
 	public BgpServer()
 	{
@@ -90,7 +93,8 @@ public class BgpServer
 	}
 	private void readConfiguration() throws FileNotFoundException, IOException
 	{
-		this.configuration=new MyConfiguration();
+		this.configurationReader=new RouterConfigurationReader(configurationFilename);
+		this.configuration=configurationReader.getConfiguration();
 	}
 	private void openListener() throws IOException
 	{
