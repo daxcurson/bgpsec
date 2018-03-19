@@ -100,6 +100,18 @@ public class ConfigurationBaseListener implements ConfigurationListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOption_interface_netmask(ConfigurationParser.Option_interface_netmaskContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOption_interface_netmask(ConfigurationParser.Option_interface_netmaskContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOption_interface_negotiation(ConfigurationParser.Option_interface_negotiationContext ctx) { }
 	/**
 	 * {@inheritDoc}

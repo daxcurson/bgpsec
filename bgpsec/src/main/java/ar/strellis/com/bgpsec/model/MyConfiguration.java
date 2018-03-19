@@ -1,5 +1,6 @@
 package ar.strellis.com.bgpsec.model;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -44,5 +45,29 @@ public class MyConfiguration
 	}
 	public void setNeighbors(List<BgpNeighbor> neighbors) {
 		this.neighbors = neighbors;
+	}
+	/**
+	 * Retrieves the interface that belongs to the same net as the BGP peer that I'm addressing.
+	 * @return
+	 */
+	public BgpInterface getInterfaceForPeerAddress(long bgpIdentifier)
+	{
+		// The BGP Identifier is a representation of the peer's IP.
+		// I'll return the interface whose inMyNetwork value is true, 
+		// meaning, that the interface itself will tell me if the IP of the peer 
+		// is in its network.
+		boolean found=false;
+		BgpInterface result=null;
+		Iterator<BgpInterface> listInterfaces=this.interfaces.iterator();
+		while(!found && listInterfaces.hasNext())
+		{
+			BgpInterface e=listInterfaces.next();
+			if(e.inMyNetwork(bgpIdentifier))
+			{
+				found=true;
+				result=e;
+			}
+		}
+		return result;
 	}
 }

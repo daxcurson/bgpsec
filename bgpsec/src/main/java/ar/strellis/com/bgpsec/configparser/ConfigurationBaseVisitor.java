@@ -66,6 +66,13 @@ public class ConfigurationBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitOption_interface_netmask(ConfigurationParser.Option_interface_netmaskContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitOption_interface_negotiation(ConfigurationParser.Option_interface_negotiationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

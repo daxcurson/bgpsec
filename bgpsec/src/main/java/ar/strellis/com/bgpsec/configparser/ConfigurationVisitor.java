@@ -53,6 +53,12 @@ public interface ConfigurationVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOption_interface_ip(ConfigurationParser.Option_interface_ipContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ConfigurationParser#option_interface_netmask}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOption_interface_netmask(ConfigurationParser.Option_interface_netmaskContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ConfigurationParser#option_interface_negotiation}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

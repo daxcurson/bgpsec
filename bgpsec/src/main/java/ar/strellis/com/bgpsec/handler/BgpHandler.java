@@ -46,7 +46,7 @@ public class BgpHandler implements EventTransitionListener
 	/**
 	 * Sends a KeepAlive message when the time expires. It contains the session
 	 * for which this message must be sent.
-	 * @author Agustín Villafañe
+	 * @author Agustï¿½n Villafaï¿½e
 	 *
 	 */
 	class BgpKeepAliveTimerExpired implements Runnable
@@ -127,7 +127,12 @@ public class BgpHandler implements EventTransitionListener
 			// I don't send a new Open message. If I receive a keepalive message,
 			// I change to the OpenConfirm state.
 			BgpOpen openMessage=new BgpOpen();
-			openMessage.setBgp_identifier(ipToLong(configuration.getMyIP()));
+			// Somehow, I have to determine what IP I'm going to use with this peer.
+			// I have to obtain the list of interfaces, and from there, determine
+			// who is the router that I will contact, based on the BGP peers in that network.
+			// I have to retrieve the address of my peer from the BGP Message that I receive.
+			BgpOpen openReceived=(BgpOpen) message;
+			openMessage.setBgp_identifier(ipToLong(configuration.getInterfaceForPeerAddress(openReceived.getBgp_identifier()).getIp()));
 			openMessage.setHold_time(configuration.getMyHoldTime());
 			openMessage.setSender_AS(Integer.parseInt(configuration.getMyAS()));
 			ioSession.write(openMessage);

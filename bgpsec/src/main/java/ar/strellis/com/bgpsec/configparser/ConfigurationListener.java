@@ -78,6 +78,16 @@ public interface ConfigurationListener extends ParseTreeListener {
 	 */
 	void exitOption_interface_ip(ConfigurationParser.Option_interface_ipContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_interface_netmask}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption_interface_netmask(ConfigurationParser.Option_interface_netmaskContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_interface_netmask}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption_interface_netmask(ConfigurationParser.Option_interface_netmaskContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ConfigurationParser#option_interface_negotiation}.
 	 * @param ctx the parse tree
 	 */
