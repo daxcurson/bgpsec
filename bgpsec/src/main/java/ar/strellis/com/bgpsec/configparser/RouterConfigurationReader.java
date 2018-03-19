@@ -13,6 +13,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import ar.strellis.com.bgpsec.model.BgpInterface;
+import ar.strellis.com.bgpsec.model.BgpNeighbor;
 import ar.strellis.com.bgpsec.model.MyConfiguration;
 
 public class RouterConfigurationReader
@@ -35,6 +36,8 @@ public class RouterConfigurationReader
 		ConfigurationParser parser=new ConfigurationParser(tokens);
 		// I get the interfaces present with a list.
 		List<BgpInterface> interfaces=new LinkedList<BgpInterface>();
+		// The BGP peers too.
+		List<BgpNeighbor> neighbors=new LinkedList<BgpNeighbor>();
 		parser.addParseListener(new ConfigurationBaseListener()
 				{
 			private String ip;
@@ -57,8 +60,40 @@ public class RouterConfigurationReader
 			}
 				}
 		);
+		// Now, read the BGP peers. I'll assume, for now, that all the router statements
+		// that I will have will be BGP and that I'll have configuration for their BGP
+		// neighbors, so looking into any other kind of statement except neighbor statements
+		// is useless for now.
+		parser.addParseListener(new ConfigurationBaseListener()
+				{
+			private String neighbor_description;
+			private String neighbor_ip;
+			private int remote_as;
+			public void exitNeighbor_description_string(ConfigurationParser.Neighbor_description_stringContext ctx)
+			{
+				neighbor_description=ctx.STRING().getText();
+			}
+			public void exitNeighbor_ip(ConfigurationParser.Neighbor_ipContext ctx)
+			{
+				neighbor_ip=ctx.IPV4().getText();
+			}
+			public void exitRemote_as(ConfigurationParser.Remote_asContext ctx)
+			{
+				remote_as=Integer.parseInt(ctx.INT().getText());
+			}
+			public void exitNeighbor(ConfigurationParser.NeighborContext ctx)
+			{
+				BgpNeighbor n=new BgpNeighbor();
+				n.setAsNumber(this.remote_as);
+				n.setDescription(this.neighbor_description);
+				n.setPeerIp(neighbor_ip);
+				neighbors.add(n);
+			}
+				}
+		);
 		parser.prog();
 		configuration.setInterfaces(interfaces);
+		configuration.setNeighbors(neighbors);
 		return configuration;
 	}
 }
