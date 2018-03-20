@@ -12,6 +12,7 @@ public class MyConfiguration
 {
 	private List<BgpInterface> interfaces;
 	private List<BgpNeighbor> neighbors;
+	private String myRouterKind;
 	private String myAS;
 	private int myHoldTime;
 	private int myKeepAliveTimer;
@@ -69,5 +70,11 @@ public class MyConfiguration
 			}
 		}
 		return result;
+	}
+	public String getMyRouterKind() {
+		return myRouterKind;
+	}
+	public void setMyRouterKind(String myRouterKind) {
+		this.myRouterKind = myRouterKind;
 	}
 }
