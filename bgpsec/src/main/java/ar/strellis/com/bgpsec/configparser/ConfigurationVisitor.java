@@ -1,4 +1,4 @@
-// Generated from ar\strellis\com\bgpsec\configparser\Configuration.g4 by ANTLR 4.7
+// Generated from ar/strellis/com/bgpsec/configparser/Configuration.g4 by ANTLR 4.7
 package ar.strellis.com.bgpsec.configparser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -95,11 +95,11 @@ public interface ConfigurationVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOption_router_log(ConfigurationParser.Option_router_logContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ConfigurationParser#option_router_neighbor}.
+	 * Visit a parse tree produced by {@link ConfigurationParser#neighbor}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx);
+	T visitNeighbor(ConfigurationParser.NeighborContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ConfigurationParser#neighbor_description}.
 	 * @param ctx the parse tree
@@ -124,18 +124,6 @@ public interface ConfigurationVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRemote_as(ConfigurationParser.Remote_asContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ConfigurationParser#router}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRouter(ConfigurationParser.RouterContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ConfigurationParser#auto}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAuto(ConfigurationParser.AutoContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ConfigurationParser#full_duplex}.
 	 * @param ctx the parse tree

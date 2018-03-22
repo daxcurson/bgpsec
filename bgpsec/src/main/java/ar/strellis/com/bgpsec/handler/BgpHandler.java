@@ -20,6 +20,7 @@ import ar.strellis.com.bgpsec.model.BgpOpen;
 import ar.strellis.com.bgpsec.model.BgpSession;
 import ar.strellis.com.bgpsec.model.BgpUpdate;
 import ar.strellis.com.bgpsec.model.MyConfiguration;
+import ar.strellis.com.bgpsec.util.NetworkConverter;
 
 /**
  * MINA BGP handler
@@ -130,7 +131,7 @@ public class BgpHandler implements EventTransitionListener
 			// who is the router that I will contact, based on the BGP peers in that network.
 			// I have to retrieve the address of my peer from the BGP Message that I receive.
 			BgpOpen openReceived=(BgpOpen) message;
-			openMessage.setBgp_identifier(ipToLong(configuration.getInterfaceForPeerAddress(openReceived.getBgp_identifier()).getIp()));
+			openMessage.setBgp_identifier(NetworkConverter.convertStringIPtoLong(configuration.getInterfaceForPeerAddress(openReceived.getBgp_identifier()).getIp()));
 			openMessage.setHold_time(configuration.getMyHoldTime());
 			openMessage.setSender_AS(Integer.parseInt(configuration.getMyAS()));
 			ioSession.write(openMessage);
@@ -168,26 +169,6 @@ public class BgpHandler implements EventTransitionListener
 		keepAliveScheduler.schedule(keepAliveTimer, configuration.getMyKeepAliveTimer(),TimeUnit.SECONDS);
 		// Store the created keepalive timer in the BgpSession.
 		bgpSession.setAttribute("keepAliveTimer", keepAliveTimer);
-	}
-	/**
-	 * Extracted from https://www.mkyong.com/java/java-convert-ip-address-to-decimal-number/
-	 * @param IP
-	 * @return
-	 */
-	private long ipToLong(String IP)
-	{
-		String[] ipAddressInArray = IP.split("\\.");
-
-		long result = 0;
-		for (int i = 0; i < ipAddressInArray.length; i++) {
-
-			int power = 3 - i;
-			int ip = Integer.parseInt(ipAddressInArray[i]);
-			result += ip * Math.pow(256, power);
-
-		}
-
-		return result;
 	}
 	@IoHandlerTransition(on=MESSAGE_SENT,in=CONNECT)
 	public void messageSentConnect(BgpSession bgpSession,IoSession ioSession,BgpMessage message)

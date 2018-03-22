@@ -1,4 +1,4 @@
-// Generated from ar\strellis\com\bgpsec\configparser\Configuration.g4 by ANTLR 4.7
+// Generated from ar/strellis/com/bgpsec/configparser/Configuration.g4 by ANTLR 4.7
 package ar.strellis.com.bgpsec.configparser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -184,13 +184,13 @@ public class ConfigurationBaseListener implements ConfigurationListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx) { }
+	@Override public void enterNeighbor(ConfigurationParser.NeighborContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx) { }
+	@Override public void exitNeighbor(ConfigurationParser.NeighborContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -239,30 +239,6 @@ public class ConfigurationBaseListener implements ConfigurationListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRemote_as(ConfigurationParser.Remote_asContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRouter(ConfigurationParser.RouterContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRouter(ConfigurationParser.RouterContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAuto(ConfigurationParser.AutoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAuto(ConfigurationParser.AutoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

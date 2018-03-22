@@ -41,6 +41,7 @@ public class TestAntlr
 	@Test
 	public void testInterfaces()
 	{
+		System.out.println("INTERFACES------------------------------------------------");
 		// Now I list the interfaces.
 		for(BgpInterface i:configuration.getInterfaces())
 		{
@@ -50,6 +51,7 @@ public class TestAntlr
 	@Test
 	public void compareIP()
 	{
+		System.out.println("COMPARING IPs----------------------------------------------");
 		// I will compare the IP with those of the interfaces and decide
 		// if they are in the same network.
 		// Let's consume the configuration file
@@ -67,6 +69,7 @@ public class TestAntlr
 	@Test
 	public void findPeers()
 	{
+		System.out.println("FIND PEERS----------------------------------------------");
 		// Find the BGP peers read from the configuration file.
 		for(BgpNeighbor n:configuration.getNeighbors())
 		{
@@ -76,7 +79,8 @@ public class TestAntlr
 	@Test
 	public void getASNumber()
 	{
-		System.out.println("Getting AS number from configuration");
+		System.out.println("GETTING AS NUMBER----------------------------------------------");
 		assertNotNull(configuration.getMyAS());
+		System.out.println("My AS is "+configuration.getMyAS());
 	}
 }

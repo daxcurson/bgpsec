@@ -1,4 +1,4 @@
-// Generated from ar\strellis\com\bgpsec\configparser\Configuration.g4 by ANTLR 4.7
+// Generated from ar/strellis/com/bgpsec/configparser/Configuration.g4 by ANTLR 4.7
 package ar.strellis.com.bgpsec.configparser;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -115,7 +115,7 @@ public class ConfigurationBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx) { return visitChildren(ctx); }
+	@Override public T visitNeighbor(ConfigurationParser.NeighborContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -144,20 +144,6 @@ public class ConfigurationBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitRemote_as(ConfigurationParser.Remote_asContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitRouter(ConfigurationParser.RouterContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitAuto(ConfigurationParser.AutoContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -1,4 +1,4 @@
-// Generated from ar\strellis\com\bgpsec\configparser\Configuration.g4 by ANTLR 4.7
+// Generated from ar/strellis/com/bgpsec/configparser/Configuration.g4 by ANTLR 4.7
 package ar.strellis.com.bgpsec.configparser;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -148,15 +148,15 @@ public interface ConfigurationListener extends ParseTreeListener {
 	 */
 	void exitOption_router_log(ConfigurationParser.Option_router_logContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ConfigurationParser#option_router_neighbor}.
+	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor}.
 	 * @param ctx the parse tree
 	 */
-	void enterOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx);
+	void enterNeighbor(ConfigurationParser.NeighborContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ConfigurationParser#option_router_neighbor}.
+	 * Exit a parse tree produced by {@link ConfigurationParser#neighbor}.
 	 * @param ctx the parse tree
 	 */
-	void exitOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx);
+	void exitNeighbor(ConfigurationParser.NeighborContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor_description}.
 	 * @param ctx the parse tree
@@ -197,26 +197,6 @@ public interface ConfigurationListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRemote_as(ConfigurationParser.Remote_asContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ConfigurationParser#router}.
-	 * @param ctx the parse tree
-	 */
-	void enterRouter(ConfigurationParser.RouterContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ConfigurationParser#router}.
-	 * @param ctx the parse tree
-	 */
-	void exitRouter(ConfigurationParser.RouterContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ConfigurationParser#auto}.
-	 * @param ctx the parse tree
-	 */
-	void enterAuto(ConfigurationParser.AutoContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ConfigurationParser#auto}.
-	 * @param ctx the parse tree
-	 */
-	void exitAuto(ConfigurationParser.AutoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ConfigurationParser#full_duplex}.
 	 * @param ctx the parse tree
