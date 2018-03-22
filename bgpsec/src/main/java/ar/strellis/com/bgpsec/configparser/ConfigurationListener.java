@@ -118,35 +118,45 @@ public interface ConfigurationListener extends ParseTreeListener {
 	 */
 	void exitOption_router(ConfigurationParser.Option_routerContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ConfigurationParser#kind}.
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_router_kind}.
 	 * @param ctx the parse tree
 	 */
-	void enterKind(ConfigurationParser.KindContext ctx);
+	void enterOption_router_kind(ConfigurationParser.Option_router_kindContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ConfigurationParser#kind}.
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_router_kind}.
 	 * @param ctx the parse tree
 	 */
-	void exitKind(ConfigurationParser.KindContext ctx);
+	void exitOption_router_kind(ConfigurationParser.Option_router_kindContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ConfigurationParser#log}.
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_router_asnumber}.
 	 * @param ctx the parse tree
 	 */
-	void enterLog(ConfigurationParser.LogContext ctx);
+	void enterOption_router_asnumber(ConfigurationParser.Option_router_asnumberContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ConfigurationParser#log}.
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_router_asnumber}.
 	 * @param ctx the parse tree
 	 */
-	void exitLog(ConfigurationParser.LogContext ctx);
+	void exitOption_router_asnumber(ConfigurationParser.Option_router_asnumberContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor}.
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_router_log}.
 	 * @param ctx the parse tree
 	 */
-	void enterNeighbor(ConfigurationParser.NeighborContext ctx);
+	void enterOption_router_log(ConfigurationParser.Option_router_logContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ConfigurationParser#neighbor}.
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_router_log}.
 	 * @param ctx the parse tree
 	 */
-	void exitNeighbor(ConfigurationParser.NeighborContext ctx);
+	void exitOption_router_log(ConfigurationParser.Option_router_logContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_router_neighbor}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_router_neighbor}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor_description}.
 	 * @param ctx the parse tree
@@ -227,14 +237,4 @@ public interface ConfigurationListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitHalf_duplex(ConfigurationParser.Half_duplexContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ConfigurationParser#asnumber}.
-	 * @param ctx the parse tree
-	 */
-	void enterAsnumber(ConfigurationParser.AsnumberContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ConfigurationParser#asnumber}.
-	 * @param ctx the parse tree
-	 */
-	void exitAsnumber(ConfigurationParser.AsnumberContext ctx);
 }

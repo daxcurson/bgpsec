@@ -94,21 +94,28 @@ public class ConfigurationBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitKind(ConfigurationParser.KindContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOption_router_kind(ConfigurationParser.Option_router_kindContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLog(ConfigurationParser.LogContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOption_router_asnumber(ConfigurationParser.Option_router_asnumberContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNeighbor(ConfigurationParser.NeighborContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOption_router_log(ConfigurationParser.Option_router_logContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -165,11 +172,4 @@ public class ConfigurationBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitHalf_duplex(ConfigurationParser.Half_duplexContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitAsnumber(ConfigurationParser.AsnumberContext ctx) { return visitChildren(ctx); }
 }

@@ -77,23 +77,29 @@ public interface ConfigurationVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOption_router(ConfigurationParser.Option_routerContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ConfigurationParser#kind}.
+	 * Visit a parse tree produced by {@link ConfigurationParser#option_router_kind}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitKind(ConfigurationParser.KindContext ctx);
+	T visitOption_router_kind(ConfigurationParser.Option_router_kindContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ConfigurationParser#log}.
+	 * Visit a parse tree produced by {@link ConfigurationParser#option_router_asnumber}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLog(ConfigurationParser.LogContext ctx);
+	T visitOption_router_asnumber(ConfigurationParser.Option_router_asnumberContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ConfigurationParser#neighbor}.
+	 * Visit a parse tree produced by {@link ConfigurationParser#option_router_log}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNeighbor(ConfigurationParser.NeighborContext ctx);
+	T visitOption_router_log(ConfigurationParser.Option_router_logContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ConfigurationParser#option_router_neighbor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ConfigurationParser#neighbor_description}.
 	 * @param ctx the parse tree
@@ -142,10 +148,4 @@ public interface ConfigurationVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitHalf_duplex(ConfigurationParser.Half_duplexContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ConfigurationParser#asnumber}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAsnumber(ConfigurationParser.AsnumberContext ctx);
 }

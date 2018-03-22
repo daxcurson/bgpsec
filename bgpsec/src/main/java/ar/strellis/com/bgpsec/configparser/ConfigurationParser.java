@@ -24,24 +24,25 @@ public class ConfigurationParser extends Parser {
 		RULE_prog = 0, RULE_statement = 1, RULE_statement_interface = 2, RULE_interface_desc = 3, 
 		RULE_option_interface = 4, RULE_option_interface_description = 5, RULE_option_interface_ip = 6, 
 		RULE_option_interface_netmask = 7, RULE_option_interface_negotiation = 8, 
-		RULE_statement_router = 9, RULE_option_router = 10, RULE_kind = 11, RULE_log = 12, 
-		RULE_neighbor = 13, RULE_neighbor_description = 14, RULE_neighbor_description_string = 15, 
-		RULE_neighbor_ip = 16, RULE_remote_as = 17, RULE_router = 18, RULE_auto = 19, 
-		RULE_full_duplex = 20, RULE_half_duplex = 21, RULE_asnumber = 22;
+		RULE_statement_router = 9, RULE_option_router = 10, RULE_option_router_kind = 11, 
+		RULE_option_router_asnumber = 12, RULE_option_router_log = 13, RULE_option_router_neighbor = 14, 
+		RULE_neighbor_description = 15, RULE_neighbor_description_string = 16, 
+		RULE_neighbor_ip = 17, RULE_remote_as = 18, RULE_router = 19, RULE_auto = 20, 
+		RULE_full_duplex = 21, RULE_half_duplex = 22;
 	public static final String[] ruleNames = {
 		"prog", "statement", "statement_interface", "interface_desc", "option_interface", 
 		"option_interface_description", "option_interface_ip", "option_interface_netmask", 
-		"option_interface_negotiation", "statement_router", "option_router", "kind", 
-		"log", "neighbor", "neighbor_description", "neighbor_description_string", 
-		"neighbor_ip", "remote_as", "router", "auto", "full_duplex", "half_duplex", 
-		"asnumber"
+		"option_interface_negotiation", "statement_router", "option_router", "option_router_kind", 
+		"option_router_asnumber", "option_router_log", "option_router_neighbor", 
+		"neighbor_description", "neighbor_description_string", "neighbor_ip", 
+		"remote_as", "router", "auto", "full_duplex", "half_duplex"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'interface'", "'description'", "'ip'", "'netmask'", "'negotiation'", 
-		"'kind'", "'log-neighbor-changes'", "'neighbor'", "'remote_as'", "'router'", 
-		"'auto'", "'full_duplex'", "'half_duplex'", "'asnumber'", null, null, 
-		null, null, null, "'{'", "'}'"
+		"'kind'", "'asnumber'", "'log-neighbor-changes'", "'neighbor'", "'remote_as'", 
+		"'router'", "'auto'", "'full_duplex'", "'half_duplex'", null, null, null, 
+		null, null, "'{'", "'}'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
@@ -143,7 +144,7 @@ public class ConfigurationParser extends Parser {
 				setState(49); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( _la==T__0 || _la==T__9 );
+			} while ( _la==T__0 || _la==T__10 );
 			}
 		}
 		catch (RecognitionException re) {
@@ -198,7 +199,7 @@ public class ConfigurationParser extends Parser {
 				statement_interface();
 				}
 				break;
-			case T__9:
+			case T__10:
 				{
 				setState(52);
 				statement_router();
@@ -585,19 +586,19 @@ public class ConfigurationParser extends Parser {
 			setState(85);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__10:
+			case T__11:
 				{
 				setState(82);
 				auto();
 				}
 				break;
-			case T__11:
+			case T__12:
 				{
 				setState(83);
 				full_duplex();
 				}
 				break;
-			case T__12:
+			case T__13:
 				{
 				setState(84);
 				half_duplex();
@@ -674,7 +675,7 @@ public class ConfigurationParser extends Parser {
 				setState(92); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__6) | (1L << T__7) | (1L << T__13))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__6) | (1L << T__7) | (1L << T__8))) != 0) );
 			setState(94);
 			match(CLOSEBRACE);
 			}
@@ -691,17 +692,17 @@ public class ConfigurationParser extends Parser {
 	}
 
 	public static class Option_routerContext extends ParserRuleContext {
-		public KindContext kind() {
-			return getRuleContext(KindContext.class,0);
+		public Option_router_kindContext option_router_kind() {
+			return getRuleContext(Option_router_kindContext.class,0);
 		}
-		public AsnumberContext asnumber() {
-			return getRuleContext(AsnumberContext.class,0);
+		public Option_router_asnumberContext option_router_asnumber() {
+			return getRuleContext(Option_router_asnumberContext.class,0);
 		}
-		public LogContext log() {
-			return getRuleContext(LogContext.class,0);
+		public Option_router_logContext option_router_log() {
+			return getRuleContext(Option_router_logContext.class,0);
 		}
-		public NeighborContext neighbor() {
-			return getRuleContext(NeighborContext.class,0);
+		public Option_router_neighborContext option_router_neighbor() {
+			return getRuleContext(Option_router_neighborContext.class,0);
 		}
 		public Option_routerContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -734,25 +735,25 @@ public class ConfigurationParser extends Parser {
 			case T__5:
 				{
 				setState(96);
-				kind();
-				}
-				break;
-			case T__13:
-				{
-				setState(97);
-				asnumber();
+				option_router_kind();
 				}
 				break;
 			case T__6:
 				{
-				setState(98);
-				log();
+				setState(97);
+				option_router_asnumber();
 				}
 				break;
 			case T__7:
 				{
+				setState(98);
+				option_router_log();
+				}
+				break;
+			case T__8:
+				{
 				setState(99);
-				neighbor();
+				option_router_neighbor();
 				}
 				break;
 			default:
@@ -771,30 +772,30 @@ public class ConfigurationParser extends Parser {
 		return _localctx;
 	}
 
-	public static class KindContext extends ParserRuleContext {
+	public static class Option_router_kindContext extends ParserRuleContext {
 		public TerminalNode STRING() { return getToken(ConfigurationParser.STRING, 0); }
-		public KindContext(ParserRuleContext parent, int invokingState) {
+		public Option_router_kindContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_kind; }
+		@Override public int getRuleIndex() { return RULE_option_router_kind; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterKind(this);
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterOption_router_kind(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitKind(this);
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitOption_router_kind(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitKind(this);
+			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitOption_router_kind(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final KindContext kind() throws RecognitionException {
-		KindContext _localctx = new KindContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_kind);
+	public final Option_router_kindContext option_router_kind() throws RecognitionException {
+		Option_router_kindContext _localctx = new Option_router_kindContext(_ctx, getState());
+		enterRule(_localctx, 22, RULE_option_router_kind);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -815,34 +816,37 @@ public class ConfigurationParser extends Parser {
 		return _localctx;
 	}
 
-	public static class LogContext extends ParserRuleContext {
-		public LogContext(ParserRuleContext parent, int invokingState) {
+	public static class Option_router_asnumberContext extends ParserRuleContext {
+		public TerminalNode INT() { return getToken(ConfigurationParser.INT, 0); }
+		public Option_router_asnumberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_log; }
+		@Override public int getRuleIndex() { return RULE_option_router_asnumber; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterLog(this);
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterOption_router_asnumber(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitLog(this);
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitOption_router_asnumber(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitLog(this);
+			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitOption_router_asnumber(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final LogContext log() throws RecognitionException {
-		LogContext _localctx = new LogContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_log);
+	public final Option_router_asnumberContext option_router_asnumber() throws RecognitionException {
+		Option_router_asnumberContext _localctx = new Option_router_asnumberContext(_ctx, getState());
+		enterRule(_localctx, 24, RULE_option_router_asnumber);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(105);
 			match(T__6);
+			setState(106);
+			match(INT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -856,38 +860,79 @@ public class ConfigurationParser extends Parser {
 		return _localctx;
 	}
 
-	public static class NeighborContext extends ParserRuleContext {
-		public Neighbor_descriptionContext neighbor_description() {
-			return getRuleContext(Neighbor_descriptionContext.class,0);
-		}
-		public NeighborContext(ParserRuleContext parent, int invokingState) {
+	public static class Option_router_logContext extends ParserRuleContext {
+		public Option_router_logContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_neighbor; }
+		@Override public int getRuleIndex() { return RULE_option_router_log; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterNeighbor(this);
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterOption_router_log(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitNeighbor(this);
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitOption_router_log(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitNeighbor(this);
+			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitOption_router_log(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final NeighborContext neighbor() throws RecognitionException {
-		NeighborContext _localctx = new NeighborContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_neighbor);
+	public final Option_router_logContext option_router_log() throws RecognitionException {
+		Option_router_logContext _localctx = new Option_router_logContext(_ctx, getState());
+		enterRule(_localctx, 26, RULE_option_router_log);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(107);
-			match(T__7);
 			setState(108);
+			match(T__7);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Option_router_neighborContext extends ParserRuleContext {
+		public Neighbor_descriptionContext neighbor_description() {
+			return getRuleContext(Neighbor_descriptionContext.class,0);
+		}
+		public Option_router_neighborContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_option_router_neighbor; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterOption_router_neighbor(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitOption_router_neighbor(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitOption_router_neighbor(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Option_router_neighborContext option_router_neighbor() throws RecognitionException {
+		Option_router_neighborContext _localctx = new Option_router_neighborContext(_ctx, getState());
+		enterRule(_localctx, 28, RULE_option_router_neighbor);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(110);
+			match(T__8);
+			setState(111);
 			neighbor_description();
 			}
 		}
@@ -944,36 +989,36 @@ public class ConfigurationParser extends Parser {
 
 	public final Neighbor_descriptionContext neighbor_description() throws RecognitionException {
 		Neighbor_descriptionContext _localctx = new Neighbor_descriptionContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_neighbor_description);
+		enterRule(_localctx, 30, RULE_neighbor_description);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(110);
+			setState(113);
 			match(OPENBRACE);
-			setState(114); 
+			setState(117); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
-				setState(114);
+				setState(117);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case T__2:
 					{
-					setState(111);
+					setState(114);
 					neighbor_ip();
 					}
 					break;
-				case T__8:
+				case T__9:
 					{
-					setState(112);
+					setState(115);
 					remote_as();
 					}
 					break;
 				case T__1:
 					{
-					setState(113);
+					setState(116);
 					neighbor_description_string();
 					}
 					break;
@@ -981,11 +1026,11 @@ public class ConfigurationParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(116); 
+				setState(119); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__8))) != 0) );
-			setState(118);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__9))) != 0) );
+			setState(121);
 			match(CLOSEBRACE);
 			}
 		}
@@ -1023,13 +1068,13 @@ public class ConfigurationParser extends Parser {
 
 	public final Neighbor_description_stringContext neighbor_description_string() throws RecognitionException {
 		Neighbor_description_stringContext _localctx = new Neighbor_description_stringContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_neighbor_description_string);
+		enterRule(_localctx, 32, RULE_neighbor_description_string);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120);
+			setState(123);
 			match(T__1);
-			setState(121);
+			setState(124);
 			match(STRING);
 			}
 		}
@@ -1067,13 +1112,13 @@ public class ConfigurationParser extends Parser {
 
 	public final Neighbor_ipContext neighbor_ip() throws RecognitionException {
 		Neighbor_ipContext _localctx = new Neighbor_ipContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_neighbor_ip);
+		enterRule(_localctx, 34, RULE_neighbor_ip);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(123);
+			setState(126);
 			match(T__2);
-			setState(124);
+			setState(127);
 			match(IPV4);
 			}
 		}
@@ -1111,13 +1156,13 @@ public class ConfigurationParser extends Parser {
 
 	public final Remote_asContext remote_as() throws RecognitionException {
 		Remote_asContext _localctx = new Remote_asContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_remote_as);
+		enterRule(_localctx, 36, RULE_remote_as);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(126);
-			match(T__8);
-			setState(127);
+			setState(129);
+			match(T__9);
+			setState(130);
 			match(INT);
 			}
 		}
@@ -1154,12 +1199,12 @@ public class ConfigurationParser extends Parser {
 
 	public final RouterContext router() throws RecognitionException {
 		RouterContext _localctx = new RouterContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_router);
+		enterRule(_localctx, 38, RULE_router);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(129);
-			match(T__9);
+			setState(132);
+			match(T__10);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1195,12 +1240,12 @@ public class ConfigurationParser extends Parser {
 
 	public final AutoContext auto() throws RecognitionException {
 		AutoContext _localctx = new AutoContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_auto);
+		enterRule(_localctx, 40, RULE_auto);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(131);
-			match(T__10);
+			setState(134);
+			match(T__11);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1236,12 +1281,12 @@ public class ConfigurationParser extends Parser {
 
 	public final Full_duplexContext full_duplex() throws RecognitionException {
 		Full_duplexContext _localctx = new Full_duplexContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_full_duplex);
+		enterRule(_localctx, 42, RULE_full_duplex);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(133);
-			match(T__11);
+			setState(136);
+			match(T__12);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1277,56 +1322,12 @@ public class ConfigurationParser extends Parser {
 
 	public final Half_duplexContext half_duplex() throws RecognitionException {
 		Half_duplexContext _localctx = new Half_duplexContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_half_duplex);
+		enterRule(_localctx, 44, RULE_half_duplex);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(135);
-			match(T__12);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class AsnumberContext extends ParserRuleContext {
-		public TerminalNode INT() { return getToken(ConfigurationParser.INT, 0); }
-		public AsnumberContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_asnumber; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterAsnumber(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitAsnumber(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitAsnumber(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final AsnumberContext asnumber() throws RecognitionException {
-		AsnumberContext _localctx = new AsnumberContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_asnumber);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(137);
-			match(T__13);
 			setState(138);
-			match(INT);
+			match(T__13);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1348,34 +1349,34 @@ public class ConfigurationParser extends Parser {
 		"\n\2\r\2\16\2\63\3\3\3\3\5\38\n\3\3\4\3\4\3\4\6\4=\n\4\r\4\16\4>\3\4\3"+
 		"\4\3\5\3\5\3\6\3\6\3\6\3\6\5\6I\n\6\3\7\3\7\3\7\3\b\3\b\3\b\3\t\3\t\3"+
 		"\t\3\n\3\n\3\n\3\n\5\nX\n\n\3\13\3\13\3\13\6\13]\n\13\r\13\16\13^\3\13"+
-		"\3\13\3\f\3\f\3\f\3\f\5\fg\n\f\3\r\3\r\3\r\3\16\3\16\3\17\3\17\3\17\3"+
-		"\20\3\20\3\20\3\20\6\20u\n\20\r\20\16\20v\3\20\3\20\3\21\3\21\3\21\3\22"+
-		"\3\22\3\22\3\23\3\23\3\23\3\24\3\24\3\25\3\25\3\26\3\26\3\27\3\27\3\30"+
+		"\3\13\3\f\3\f\3\f\3\f\5\fg\n\f\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3"+
+		"\20\3\20\3\20\3\21\3\21\3\21\3\21\6\21x\n\21\r\21\16\21y\3\21\3\21\3\22"+
+		"\3\22\3\22\3\23\3\23\3\23\3\24\3\24\3\24\3\25\3\25\3\26\3\26\3\27\3\27"+
 		"\3\30\3\30\3\30\2\2\31\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,"+
 		".\2\2\2\u0086\2\61\3\2\2\2\4\67\3\2\2\2\69\3\2\2\2\bB\3\2\2\2\nH\3\2\2"+
 		"\2\fJ\3\2\2\2\16M\3\2\2\2\20P\3\2\2\2\22S\3\2\2\2\24Y\3\2\2\2\26f\3\2"+
-		"\2\2\30h\3\2\2\2\32k\3\2\2\2\34m\3\2\2\2\36p\3\2\2\2 z\3\2\2\2\"}\3\2"+
-		"\2\2$\u0080\3\2\2\2&\u0083\3\2\2\2(\u0085\3\2\2\2*\u0087\3\2\2\2,\u0089"+
-		"\3\2\2\2.\u008b\3\2\2\2\60\62\5\4\3\2\61\60\3\2\2\2\62\63\3\2\2\2\63\61"+
+		"\2\2\30h\3\2\2\2\32k\3\2\2\2\34n\3\2\2\2\36p\3\2\2\2 s\3\2\2\2\"}\3\2"+
+		"\2\2$\u0080\3\2\2\2&\u0083\3\2\2\2(\u0086\3\2\2\2*\u0088\3\2\2\2,\u008a"+
+		"\3\2\2\2.\u008c\3\2\2\2\60\62\5\4\3\2\61\60\3\2\2\2\62\63\3\2\2\2\63\61"+
 		"\3\2\2\2\63\64\3\2\2\2\64\3\3\2\2\2\658\5\6\4\2\668\5\24\13\2\67\65\3"+
 		"\2\2\2\67\66\3\2\2\28\5\3\2\2\29:\5\b\5\2:<\7\26\2\2;=\5\n\6\2<;\3\2\2"+
 		"\2=>\3\2\2\2><\3\2\2\2>?\3\2\2\2?@\3\2\2\2@A\7\27\2\2A\7\3\2\2\2BC\7\3"+
 		"\2\2C\t\3\2\2\2DI\5\f\7\2EI\5\16\b\2FI\5\22\n\2GI\5\20\t\2HD\3\2\2\2H"+
 		"E\3\2\2\2HF\3\2\2\2HG\3\2\2\2I\13\3\2\2\2JK\7\4\2\2KL\7\22\2\2L\r\3\2"+
 		"\2\2MN\7\5\2\2NO\7\21\2\2O\17\3\2\2\2PQ\7\6\2\2QR\7\21\2\2R\21\3\2\2\2"+
-		"SW\7\7\2\2TX\5(\25\2UX\5*\26\2VX\5,\27\2WT\3\2\2\2WU\3\2\2\2WV\3\2\2\2"+
-		"X\23\3\2\2\2YZ\5&\24\2Z\\\7\26\2\2[]\5\26\f\2\\[\3\2\2\2]^\3\2\2\2^\\"+
-		"\3\2\2\2^_\3\2\2\2_`\3\2\2\2`a\7\27\2\2a\25\3\2\2\2bg\5\30\r\2cg\5.\30"+
-		"\2dg\5\32\16\2eg\5\34\17\2fb\3\2\2\2fc\3\2\2\2fd\3\2\2\2fe\3\2\2\2g\27"+
-		"\3\2\2\2hi\7\b\2\2ij\7\22\2\2j\31\3\2\2\2kl\7\t\2\2l\33\3\2\2\2mn\7\n"+
-		"\2\2no\5\36\20\2o\35\3\2\2\2pt\7\26\2\2qu\5\"\22\2ru\5$\23\2su\5 \21\2"+
-		"tq\3\2\2\2tr\3\2\2\2ts\3\2\2\2uv\3\2\2\2vt\3\2\2\2vw\3\2\2\2wx\3\2\2\2"+
-		"xy\7\27\2\2y\37\3\2\2\2z{\7\4\2\2{|\7\22\2\2|!\3\2\2\2}~\7\5\2\2~\177"+
-		"\7\21\2\2\177#\3\2\2\2\u0080\u0081\7\13\2\2\u0081\u0082\7\24\2\2\u0082"+
-		"%\3\2\2\2\u0083\u0084\7\f\2\2\u0084\'\3\2\2\2\u0085\u0086\7\r\2\2\u0086"+
-		")\3\2\2\2\u0087\u0088\7\16\2\2\u0088+\3\2\2\2\u0089\u008a\7\17\2\2\u008a"+
-		"-\3\2\2\2\u008b\u008c\7\20\2\2\u008c\u008d\7\24\2\2\u008d/\3\2\2\2\13"+
-		"\63\67>HW^ftv";
+		"SW\7\7\2\2TX\5*\26\2UX\5,\27\2VX\5.\30\2WT\3\2\2\2WU\3\2\2\2WV\3\2\2\2"+
+		"X\23\3\2\2\2YZ\5(\25\2Z\\\7\26\2\2[]\5\26\f\2\\[\3\2\2\2]^\3\2\2\2^\\"+
+		"\3\2\2\2^_\3\2\2\2_`\3\2\2\2`a\7\27\2\2a\25\3\2\2\2bg\5\30\r\2cg\5\32"+
+		"\16\2dg\5\34\17\2eg\5\36\20\2fb\3\2\2\2fc\3\2\2\2fd\3\2\2\2fe\3\2\2\2"+
+		"g\27\3\2\2\2hi\7\b\2\2ij\7\22\2\2j\31\3\2\2\2kl\7\t\2\2lm\7\24\2\2m\33"+
+		"\3\2\2\2no\7\n\2\2o\35\3\2\2\2pq\7\13\2\2qr\5 \21\2r\37\3\2\2\2sw\7\26"+
+		"\2\2tx\5$\23\2ux\5&\24\2vx\5\"\22\2wt\3\2\2\2wu\3\2\2\2wv\3\2\2\2xy\3"+
+		"\2\2\2yw\3\2\2\2yz\3\2\2\2z{\3\2\2\2{|\7\27\2\2|!\3\2\2\2}~\7\4\2\2~\177"+
+		"\7\22\2\2\177#\3\2\2\2\u0080\u0081\7\5\2\2\u0081\u0082\7\21\2\2\u0082"+
+		"%\3\2\2\2\u0083\u0084\7\f\2\2\u0084\u0085\7\24\2\2\u0085\'\3\2\2\2\u0086"+
+		"\u0087\7\r\2\2\u0087)\3\2\2\2\u0088\u0089\7\16\2\2\u0089+\3\2\2\2\u008a"+
+		"\u008b\7\17\2\2\u008b-\3\2\2\2\u008c\u008d\7\20\2\2\u008d/\3\2\2\2\13"+
+		"\63\67>HW^fwy";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -148,37 +148,49 @@ public class ConfigurationBaseListener implements ConfigurationListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterKind(ConfigurationParser.KindContext ctx) { }
+	@Override public void enterOption_router_kind(ConfigurationParser.Option_router_kindContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitKind(ConfigurationParser.KindContext ctx) { }
+	@Override public void exitOption_router_kind(ConfigurationParser.Option_router_kindContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLog(ConfigurationParser.LogContext ctx) { }
+	@Override public void enterOption_router_asnumber(ConfigurationParser.Option_router_asnumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLog(ConfigurationParser.LogContext ctx) { }
+	@Override public void exitOption_router_asnumber(ConfigurationParser.Option_router_asnumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNeighbor(ConfigurationParser.NeighborContext ctx) { }
+	@Override public void enterOption_router_log(ConfigurationParser.Option_router_logContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNeighbor(ConfigurationParser.NeighborContext ctx) { }
+	@Override public void exitOption_router_log(ConfigurationParser.Option_router_logContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOption_router_neighbor(ConfigurationParser.Option_router_neighborContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -275,18 +287,6 @@ public class ConfigurationBaseListener implements ConfigurationListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitHalf_duplex(ConfigurationParser.Half_duplexContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAsnumber(ConfigurationParser.AsnumberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAsnumber(ConfigurationParser.AsnumberContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
