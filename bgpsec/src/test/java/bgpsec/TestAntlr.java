@@ -1,12 +1,12 @@
 package bgpsec;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ar.strellis.com.bgpsec.configparser.RouterConfigurationReader;
@@ -72,5 +72,11 @@ public class TestAntlr
 		{
 			System.out.println("Parsed neighbor: "+n.getAsNumber()+", at "+n.getPeerIp());
 		}
+	}
+	@Test
+	public void getASNumber()
+	{
+		System.out.println("Getting AS number from configuration");
+		assertNotNull(configuration.getMyAS());
 	}
 }

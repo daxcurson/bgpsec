@@ -5,7 +5,6 @@ import org.apache.mina.statemachine.annotation.IoHandlerTransition;
 import org.apache.mina.statemachine.annotation.State;
 import static org.apache.mina.statemachine.event.IoHandlerEvents.*;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -21,7 +20,6 @@ import ar.strellis.com.bgpsec.model.BgpOpen;
 import ar.strellis.com.bgpsec.model.BgpSession;
 import ar.strellis.com.bgpsec.model.BgpUpdate;
 import ar.strellis.com.bgpsec.model.MyConfiguration;
-//import ar.strellis.com.bgpsec.routingconfig.RoutingConfigurer;
 
 /**
  * MINA BGP handler
@@ -40,8 +38,8 @@ public class BgpHandler implements EventTransitionListener
 	
 	private MyConfiguration configuration;
 	private ScheduledExecutorService keepAliveScheduler;
-	private ScheduledExecutorService holdScheduler;
-	private ScheduledFuture<Void> holdTimerRunning;
+	//private ScheduledExecutorService holdScheduler;
+	//private ScheduledFuture<Void> holdTimerRunning;
 	
 	/**
 	 * Sends a KeepAlive message when the time expires. It contains the session
@@ -242,12 +240,12 @@ public class BgpHandler implements EventTransitionListener
 	@IoHandlerTransition(on=SESSION_CLOSED,in=OPEN_CONFIRM)
 	public void closeRunningSessionConfirmed(BgpSession bgpSession,IoSession ioSession)
 	{
-		System.out.println("Close session received");
+		System.out.println("Close session received, state Open Confirm");
 	}
 	@IoHandlerTransition(on=EXCEPTION_CAUGHT,in=OPEN_CONFIRM)
 	public void exceptionCaughtConfirmed(BgpSession bgpSession,IoSession ioSession)
 	{
-		System.out.println("Exception caught!!!!");
+		System.out.println("Exception caught in open confirm!!!!");
 	}
 	@Override
 	public void start() 
@@ -275,16 +273,16 @@ public class BgpHandler implements EventTransitionListener
 	@IoHandlerTransition(on=SESSION_CLOSED,in=ESTABLISHED)
 	public void sessionClosedEstablished(BgpSession bgpSession,IoSession ioSession)
 	{
-		
+		System.out.println("Session closed, state Established");
 	}
 	@IoHandlerTransition(on=EXCEPTION_CAUGHT,in=ESTABLISHED)
 	public void exceptionCaughtEstablished(BgpSession bgpSession,IoSession ioSession)
 	{
-		
+		System.out.println("Exception caught in state Established");
 	}
 	@IoHandlerTransition(on=MESSAGE_SENT,in=ESTABLISHED)
 	public void messageSentEstablished(BgpSession bgpSession,IoSession ioSession,BgpMessage message)
 	{
-		
+		System.out.println("Message sent in session established");
 	}
 }

@@ -69,6 +69,8 @@ public class RouterConfigurationReader
 			private String neighbor_description;
 			private String neighbor_ip;
 			private int remote_as;
+			private String router_kind;
+			private String my_as;
 			public void exitNeighbor_description_string(ConfigurationParser.Neighbor_description_stringContext ctx)
 			{
 				neighbor_description=ctx.STRING().getText();
@@ -88,6 +90,23 @@ public class RouterConfigurationReader
 				n.setDescription(this.neighbor_description);
 				n.setPeerIp(neighbor_ip);
 				neighbors.add(n);
+			}
+			public void exitKind(ConfigurationParser.KindContext ctx)
+			{
+				this.router_kind=ctx.STRING().getText();
+			}
+			public void exitAsnumber(ConfigurationParser.AsnumberContext ctx)
+			{
+				System.out.println("The AS number is:"+ctx.INT().getText());
+				this.my_as=ctx.INT().getText();
+			}
+			public void exitRouter(ConfigurationParser.RouterContext ctx)
+			{
+				// Leaving the router configuration section, I require to read
+				// what kind of router I am, and what is my AS number.
+				System.out.println("My AS is: "+this.my_as);
+				configuration.setMyAS(this.my_as);
+				configuration.setMyRouterKind(router_kind);
 			}
 				}
 		);
