@@ -1,11 +1,8 @@
 package bgpsec;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.strellis.com.bgpsec.exceptions.BgpException;
 import ar.strellis.com.bgpsec.routingconfig.RoutingConfigurer;
 import ar.strellis.com.bgpsec.routingconfig.RoutingConfigurerFactory;
 

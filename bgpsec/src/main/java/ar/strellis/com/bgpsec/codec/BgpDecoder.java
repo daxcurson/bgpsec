@@ -193,6 +193,9 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 			BgpPathAttribute p=new BgpPathAttribute();
 			p.setAttribute_type_code(BgpAttributeTypeCode.valueOf(attr_type_code));
 			p.setAttribute_value(attribute_value);
+			p.setOptional(optional);
+			p.setTransitive(transitive);
+			p.setPartial(partial);
 			path_attributes.add(p);
 		}
 		((BgpUpdate)message).setPath_attributes(path_attributes);
