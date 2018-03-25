@@ -1,11 +1,18 @@
 package ar.strellis.com.bgpsec.model;
 
-public class BgpPathAttributeLocalPref extends BgpPathAttribute {
+/**
+ * LOCAL_PREF is a well-known attribute taht is a four-octet unsigned integer. A BGP speaker
+ * uses it to inform its other internal peers of the advertising speaker's degree of preference
+ * for an advertised route.
+ * @author Agustín Villafañe
+ *
+ */
+public class BgpPathAttributeLocalPref extends BgpPathAttribute 
+{
 
 	@Override
-	public void loadValue(byte[] value) {
-		// TODO Auto-generated method stub
-
+	public void loadValue(byte[] value) 
+	{
+		this.loadLongValue(value);
 	}
-
 }

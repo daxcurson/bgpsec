@@ -57,6 +57,8 @@ public class BgpPathAttributeAsPath extends BgpPathAttribute
 				as_quantity--;
 				s.getAs_numbers().add(as_value);
 			}
+			// I read the BGP Path segment, now I save it!!!
+			this.as_path_segment.add(s);
 		}
 	}
 	private int unsignedByte(byte val)

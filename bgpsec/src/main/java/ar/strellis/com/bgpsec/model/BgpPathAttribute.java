@@ -12,6 +12,7 @@ public abstract class BgpPathAttribute
 	private int optional;
 	private int transitive;
 	private int partial;
+	protected long value;
 	
 	/**
 	 * The subclass will have the responsiblility of loading the value it needs,
@@ -20,6 +21,16 @@ public abstract class BgpPathAttribute
 	 * @param value
 	 */
 	public abstract void loadValue(byte[] value);
+	
+	protected void loadLongValue(byte[] value)
+	{
+		this.value=0;
+		for(int i=0;i<4;i++)
+		{
+			this.value=this.value << 8;
+			this.value=this.value+value[i];
+		}
+	}
 	
 	public BgpAttributeTypeCode getAttribute_type_code() {
 		return attribute_type_code;

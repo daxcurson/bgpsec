@@ -38,6 +38,7 @@ public class BgpHandler implements EventTransitionListener
 	@State(ROOT) public static final String ESTABLISHED="Established";
 	
 	private MyConfiguration configuration;
+	private BgpDecisionProcess bgpDecisionProcess;
 	private ScheduledExecutorService keepAliveScheduler;
 	//private ScheduledExecutorService holdScheduler;
 	//private ScheduledFuture<Void> holdTimerRunning;
@@ -74,6 +75,8 @@ public class BgpHandler implements EventTransitionListener
 		this.configuration=configuration;
 		// Start the keepalive timer.
 		keepAliveScheduler=Executors.newScheduledThreadPool(3);
+		// Get a new decision process
+		this.bgpDecisionProcess=new BgpDecisionProcess(configuration);
 	}
 	/*
 	 * State changes
@@ -245,6 +248,7 @@ public class BgpHandler implements EventTransitionListener
 		if(message instanceof BgpUpdate)
 		{
 			// Do something with the update.
+			bgpDecisionProcess.processUpdate((BgpUpdate)message);
 		}
 		if(message instanceof BgpKeepAlive)
 		{
