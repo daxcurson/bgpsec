@@ -15,6 +15,7 @@ import ar.strellis.com.bgpsec.model.BgpMessage;
 import ar.strellis.com.bgpsec.model.BgpNotification;
 import ar.strellis.com.bgpsec.model.BgpOpen;
 import ar.strellis.com.bgpsec.model.BgpPathAttribute;
+import ar.strellis.com.bgpsec.model.BgpPathAttributeFactory;
 import ar.strellis.com.bgpsec.model.BgpUpdate;
 import ar.strellis.com.bgpsec.model.Route;
 
@@ -174,29 +175,22 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 				count-=2;
 			}
 			// Now comes the attribute value.
-			long attribute_value=0;
 			// Read a byte now, reduce the number of path_attribute_length
 			// and shift left whatever I read, if there is more.
 			if(path_attribute_value_length>0)
 			{
-				attribute_value=in.getUnsigned();
-				count--;
-				path_attribute_value_length--;
-				while(path_attribute_value_length>0)
-				{
-					int byte_read=in.getUnsigned();
-					count--;
-					attribute_value=(attribute_value << 8)+byte_read;
-					path_attribute_value_length--;
-				}
+				// I read the value of the attribute directly into an array of bytes
+				// so that it can be consumed by the BgpPathAttribute.
+				byte[] value=new byte[path_attribute_value_length];
+				in.get(value);
+				BgpPathAttribute p=BgpPathAttributeFactory.returnPathAttribute(BgpAttributeTypeCode.valueOf(attr_type_code));
+				p.setAttribute_type_code(BgpAttributeTypeCode.valueOf(attr_type_code));
+				p.loadValue(value);
+				p.setOptional(optional);
+				p.setTransitive(transitive);
+				p.setPartial(partial);
+				path_attributes.add(p);
 			}
-			BgpPathAttribute p=new BgpPathAttribute();
-			p.setAttribute_type_code(BgpAttributeTypeCode.valueOf(attr_type_code));
-			p.setAttribute_value(attribute_value);
-			p.setOptional(optional);
-			p.setTransitive(transitive);
-			p.setPartial(partial);
-			path_attributes.add(p);
 		}
 		((BgpUpdate)message).setPath_attributes(path_attributes);
 		// Finally, now comes the Network Layer Reachability Information,

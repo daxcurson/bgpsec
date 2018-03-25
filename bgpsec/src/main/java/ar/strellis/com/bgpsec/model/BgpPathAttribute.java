@@ -1,12 +1,25 @@
 package ar.strellis.com.bgpsec.model;
 
-public class BgpPathAttribute 
+/**
+ * A BGP Path attribute.
+ * @author Agustín Villafañe
+ *
+ */
+public abstract class BgpPathAttribute 
 {
 	private BgpAttributeTypeCode attribute_type_code;
-	private long attribute_value;
+	private byte[] attribute_value;
 	private int optional;
 	private int transitive;
 	private int partial;
+	
+	/**
+	 * The subclass will have the responsiblility of loading the value it needs,
+	 * due to the fact that the different options have different ways of saving its value.
+	 * What they all have in common, is that they receive an array of bytes.
+	 * @param value
+	 */
+	public abstract void loadValue(byte[] value);
 	
 	public BgpAttributeTypeCode getAttribute_type_code() {
 		return attribute_type_code;
@@ -14,10 +27,10 @@ public class BgpPathAttribute
 	public void setAttribute_type_code(BgpAttributeTypeCode attribute_type_code) {
 		this.attribute_type_code = attribute_type_code;
 	}
-	public long getAttribute_value() {
+	public byte[] getAttribute_value() {
 		return attribute_value;
 	}
-	public void setAttribute_value(long attribute_value) {
+	public void setAttribute_value(byte[] attribute_value) {
 		this.attribute_value = attribute_value;
 	}
 	public int getOptional() {
