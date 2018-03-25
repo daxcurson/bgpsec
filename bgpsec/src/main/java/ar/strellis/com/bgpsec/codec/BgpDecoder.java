@@ -89,31 +89,35 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 			// of the field fall on an octet boundary. Note that the value of trailing bits
 			// is irrelevant".
 			// So this is a number of bytes, where 32 bits of route_length means 4 bytes.
-			int route=0;
-			int byte_route=in.getUnsigned();
-			count--;
-			int route_length_count=route_prefix_length;
-			while(route_length_count>0)
+			// I must do this if route_prefix_length >0!!!
+			if(route_prefix_length>0)
 			{
-				if(route_length_count<8)
+				int route=0;
+				int byte_route=in.getUnsigned();
+				count--;
+				int route_length_count=route_prefix_length;
+				while(route_length_count>0)
 				{
-					// No more bytes in the route.
-					route=(route << route_length_count)+byte_route;
-					route_length_count=0;
+					if(route_length_count<8)
+					{
+						// No more bytes in the route.
+						route=(route << route_length_count)+byte_route;
+						route_length_count=0;
+					}
+					else
+					{
+						// Add the byte to the route and read one byte from the message
+						route=(route << 8)+byte_route;
+						byte_route=in.getUnsigned();
+						count--;
+						route_length_count=-8;
+					}
 				}
-				else
-				{
-					// Add the byte to the route and read one byte from the message
-					route=(route << 8)+byte_route;
-					byte_route=in.getUnsigned();
-					count--;
-					route_length_count=-8;
-				}
+				Route r=new Route();
+				r.setNetwork_address(route);
+				r.setPrefix(route_prefix_length);
+				withdrawn_routes.add(r);
 			}
-			Route r=new Route();
-			r.setNetwork_address(route);
-			r.setPrefix(route_prefix_length);
-			withdrawn_routes.add(r);
 		}
 		((BgpUpdate)message).setWithdrawn_routes(withdrawn_routes);
 		// Done with the list of withdrawn routes.
@@ -183,6 +187,8 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 				// so that it can be consumed by the BgpPathAttribute.
 				byte[] value=new byte[path_attribute_value_length];
 				in.get(value);
+				// Now I decrease the count by the number of bytes read.
+				count-=path_attribute_value_length;
 				BgpPathAttribute p=BgpPathAttributeFactory.returnPathAttribute(BgpAttributeTypeCode.valueOf(attr_type_code));
 				p.setAttribute_type_code(BgpAttributeTypeCode.valueOf(attr_type_code));
 				p.loadValue(value);

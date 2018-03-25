@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * BGP Update message
- * @author Agustín Villafañe
+ * @author Agustin Villafane
  *
  */
 public class BgpUpdate extends BgpMessage
