@@ -18,8 +18,9 @@ public class ConfigurationParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, ROUTER=12, NEIGHBOR=13, AUTO=14, IPV4=15, STRING=16, 
-		ID_LETTER=17, INT=18, DIGIT=19, OPENBRACE=20, CLOSEBRACE=21, WS=22;
+		T__9=10, T__10=11, T__11=12, ROUTER=13, NEIGHBOR=14, AUTO=15, INTERNAL=16, 
+		EXTERNAL=17, IPV4=18, STRING=19, ID_LETTER=20, INT=21, DIGIT=22, OPENBRACE=23, 
+		CLOSEBRACE=24, WS=25;
 	public static final int
 		RULE_prog = 0, RULE_statement = 1, RULE_statement_interface = 2, RULE_interface_desc = 3, 
 		RULE_option_interface = 4, RULE_option_interface_description = 5, RULE_option_interface_ip = 6, 
@@ -27,26 +28,27 @@ public class ConfigurationParser extends Parser {
 		RULE_statement_router = 9, RULE_option_router = 10, RULE_option_router_kind = 11, 
 		RULE_option_router_asnumber = 12, RULE_option_router_log = 13, RULE_neighbor = 14, 
 		RULE_neighbor_description = 15, RULE_neighbor_description_string = 16, 
-		RULE_neighbor_ip = 17, RULE_remote_as = 18, RULE_full_duplex = 19, RULE_half_duplex = 20;
+		RULE_neighbor_ip = 17, RULE_neighbor_type = 18, RULE_remote_as = 19, RULE_full_duplex = 20, 
+		RULE_half_duplex = 21;
 	public static final String[] ruleNames = {
 		"prog", "statement", "statement_interface", "interface_desc", "option_interface", 
 		"option_interface_description", "option_interface_ip", "option_interface_netmask", 
 		"option_interface_negotiation", "statement_router", "option_router", "option_router_kind", 
 		"option_router_asnumber", "option_router_log", "neighbor", "neighbor_description", 
-		"neighbor_description_string", "neighbor_ip", "remote_as", "full_duplex", 
-		"half_duplex"
+		"neighbor_description_string", "neighbor_ip", "neighbor_type", "remote_as", 
+		"full_duplex", "half_duplex"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'interface'", "'description'", "'ip'", "'netmask'", "'negotiation'", 
-		"'kind'", "'asnumber'", "'log-neighbor-changes'", "'remote_as'", "'full_duplex'", 
-		"'half_duplex'", "'router'", "'neighbor'", "'auto'", null, null, null, 
-		null, null, "'{'", "'}'"
+		"'kind'", "'asnumber'", "'log-neighbor-changes'", "'type'", "'remote_as'", 
+		"'full_duplex'", "'half_duplex'", "'router'", "'neighbor'", "'auto'", 
+		"'internal'", "'external'", null, null, null, null, null, "'{'", "'}'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		"ROUTER", "NEIGHBOR", "AUTO", "IPV4", "STRING", "ID_LETTER", "INT", "DIGIT", 
-		"OPENBRACE", "CLOSEBRACE", "WS"
+		null, "ROUTER", "NEIGHBOR", "AUTO", "INTERNAL", "EXTERNAL", "IPV4", "STRING", 
+		"ID_LETTER", "INT", "DIGIT", "OPENBRACE", "CLOSEBRACE", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -130,17 +132,17 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43); 
+			setState(45); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(42);
+				setState(44);
 				statement();
 				}
 				}
-				setState(45); 
+				setState(47); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==T__0 || _la==ROUTER );
@@ -189,18 +191,18 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(49);
+			setState(51);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
 				{
-				setState(47);
+				setState(49);
 				statement_interface();
 				}
 				break;
 			case ROUTER:
 				{
-				setState(48);
+				setState(50);
 				statement_router();
 				}
 				break;
@@ -258,25 +260,25 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(51);
+			setState(53);
 			interface_desc();
-			setState(52);
+			setState(54);
 			match(OPENBRACE);
-			setState(54); 
+			setState(56); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(53);
+				setState(55);
 				option_interface();
 				}
 				}
-				setState(56); 
+				setState(58); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4))) != 0) );
-			setState(58);
+			setState(60);
 			match(CLOSEBRACE);
 			}
 		}
@@ -317,7 +319,7 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(60);
+			setState(62);
 			match(T__0);
 			}
 		}
@@ -370,30 +372,30 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66);
+			setState(68);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__1:
 				{
-				setState(62);
+				setState(64);
 				option_interface_description();
 				}
 				break;
 			case T__2:
 				{
-				setState(63);
+				setState(65);
 				option_interface_ip();
 				}
 				break;
 			case T__4:
 				{
-				setState(64);
+				setState(66);
 				option_interface_negotiation();
 				}
 				break;
 			case T__3:
 				{
-				setState(65);
+				setState(67);
 				option_interface_netmask();
 				}
 				break;
@@ -440,9 +442,9 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(68);
+			setState(70);
 			match(T__1);
-			setState(69);
+			setState(71);
 			match(STRING);
 			}
 		}
@@ -484,9 +486,9 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(71);
+			setState(73);
 			match(T__2);
-			setState(72);
+			setState(74);
 			match(IPV4);
 			}
 		}
@@ -528,9 +530,9 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(74);
+			setState(76);
 			match(T__3);
-			setState(75);
+			setState(77);
 			match(IPV4);
 			}
 		}
@@ -578,26 +580,26 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(77);
+			setState(79);
 			match(T__4);
-			setState(81);
+			setState(83);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case AUTO:
 				{
-				setState(78);
+				setState(80);
 				match(AUTO);
-				}
-				break;
-			case T__9:
-				{
-				setState(79);
-				full_duplex();
 				}
 				break;
 			case T__10:
 				{
-				setState(80);
+				setState(81);
+				full_duplex();
+				}
+				break;
+			case T__11:
+				{
+				setState(82);
 				half_duplex();
 				}
 				break;
@@ -659,39 +661,39 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(83);
+			setState(85);
 			match(ROUTER);
-			setState(84);
+			setState(86);
 			match(OPENBRACE);
-			setState(86); 
+			setState(88); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(85);
+				setState(87);
 				option_router();
 				}
 				}
-				setState(88); 
+				setState(90); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__6) | (1L << T__7))) != 0) );
-			setState(91); 
+			setState(93); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(90);
+				setState(92);
 				neighbor();
 				}
 				}
-				setState(93); 
+				setState(95); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==NEIGHBOR );
-			setState(95);
+			setState(97);
 			match(CLOSEBRACE);
 			}
 		}
@@ -741,24 +743,24 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(100);
+			setState(102);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__5:
 				{
-				setState(97);
+				setState(99);
 				option_router_kind();
 				}
 				break;
 			case T__6:
 				{
-				setState(98);
+				setState(100);
 				option_router_asnumber();
 				}
 				break;
 			case T__7:
 				{
-				setState(99);
+				setState(101);
 				option_router_log();
 				}
 				break;
@@ -805,9 +807,9 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(102);
+			setState(104);
 			match(T__5);
-			setState(103);
+			setState(105);
 			match(STRING);
 			}
 		}
@@ -849,9 +851,9 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(105);
+			setState(107);
 			match(T__6);
-			setState(106);
+			setState(108);
 			match(INT);
 			}
 		}
@@ -892,7 +894,7 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(108);
+			setState(110);
 			match(T__7);
 			}
 		}
@@ -937,9 +939,9 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(110);
+			setState(112);
 			match(NEIGHBOR);
-			setState(111);
+			setState(113);
 			neighbor_description();
 			}
 		}
@@ -962,6 +964,12 @@ public class ConfigurationParser extends Parser {
 		}
 		public Neighbor_ipContext neighbor_ip(int i) {
 			return getRuleContext(Neighbor_ipContext.class,i);
+		}
+		public List<Neighbor_typeContext> neighbor_type() {
+			return getRuleContexts(Neighbor_typeContext.class);
+		}
+		public Neighbor_typeContext neighbor_type(int i) {
+			return getRuleContext(Neighbor_typeContext.class,i);
 		}
 		public List<Remote_asContext> remote_as() {
 			return getRuleContexts(Remote_asContext.class);
@@ -1001,31 +1009,37 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(113);
+			setState(115);
 			match(OPENBRACE);
-			setState(117); 
+			setState(120); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
-				setState(117);
+				setState(120);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case T__2:
 					{
-					setState(114);
+					setState(116);
 					neighbor_ip();
 					}
 					break;
 				case T__8:
 					{
-					setState(115);
+					setState(117);
+					neighbor_type();
+					}
+					break;
+				case T__9:
+					{
+					setState(118);
 					remote_as();
 					}
 					break;
 				case T__1:
 					{
-					setState(116);
+					setState(119);
 					neighbor_description_string();
 					}
 					break;
@@ -1033,11 +1047,11 @@ public class ConfigurationParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(119); 
+				setState(122); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__8))) != 0) );
-			setState(121);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__8) | (1L << T__9))) != 0) );
+			setState(124);
 			match(CLOSEBRACE);
 			}
 		}
@@ -1079,9 +1093,9 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(123);
+			setState(126);
 			match(T__1);
-			setState(124);
+			setState(127);
 			match(STRING);
 			}
 		}
@@ -1123,10 +1137,64 @@ public class ConfigurationParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(126);
+			setState(129);
 			match(T__2);
-			setState(127);
+			setState(130);
 			match(IPV4);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Neighbor_typeContext extends ParserRuleContext {
+		public TerminalNode INTERNAL() { return getToken(ConfigurationParser.INTERNAL, 0); }
+		public TerminalNode EXTERNAL() { return getToken(ConfigurationParser.EXTERNAL, 0); }
+		public Neighbor_typeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_neighbor_type; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).enterNeighbor_type(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ConfigurationListener ) ((ConfigurationListener)listener).exitNeighbor_type(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ConfigurationVisitor ) return ((ConfigurationVisitor<? extends T>)visitor).visitNeighbor_type(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Neighbor_typeContext neighbor_type() throws RecognitionException {
+		Neighbor_typeContext _localctx = new Neighbor_typeContext(_ctx, getState());
+		enterRule(_localctx, 36, RULE_neighbor_type);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(132);
+			match(T__8);
+			setState(133);
+			_la = _input.LA(1);
+			if ( !(_la==INTERNAL || _la==EXTERNAL) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -1163,13 +1231,13 @@ public class ConfigurationParser extends Parser {
 
 	public final Remote_asContext remote_as() throws RecognitionException {
 		Remote_asContext _localctx = new Remote_asContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_remote_as);
+		enterRule(_localctx, 38, RULE_remote_as);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(129);
-			match(T__8);
-			setState(130);
+			setState(135);
+			match(T__9);
+			setState(136);
 			match(INT);
 			}
 		}
@@ -1206,12 +1274,12 @@ public class ConfigurationParser extends Parser {
 
 	public final Full_duplexContext full_duplex() throws RecognitionException {
 		Full_duplexContext _localctx = new Full_duplexContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_full_duplex);
+		enterRule(_localctx, 40, RULE_full_duplex);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(132);
-			match(T__9);
+			setState(138);
+			match(T__10);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1247,12 +1315,12 @@ public class ConfigurationParser extends Parser {
 
 	public final Half_duplexContext half_duplex() throws RecognitionException {
 		Half_duplexContext _localctx = new Half_duplexContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_half_duplex);
+		enterRule(_localctx, 42, RULE_half_duplex);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(134);
-			match(T__10);
+			setState(140);
+			match(T__11);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1267,40 +1335,42 @@ public class ConfigurationParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\30\u008b\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33\u0091\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\3\2\6\2.\n\2\r\2\16\2/\3\3\3"+
-		"\3\5\3\64\n\3\3\4\3\4\3\4\6\49\n\4\r\4\16\4:\3\4\3\4\3\5\3\5\3\6\3\6\3"+
-		"\6\3\6\5\6E\n\6\3\7\3\7\3\7\3\b\3\b\3\b\3\t\3\t\3\t\3\n\3\n\3\n\3\n\5"+
-		"\nT\n\n\3\13\3\13\3\13\6\13Y\n\13\r\13\16\13Z\3\13\6\13^\n\13\r\13\16"+
-		"\13_\3\13\3\13\3\f\3\f\3\f\5\fg\n\f\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3"+
-		"\17\3\20\3\20\3\20\3\21\3\21\3\21\3\21\6\21x\n\21\r\21\16\21y\3\21\3\21"+
-		"\3\22\3\22\3\22\3\23\3\23\3\23\3\24\3\24\3\24\3\25\3\25\3\26\3\26\3\26"+
-		"\2\2\27\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*\2\2\2\u0084\2-\3"+
-		"\2\2\2\4\63\3\2\2\2\6\65\3\2\2\2\b>\3\2\2\2\nD\3\2\2\2\fF\3\2\2\2\16I"+
-		"\3\2\2\2\20L\3\2\2\2\22O\3\2\2\2\24U\3\2\2\2\26f\3\2\2\2\30h\3\2\2\2\32"+
-		"k\3\2\2\2\34n\3\2\2\2\36p\3\2\2\2 s\3\2\2\2\"}\3\2\2\2$\u0080\3\2\2\2"+
-		"&\u0083\3\2\2\2(\u0086\3\2\2\2*\u0088\3\2\2\2,.\5\4\3\2-,\3\2\2\2./\3"+
-		"\2\2\2/-\3\2\2\2/\60\3\2\2\2\60\3\3\2\2\2\61\64\5\6\4\2\62\64\5\24\13"+
-		"\2\63\61\3\2\2\2\63\62\3\2\2\2\64\5\3\2\2\2\65\66\5\b\5\2\668\7\26\2\2"+
-		"\679\5\n\6\28\67\3\2\2\29:\3\2\2\2:8\3\2\2\2:;\3\2\2\2;<\3\2\2\2<=\7\27"+
-		"\2\2=\7\3\2\2\2>?\7\3\2\2?\t\3\2\2\2@E\5\f\7\2AE\5\16\b\2BE\5\22\n\2C"+
-		"E\5\20\t\2D@\3\2\2\2DA\3\2\2\2DB\3\2\2\2DC\3\2\2\2E\13\3\2\2\2FG\7\4\2"+
-		"\2GH\7\22\2\2H\r\3\2\2\2IJ\7\5\2\2JK\7\21\2\2K\17\3\2\2\2LM\7\6\2\2MN"+
-		"\7\21\2\2N\21\3\2\2\2OS\7\7\2\2PT\7\20\2\2QT\5(\25\2RT\5*\26\2SP\3\2\2"+
-		"\2SQ\3\2\2\2SR\3\2\2\2T\23\3\2\2\2UV\7\16\2\2VX\7\26\2\2WY\5\26\f\2XW"+
-		"\3\2\2\2YZ\3\2\2\2ZX\3\2\2\2Z[\3\2\2\2[]\3\2\2\2\\^\5\36\20\2]\\\3\2\2"+
-		"\2^_\3\2\2\2_]\3\2\2\2_`\3\2\2\2`a\3\2\2\2ab\7\27\2\2b\25\3\2\2\2cg\5"+
-		"\30\r\2dg\5\32\16\2eg\5\34\17\2fc\3\2\2\2fd\3\2\2\2fe\3\2\2\2g\27\3\2"+
-		"\2\2hi\7\b\2\2ij\7\22\2\2j\31\3\2\2\2kl\7\t\2\2lm\7\24\2\2m\33\3\2\2\2"+
-		"no\7\n\2\2o\35\3\2\2\2pq\7\17\2\2qr\5 \21\2r\37\3\2\2\2sw\7\26\2\2tx\5"+
-		"$\23\2ux\5&\24\2vx\5\"\22\2wt\3\2\2\2wu\3\2\2\2wv\3\2\2\2xy\3\2\2\2yw"+
-		"\3\2\2\2yz\3\2\2\2z{\3\2\2\2{|\7\27\2\2|!\3\2\2\2}~\7\4\2\2~\177\7\22"+
-		"\2\2\177#\3\2\2\2\u0080\u0081\7\5\2\2\u0081\u0082\7\21\2\2\u0082%\3\2"+
-		"\2\2\u0083\u0084\7\13\2\2\u0084\u0085\7\24\2\2\u0085\'\3\2\2\2\u0086\u0087"+
-		"\7\f\2\2\u0087)\3\2\2\2\u0088\u0089\7\r\2\2\u0089+\3\2\2\2\f/\63:DSZ_"+
-		"fwy";
+		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\3\2\6\2\60\n\2\r\2"+
+		"\16\2\61\3\3\3\3\5\3\66\n\3\3\4\3\4\3\4\6\4;\n\4\r\4\16\4<\3\4\3\4\3\5"+
+		"\3\5\3\6\3\6\3\6\3\6\5\6G\n\6\3\7\3\7\3\7\3\b\3\b\3\b\3\t\3\t\3\t\3\n"+
+		"\3\n\3\n\3\n\5\nV\n\n\3\13\3\13\3\13\6\13[\n\13\r\13\16\13\\\3\13\6\13"+
+		"`\n\13\r\13\16\13a\3\13\3\13\3\f\3\f\3\f\5\fi\n\f\3\r\3\r\3\r\3\16\3\16"+
+		"\3\16\3\17\3\17\3\20\3\20\3\20\3\21\3\21\3\21\3\21\3\21\6\21{\n\21\r\21"+
+		"\16\21|\3\21\3\21\3\22\3\22\3\22\3\23\3\23\3\23\3\24\3\24\3\24\3\25\3"+
+		"\25\3\25\3\26\3\26\3\27\3\27\3\27\2\2\30\2\4\6\b\n\f\16\20\22\24\26\30"+
+		"\32\34\36 \"$&(*,\2\3\3\2\22\23\2\u008a\2/\3\2\2\2\4\65\3\2\2\2\6\67\3"+
+		"\2\2\2\b@\3\2\2\2\nF\3\2\2\2\fH\3\2\2\2\16K\3\2\2\2\20N\3\2\2\2\22Q\3"+
+		"\2\2\2\24W\3\2\2\2\26h\3\2\2\2\30j\3\2\2\2\32m\3\2\2\2\34p\3\2\2\2\36"+
+		"r\3\2\2\2 u\3\2\2\2\"\u0080\3\2\2\2$\u0083\3\2\2\2&\u0086\3\2\2\2(\u0089"+
+		"\3\2\2\2*\u008c\3\2\2\2,\u008e\3\2\2\2.\60\5\4\3\2/.\3\2\2\2\60\61\3\2"+
+		"\2\2\61/\3\2\2\2\61\62\3\2\2\2\62\3\3\2\2\2\63\66\5\6\4\2\64\66\5\24\13"+
+		"\2\65\63\3\2\2\2\65\64\3\2\2\2\66\5\3\2\2\2\678\5\b\5\28:\7\31\2\29;\5"+
+		"\n\6\2:9\3\2\2\2;<\3\2\2\2<:\3\2\2\2<=\3\2\2\2=>\3\2\2\2>?\7\32\2\2?\7"+
+		"\3\2\2\2@A\7\3\2\2A\t\3\2\2\2BG\5\f\7\2CG\5\16\b\2DG\5\22\n\2EG\5\20\t"+
+		"\2FB\3\2\2\2FC\3\2\2\2FD\3\2\2\2FE\3\2\2\2G\13\3\2\2\2HI\7\4\2\2IJ\7\25"+
+		"\2\2J\r\3\2\2\2KL\7\5\2\2LM\7\24\2\2M\17\3\2\2\2NO\7\6\2\2OP\7\24\2\2"+
+		"P\21\3\2\2\2QU\7\7\2\2RV\7\21\2\2SV\5*\26\2TV\5,\27\2UR\3\2\2\2US\3\2"+
+		"\2\2UT\3\2\2\2V\23\3\2\2\2WX\7\17\2\2XZ\7\31\2\2Y[\5\26\f\2ZY\3\2\2\2"+
+		"[\\\3\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]_\3\2\2\2^`\5\36\20\2_^\3\2\2\2`a\3"+
+		"\2\2\2a_\3\2\2\2ab\3\2\2\2bc\3\2\2\2cd\7\32\2\2d\25\3\2\2\2ei\5\30\r\2"+
+		"fi\5\32\16\2gi\5\34\17\2he\3\2\2\2hf\3\2\2\2hg\3\2\2\2i\27\3\2\2\2jk\7"+
+		"\b\2\2kl\7\25\2\2l\31\3\2\2\2mn\7\t\2\2no\7\27\2\2o\33\3\2\2\2pq\7\n\2"+
+		"\2q\35\3\2\2\2rs\7\20\2\2st\5 \21\2t\37\3\2\2\2uz\7\31\2\2v{\5$\23\2w"+
+		"{\5&\24\2x{\5(\25\2y{\5\"\22\2zv\3\2\2\2zw\3\2\2\2zx\3\2\2\2zy\3\2\2\2"+
+		"{|\3\2\2\2|z\3\2\2\2|}\3\2\2\2}~\3\2\2\2~\177\7\32\2\2\177!\3\2\2\2\u0080"+
+		"\u0081\7\4\2\2\u0081\u0082\7\25\2\2\u0082#\3\2\2\2\u0083\u0084\7\5\2\2"+
+		"\u0084\u0085\7\24\2\2\u0085%\3\2\2\2\u0086\u0087\7\13\2\2\u0087\u0088"+
+		"\t\2\2\2\u0088\'\3\2\2\2\u0089\u008a\7\f\2\2\u008a\u008b\7\27\2\2\u008b"+
+		")\3\2\2\2\u008c\u008d\7\r\2\2\u008d+\3\2\2\2\u008e\u008f\7\16\2\2\u008f"+
+		"-\3\2\2\2\f\61\65<FU\\ahz|";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

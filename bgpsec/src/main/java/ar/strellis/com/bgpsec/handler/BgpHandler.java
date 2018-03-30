@@ -5,6 +5,8 @@ import org.apache.mina.statemachine.annotation.IoHandlerTransition;
 import org.apache.mina.statemachine.annotation.State;
 import static org.apache.mina.statemachine.event.IoHandlerEvents.*;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -15,6 +17,7 @@ import org.apache.mina.core.session.IoSession;
 import ar.strellis.com.bgpsec.event.EventTransitionListener;
 import ar.strellis.com.bgpsec.model.BgpKeepAlive;
 import ar.strellis.com.bgpsec.model.BgpMessage;
+import ar.strellis.com.bgpsec.model.BgpNeighbor;
 import ar.strellis.com.bgpsec.model.BgpNotification;
 import ar.strellis.com.bgpsec.model.BgpOpen;
 import ar.strellis.com.bgpsec.model.BgpSession;
@@ -107,6 +110,11 @@ public class BgpHandler implements EventTransitionListener
 	{
 		// Create a new BgpSession.
 		bgpSession.setState(CONNECT);
+		InetSocketAddress a=(InetSocketAddress) ioSession.getServiceAddress();
+		// Who is my peer??? I'll look it up based on its address.
+		InetAddress address=a.getAddress();
+		BgpNeighbor neighbor=configuration.getNeighbors().get(address.toString());
+		ioSession.setAttribute("neighbor", neighbor);
 	}
 	@IoHandlerTransition(on=SESSION_CLOSED,in=CONNECT)
 	public void closeRunningSession(BgpSession bgpSession,IoSession ioSession)

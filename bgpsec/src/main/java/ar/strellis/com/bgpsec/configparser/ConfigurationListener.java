@@ -188,6 +188,16 @@ public interface ConfigurationListener extends ParseTreeListener {
 	 */
 	void exitNeighbor_ip(ConfigurationParser.Neighbor_ipContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#neighbor_type}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeighbor_type(ConfigurationParser.Neighbor_typeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#neighbor_type}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeighbor_type(ConfigurationParser.Neighbor_typeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ConfigurationParser#remote_as}.
 	 * @param ctx the parse tree
 	 */

@@ -7,7 +7,7 @@ package ar.strellis.com.bgpsec.model;
  */
 public abstract class BgpPathAttribute 
 {
-	private BgpAttributeTypeCode attribute_type_code;
+	private BgpPathAttributeTypeCode attribute_type_code;
 	private byte[] attribute_value;
 	private int optional;
 	private int transitive;
@@ -32,10 +32,10 @@ public abstract class BgpPathAttribute
 		}
 	}
 	
-	public BgpAttributeTypeCode getAttribute_type_code() {
+	public BgpPathAttributeTypeCode getAttribute_type_code() {
 		return attribute_type_code;
 	}
-	public void setAttribute_type_code(BgpAttributeTypeCode attribute_type_code) {
+	public void setAttribute_type_code(BgpPathAttributeTypeCode attribute_type_code) {
 		this.attribute_type_code = attribute_type_code;
 	}
 	public byte[] getAttribute_value() {

@@ -2,6 +2,7 @@ package ar.strellis.com.bgpsec.model;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Stores the configuration values read from a properties file.
@@ -11,7 +12,7 @@ import java.util.List;
 public class MyConfiguration 
 {
 	private List<BgpInterface> interfaces;
-	private List<BgpNeighbor> neighbors;
+	private Map<String,BgpNeighbor> neighbors;
 	private String myRouterKind;
 	private String myAS;
 	private int myHoldTime;
@@ -41,10 +42,10 @@ public class MyConfiguration
 	public void setInterfaces(List<BgpInterface> interfaces) {
 		this.interfaces = interfaces;
 	}
-	public List<BgpNeighbor> getNeighbors() {
+	public Map<String,BgpNeighbor> getNeighbors() {
 		return neighbors;
 	}
-	public void setNeighbors(List<BgpNeighbor> neighbors) {
+	public void setNeighbors(Map<String,BgpNeighbor> neighbors) {
 		this.neighbors = neighbors;
 	}
 	/**

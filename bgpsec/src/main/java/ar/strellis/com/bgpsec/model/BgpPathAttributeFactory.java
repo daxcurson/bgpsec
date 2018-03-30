@@ -2,7 +2,7 @@ package ar.strellis.com.bgpsec.model;
 
 public class BgpPathAttributeFactory 
 {
-	public static BgpPathAttribute returnPathAttribute(BgpAttributeTypeCode code)
+	public static BgpPathAttribute returnPathAttribute(BgpPathAttributeTypeCode code)
 	{
 		BgpPathAttribute att=null;
 		switch(code)

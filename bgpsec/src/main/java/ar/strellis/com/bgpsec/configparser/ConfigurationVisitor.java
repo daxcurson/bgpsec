@@ -119,6 +119,12 @@ public interface ConfigurationVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNeighbor_ip(ConfigurationParser.Neighbor_ipContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ConfigurationParser#neighbor_type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeighbor_type(ConfigurationParser.Neighbor_typeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ConfigurationParser#remote_as}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

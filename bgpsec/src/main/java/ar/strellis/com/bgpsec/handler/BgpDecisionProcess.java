@@ -1,5 +1,8 @@
 package ar.strellis.com.bgpsec.handler;
 
+import ar.strellis.com.bgpsec.model.BgpPathAttributeTypeCode;
+import ar.strellis.com.bgpsec.model.BgpPathAttributeLocalPref;
+import ar.strellis.com.bgpsec.model.BgpPathAttributeOrigin;
 import ar.strellis.com.bgpsec.model.BgpRoutingInformationBase;
 import ar.strellis.com.bgpsec.model.BgpUpdate;
 import ar.strellis.com.bgpsec.model.MyConfiguration;
@@ -58,6 +61,11 @@ public class BgpDecisionProcess
 		 * 
 		 * This is taken straight from the RFC 4271, but WHAT DOES IT REALLY MEAN????
 		 */
+		// First of all, I'll recover the value of the LOCAL_PREF attribute.
+		BgpPathAttributeLocalPref p=(BgpPathAttributeLocalPref) message.getPath_attributes().get(BgpPathAttributeTypeCode.LOCAL_PREF.toString());
+		BgpPathAttributeOrigin o=(BgpPathAttributeOrigin) message.getPath_attributes().get(BgpPathAttributeTypeCode.ORIGIN.toString());
+		// If the route is learned from an internal peer
+		p.getValue();
 	}
 	private void phase2_select_route(BgpUpdate message) 
 	{

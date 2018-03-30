@@ -232,6 +232,18 @@ public class ConfigurationBaseListener implements ConfigurationListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNeighbor_type(ConfigurationParser.Neighbor_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNeighbor_type(ConfigurationParser.Neighbor_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterRemote_as(ConfigurationParser.Remote_asContext ctx) { }
 	/**
 	 * {@inheritDoc}

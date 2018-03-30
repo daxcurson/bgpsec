@@ -15,4 +15,8 @@ public class BgpPathAttributeLocalPref extends BgpPathAttribute
 	{
 		this.loadLongValue(value);
 	}
+	public long getValue()
+	{
+		return this.value;
+	}
 }

@@ -1,17 +1,20 @@
 package ar.strellis.com.bgpsec.codec;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
-import ar.strellis.com.bgpsec.model.BgpAttributeTypeCode;
+import ar.strellis.com.bgpsec.model.BgpPathAttributeTypeCode;
 import ar.strellis.com.bgpsec.model.BgpCapability;
 import ar.strellis.com.bgpsec.model.BgpKeepAlive;
 import ar.strellis.com.bgpsec.model.BgpMessage;
+import ar.strellis.com.bgpsec.model.BgpNeighbor;
 import ar.strellis.com.bgpsec.model.BgpNotification;
 import ar.strellis.com.bgpsec.model.BgpOpen;
 import ar.strellis.com.bgpsec.model.BgpPathAttribute;
@@ -126,7 +129,8 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 		int path_attribute_length=in.getUnsignedShort();
 		count=path_attribute_length;
 		// Now, identify the path attributes.
-		List<BgpPathAttribute> path_attributes=new LinkedList<BgpPathAttribute>();
+		// I need these attributes in a Map so they are easier to look up later.
+		Map<String,BgpPathAttribute> path_attributes=new HashMap<String,BgpPathAttribute>();
 		while(count>0)
 		{
 			// Path attributes: attr. flag + attr. type code.
@@ -138,21 +142,21 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 			// The high-order bit of the attribute flags octet is the optional bit.
 			// It defines whether the attribute is optional (if set to 1) or well-known
 			// (if set to 0).
-			int optional=attr_flags & 128;
+			int optional=(attr_flags & 128) == 128 ? 1:0;
 			// The second high-order bit is the transitive bit. It defines whether
 			// an optional attribute is transitive (if set to 1) or non-transitive
 			// (if set to 0). For well-known attributes, the transitive bit must be 1.
-			int transitive=attr_flags & 64;
+			int transitive=(attr_flags & 64) == 64 ? 1:0;
 			// The third high-order bit is the partial bit. It defines whether the
 			// information contained in the optional transitive attribute is partial
 			// (if set to 1) or complete (if set to 0). For well-known attributes
 			// and for optional non-transitive attributes, the Partial bit must be 0.
-			int partial=attr_flags & 32;
+			int partial=(attr_flags & 32) == 32 ? 1:0;
 			// The fourth high-order bit is the extended length bit. It defines
 			// whether the Attribute Length is one octet (if set to 0) or two octets
 			// (if set to 1). The lower-order four bits of the Attribute flags octet
 			// are unused. They must be zero when sent and must be ignored when received.
-			int extended_length=attr_flags & 16;
+			int extended_length=(attr_flags & 16) == 16 ? 1:0;
 			// The attribute type code octet contains the attribute type code.
 			// If the extended length bit of the attribute flags octet is set to 0,
 			// the third octet of the path attribute contains the length of the
@@ -189,13 +193,13 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 				in.get(value);
 				// Now I decrease the count by the number of bytes read.
 				count-=path_attribute_value_length;
-				BgpPathAttribute p=BgpPathAttributeFactory.returnPathAttribute(BgpAttributeTypeCode.valueOf(attr_type_code));
-				p.setAttribute_type_code(BgpAttributeTypeCode.valueOf(attr_type_code));
+				BgpPathAttribute p=BgpPathAttributeFactory.returnPathAttribute(BgpPathAttributeTypeCode.valueOf(attr_type_code));
+				p.setAttribute_type_code(BgpPathAttributeTypeCode.valueOf(attr_type_code));
 				p.loadValue(value);
 				p.setOptional(optional);
 				p.setTransitive(transitive);
 				p.setPartial(partial);
-				path_attributes.add(p);
+				path_attributes.put(BgpPathAttributeTypeCode.valueOf(attr_type_code).toString(), p);
 			}
 		}
 		((BgpUpdate)message).setPath_attributes(path_attributes);
@@ -283,9 +287,11 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 	@Override
 	protected boolean doDecode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception 
 	{
+		// First of all I have to configure who sent it to me. I made sure that when the session
+		// is created, the neighbor is set. 
+		BgpNeighbor neighbor=(BgpNeighbor) session.getAttribute("neighbor");
 		// There may be more than one message in this buffer. Use a while to read them,
 		// as long as the message is longer than the minimum size.
-		
 		// Section 4. The smallest message that may be sent consists of a BGP header
 		// without a data portion.
 		if(in.remaining()>=19)
@@ -316,6 +322,7 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 					break;
 				}
 				// Place the decoded message in the output
+				message.setNeighbor(neighbor);
 				out.write(message);
 			}
 			return true;

@@ -71,7 +71,7 @@ public class TestAntlr
 	{
 		System.out.println("FIND PEERS----------------------------------------------");
 		// Find the BGP peers read from the configuration file.
-		for(BgpNeighbor n:configuration.getNeighbors())
+		for(BgpNeighbor n:configuration.getNeighbors().values())
 		{
 			System.out.println("Parsed neighbor: "+n.getAsNumber()+", at "+n.getPeerIp());
 		}

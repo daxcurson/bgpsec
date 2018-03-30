@@ -11,6 +11,7 @@ public class BgpNeighbor
 	private int asNumber;
 	private String description;
 	private String peerIp;
+	private BgpNeighborType type;
 	public int getAsNumber() {
 		return asNumber;
 	}
@@ -28,5 +29,11 @@ public class BgpNeighbor
 	}
 	public void setPeerIp(String peerIp) {
 		this.peerIp = peerIp;
+	}
+	public BgpNeighborType getType() {
+		return type;
+	}
+	public void setType(BgpNeighborType type) {
+		this.type = type;
 	}
 }

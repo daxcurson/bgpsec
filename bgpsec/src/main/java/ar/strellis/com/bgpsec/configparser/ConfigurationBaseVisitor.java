@@ -143,6 +143,13 @@ public class ConfigurationBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitNeighbor_type(ConfigurationParser.Neighbor_typeContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitRemote_as(ConfigurationParser.Remote_asContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

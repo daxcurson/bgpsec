@@ -9,6 +9,11 @@ public abstract class BgpMessage
 	protected byte[] marker;
 	protected int length;
 	protected int type;
+	/**
+	 * Neighbor who sent the message!!!! It is important that I keep a reference so I know from the message
+	 * itself who sent it to me.
+	 */
+	private BgpNeighbor neighbor;
 	
 	public BgpMessage()
 	{
@@ -41,5 +46,11 @@ public abstract class BgpMessage
 	}
 	public void setType(int type) {
 		this.type = type;
+	}
+	public BgpNeighbor getNeighbor() {
+		return neighbor;
+	}
+	public void setNeighbor(BgpNeighbor neighbor) {
+		this.neighbor = neighbor;
 	}
 }

@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -14,6 +16,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import ar.strellis.com.bgpsec.model.BgpInterface;
 import ar.strellis.com.bgpsec.model.BgpNeighbor;
+import ar.strellis.com.bgpsec.model.BgpNeighborType;
 import ar.strellis.com.bgpsec.model.MyConfiguration;
 
 /**
@@ -49,8 +52,8 @@ public class RouterConfigurationReader
 		ConfigurationParser parser=new ConfigurationParser(tokens);
 		// I get the interfaces present with a list.
 		List<BgpInterface> interfaces=new LinkedList<BgpInterface>();
-		// The BGP peers too.
-		List<BgpNeighbor> neighbors=new LinkedList<BgpNeighbor>();
+		// For the BGP peers, I need a map, because I need to retrieve them using the configured IP.
+		Map<String,BgpNeighbor> neighbors=new HashMap<String,BgpNeighbor>();
 		parser.addParseListener(new ConfigurationBaseListener()
 				{
 			private String ip;
@@ -60,6 +63,7 @@ public class RouterConfigurationReader
 			private int remote_as;
 			private String router_kind;
 			private String my_as;
+			private BgpNeighborType neighbor_type;
 			@Override
 			public void exitStatement_interface(ConfigurationParser.Statement_interfaceContext ctx)
 			{
@@ -84,6 +88,13 @@ public class RouterConfigurationReader
 			{
 				neighbor_ip=ctx.IPV4().getText();
 			}
+			public void exitNeighbor_type(ConfigurationParser.Neighbor_typeContext ctx)
+			{
+				if(ctx.INTERNAL()!=null)
+					neighbor_type=BgpNeighborType.INTERNAL;
+				if(ctx.EXTERNAL()!=null)
+					neighbor_type=BgpNeighborType.EXTERNAL;
+			}
 			public void exitRemote_as(ConfigurationParser.Remote_asContext ctx)
 			{
 				remote_as=Integer.parseInt(ctx.INT().getText());
@@ -94,7 +105,12 @@ public class RouterConfigurationReader
 				n.setAsNumber(this.remote_as);
 				n.setDescription(this.neighbor_description);
 				n.setPeerIp(neighbor_ip);
-				neighbors.add(n);
+				// If the neighbor type is null or empty, I have to assume that it is external.
+				if(neighbor_type!=null)
+					n.setType(neighbor_type);
+				else
+					n.setType(BgpNeighborType.EXTERNAL);
+				neighbors.put(neighbor_ip, n);
 			}
 			public void exitOption_router_kind(ConfigurationParser.Option_router_kindContext ctx)
 			{
