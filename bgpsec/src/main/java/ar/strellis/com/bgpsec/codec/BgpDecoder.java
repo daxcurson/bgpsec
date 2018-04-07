@@ -183,8 +183,9 @@ public class BgpDecoder extends CumulativeProtocolDecoder
 				count-=2;
 			}
 			// Now comes the attribute value.
-			// Read a byte now, reduce the number of path_attribute_length
-			// and shift left whatever I read, if there is more.
+			// I use a factory method to create the type of attribute, then the loadValue method of each
+			// attribute type takes responsibility of reading the contents and form an actual value from the
+			// bytes read from the stream.
 			if(path_attribute_value_length>0)
 			{
 				// I read the value of the attribute directly into an array of bytes
