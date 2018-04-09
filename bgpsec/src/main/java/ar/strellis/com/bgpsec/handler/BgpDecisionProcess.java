@@ -1,6 +1,7 @@
 package ar.strellis.com.bgpsec.handler;
 
 import ar.strellis.com.bgpsec.model.BgpPathAttributeTypeCode;
+import ar.strellis.com.bgpsec.model.BgpOriginType;
 import ar.strellis.com.bgpsec.model.BgpPathAttributeLocalPref;
 import ar.strellis.com.bgpsec.model.BgpPathAttributeOrigin;
 import ar.strellis.com.bgpsec.model.BgpRoutingInformationBase;
@@ -9,7 +10,6 @@ import ar.strellis.com.bgpsec.model.MyConfiguration;
 
 /**
  * Implements the BGP decision process, when an UPDATE message is received.
- * @author Agustín Villafañe
  *
  */
 public class BgpDecisionProcess 
@@ -20,7 +20,7 @@ public class BgpDecisionProcess
 	public BgpDecisionProcess(MyConfiguration c)
 	{
 		this.configuration=c;
-		this.base=new BgpRoutingInformationBase();
+		this.setBase(new BgpRoutingInformationBase());
 	}
 	public MyConfiguration getConfiguration() 
 	{
@@ -38,10 +38,10 @@ public class BgpDecisionProcess
 	public void processUpdate(BgpUpdate message) 
 	{
 		// Phase 1: Calculation of degree of preference.
-		phase1_calculate_degree_of_preference(message);
-		phase2_select_route(message);
+		long preference=phase1_calculate_degree_of_preference(message);
+		phase2_select_route(message,preference);
 	}
-	private void phase1_calculate_degree_of_preference(BgpUpdate message) 
+	private long phase1_calculate_degree_of_preference(BgpUpdate message) 
 	{
 		/*
 		 * For each newly received or replacement feasible route, the local BGP speaker
@@ -62,12 +62,31 @@ public class BgpDecisionProcess
 		 * This is taken straight from the RFC 4271, but WHAT DOES IT REALLY MEAN????
 		 */
 		// First of all, I'll recover the value of the LOCAL_PREF attribute.
+		long local_preference=0;
 		BgpPathAttributeLocalPref p=(BgpPathAttributeLocalPref) message.getPath_attributes().get(BgpPathAttributeTypeCode.LOCAL_PREF.toString());
 		BgpPathAttributeOrigin o=(BgpPathAttributeOrigin) message.getPath_attributes().get(BgpPathAttributeTypeCode.ORIGIN.toString());
-		// If the route is learned from an internal peer
-		p.getValue();
+		// If the route is learned from an internal peer, choose the value of the LOCAL_PREF property, if available.
+		if(o!=null && o.getOrigin()==BgpOriginType.IGP)
+		{
+			if(p!=null && p.getValue()!=0)
+				local_preference=p.getValue();
+		}
+		if(o!=null && o.getOrigin()==BgpOriginType.EGP)
+		{
+			// Choose the policy value. None at the moment.
+		}
+		return local_preference;
 	}
-	private void phase2_select_route(BgpUpdate message) 
+	private void phase2_select_route(BgpUpdate message, long calculated_preference) 
 	{
+		// Now, process the route.
+		// This ends in entering a value in the routing information database.
+		
+	}
+	public BgpRoutingInformationBase getBase() {
+		return base;
+	}
+	public void setBase(BgpRoutingInformationBase base) {
+		this.base = base;
 	}
 }
