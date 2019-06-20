@@ -64,6 +64,7 @@ public class RouterConfigurationReader
 			private String router_kind;
 			private String my_as;
 			private BgpNeighborType neighbor_type;
+			private String zebra_socket;
 			@Override
 			public void exitStatement_interface(ConfigurationParser.Statement_interfaceContext ctx)
 			{
@@ -124,6 +125,14 @@ public class RouterConfigurationReader
 			{
 				configuration.setMyAS(this.my_as);
 				configuration.setMyRouterKind(this.router_kind);
+			}
+			public void exitZebra_socket_desc(ConfigurationParser.Zebra_socket_descContext ctx)
+			{
+				this.zebra_socket=ctx.FILEPATH().getText();
+			}
+			public void exitStatement_options(ConfigurationParser.Statement_optionsContext ctx)
+			{
+				configuration.setZebraSocket(this.zebra_socket);
 			}
 				}
 		);

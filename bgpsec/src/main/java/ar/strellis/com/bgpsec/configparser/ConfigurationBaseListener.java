@@ -1,5 +1,5 @@
-// Generated from ar\strellis\com\bgpsec\configparser\Configuration.g4 by ANTLR 4.7
 package ar.strellis.com.bgpsec.configparser;
+// Generated from Configuration.g4 by ANTLR 4.7.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -251,6 +251,54 @@ public class ConfigurationBaseListener implements ConfigurationListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRemote_as(ConfigurationParser.Remote_asContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStatement_options(ConfigurationParser.Statement_optionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatement_options(ConfigurationParser.Statement_optionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOptions_desc(ConfigurationParser.Options_descContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOptions_desc(ConfigurationParser.Options_descContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOption_general(ConfigurationParser.Option_generalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOption_general(ConfigurationParser.Option_generalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterZebra_socket_desc(ConfigurationParser.Zebra_socket_descContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitZebra_socket_desc(ConfigurationParser.Zebra_socket_descContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -83,4 +83,11 @@ public class TestAntlr
 		assertNotNull(configuration.getMyAS());
 		System.out.println("My AS is "+configuration.getMyAS());
 	}
+	@Test
+	public void getZebraSocket()
+	{
+		System.out.println("GETTING ZEBRA SOCKET-------------------------------------------");
+		assertNotNull(configuration.getZebraSocket());
+		System.out.println("The Zebra socket is "+configuration.getZebraSocket());
+	}
 }

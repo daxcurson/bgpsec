@@ -17,6 +17,7 @@ public class MyConfiguration
 	private String myAS;
 	private int myHoldTime;
 	private int myKeepAliveTimer;
+	private String zebraSocket;
 	
 	public String getMyAS() {
 		return myAS;
@@ -77,5 +78,11 @@ public class MyConfiguration
 	}
 	public void setMyRouterKind(String myRouterKind) {
 		this.myRouterKind = myRouterKind;
+	}
+	public String getZebraSocket() {
+		return zebraSocket;
+	}
+	public void setZebraSocket(String zebraSocket) {
+		this.zebraSocket = zebraSocket;
 	}
 }

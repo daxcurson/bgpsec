@@ -131,6 +131,30 @@ public interface ConfigurationVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRemote_as(ConfigurationParser.Remote_asContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ConfigurationParser#statement_options}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatement_options(ConfigurationParser.Statement_optionsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ConfigurationParser#options_desc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOptions_desc(ConfigurationParser.Options_descContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ConfigurationParser#option_general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOption_general(ConfigurationParser.Option_generalContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ConfigurationParser#zebra_socket_desc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitZebra_socket_desc(ConfigurationParser.Zebra_socket_descContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ConfigurationParser#full_duplex}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

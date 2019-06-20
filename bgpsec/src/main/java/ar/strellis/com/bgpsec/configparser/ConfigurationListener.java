@@ -1,5 +1,5 @@
-// Generated from ar\strellis\com\bgpsec\configparser\Configuration.g4 by ANTLR 4.7
 package ar.strellis.com.bgpsec.configparser;
+// Generated from Configuration.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -207,6 +207,46 @@ public interface ConfigurationListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRemote_as(ConfigurationParser.Remote_asContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#statement_options}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement_options(ConfigurationParser.Statement_optionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#statement_options}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement_options(ConfigurationParser.Statement_optionsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#options_desc}.
+	 * @param ctx the parse tree
+	 */
+	void enterOptions_desc(ConfigurationParser.Options_descContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#options_desc}.
+	 * @param ctx the parse tree
+	 */
+	void exitOptions_desc(ConfigurationParser.Options_descContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#option_general}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption_general(ConfigurationParser.Option_generalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#option_general}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption_general(ConfigurationParser.Option_generalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConfigurationParser#zebra_socket_desc}.
+	 * @param ctx the parse tree
+	 */
+	void enterZebra_socket_desc(ConfigurationParser.Zebra_socket_descContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConfigurationParser#zebra_socket_desc}.
+	 * @param ctx the parse tree
+	 */
+	void exitZebra_socket_desc(ConfigurationParser.Zebra_socket_descContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ConfigurationParser#full_duplex}.
 	 * @param ctx the parse tree
