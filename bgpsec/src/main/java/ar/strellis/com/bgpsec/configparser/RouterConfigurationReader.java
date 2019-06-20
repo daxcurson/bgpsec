@@ -27,6 +27,8 @@ import ar.strellis.com.bgpsec.model.MyConfiguration;
 public class RouterConfigurationReader
 {
 	private static RouterConfigurationReader me;
+	private MyConfiguration configuration;
+	private String configurationFilename;
 	
 	public static RouterConfigurationReader getInstance()
 	{
@@ -38,9 +40,11 @@ public class RouterConfigurationReader
 	{
 		this.configuration=new MyConfiguration();
 	}
-	private MyConfiguration configuration;
-	private String configurationFilename;
-	public MyConfiguration getConfiguration(String configurationFilename) throws FileNotFoundException,IOException
+	public MyConfiguration getConfiguration()
+	{
+		return configuration;
+	}
+	public MyConfiguration loadConfiguration(String configurationFilename) throws FileNotFoundException,IOException
 	{
 		this.configurationFilename=configurationFilename;
 		// I'll create the parser that I'll use to consume the configuration.

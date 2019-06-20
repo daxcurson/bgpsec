@@ -25,7 +25,7 @@ public class TestAntlr
 		String filename="/etc/bgpsec/bgpsec.conf";
 		try {
 			RouterConfigurationReader r=RouterConfigurationReader.getInstance();
-			this.configuration=r.getConfiguration(filename);
+			this.configuration=r.loadConfiguration(filename);
 		} 
 		catch (FileNotFoundException e) 
 		{

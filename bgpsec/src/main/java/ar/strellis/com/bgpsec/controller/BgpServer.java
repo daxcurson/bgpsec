@@ -94,7 +94,7 @@ public class BgpServer
 	private void readConfiguration() throws FileNotFoundException, IOException
 	{
 		this.configurationReader=RouterConfigurationReader.getInstance();
-		this.configuration=configurationReader.getConfiguration(this.configurationFilename);
+		this.configuration=configurationReader.loadConfiguration(this.configurationFilename);
 	}
 	private void openListener() throws IOException
 	{

@@ -1,6 +1,6 @@
 package ar.strellis.com.bgp.messages;
 
-public class RouteAdded extends KernelMessage
+public class RouteAdded extends RoutingMessage
 {
 	/**
 	 * 

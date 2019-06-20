@@ -1,8 +1,12 @@
 package ar.strellis.com.bgpsec.testzebra;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
+import ar.strellis.com.bgp.messages.RoutingMessage;
+import ar.strellis.com.bgp.messages.RoutingMessageFactory;
 import ar.strellis.com.bgpsec.routingconfig.RoutingConfigurerZebra;
 
 public class TestZebra 
@@ -17,24 +21,31 @@ public class TestZebra
 	public void run()
 	{
 		z=new RoutingConfigurerZebra();
-		z.openSocketZebra();
-		Thread t=new Thread()
+		try {
+			z.openSocketZebra();
+			Thread t=new Thread()
 				{
-			public void run()
-			{
-				BufferedReader r=z.getIn();
-				for(;;)
-				{
-					try {
-						int i=r.read();
-						System.out.println("Read: "+i);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					public void run()
+					{
+						DataInputStream r=z.getIn();
+						RoutingMessageFactory factory=RoutingMessageFactory.getInstance();
+						for(;;)
+						{
+							try {
+								RoutingMessage message=factory.getMessage(r);
+								if(message!=null)
+									System.out.println("The op of this message is "+message.getOp().name());
+								//int b=r.readUnsignedByte();
+								//System.out.println("Read: "+b);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
 					}
-				}
-			}
 				};
 		t.start();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 }
