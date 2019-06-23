@@ -1,4 +1,4 @@
-package ar.strellis.com.bgp.messages;
+package ar.strellis.com.bgpsec.messages;
 
 public class Address 
 {
@@ -19,16 +19,12 @@ public class Address
 			return this.code;
 		}
 	}
-	private Prefix prefix;
+	private byte[] prefix;
 	private byte[] address;
+	private int prefixLength;
 	private int addressFamily;
 	private int flags;
-	public Prefix getPrefix() {
-		return prefix;
-	}
-	public void setPrefix(Prefix addr) {
-		this.prefix = addr;
-	}
+
 	public int getFlags() {
 		return flags;
 	}
@@ -46,5 +42,17 @@ public class Address
 	}
 	public void setAddressFamily(int addressFamily) {
 		this.addressFamily = addressFamily;
+	}
+	public int getPrefixLength() {
+		return prefixLength;
+	}
+	public void setPrefixLength(int prefixLength) {
+		this.prefixLength = prefixLength;
+	}
+	public byte[] getPrefix() {
+		return prefix;
+	}
+	public void setPrefix(byte[] prefix) {
+		this.prefix = prefix;
 	}
 }

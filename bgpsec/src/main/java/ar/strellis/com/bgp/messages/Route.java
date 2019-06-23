@@ -2,11 +2,12 @@ package ar.strellis.com.bgp.messages;
 
 import java.util.List;
 
+import ar.strellis.com.bgpsec.messages.Op;
+
 public class Route 
 {
 	private Op op;
 	private int vrf_id;
-	private Prefix prefix;
 	private RouteType type;
 	private RouteSubType sub_type;
 	private int distance;

@@ -1,4 +1,4 @@
-package ar.strellis.com.bgp.messages;
+package ar.strellis.com.bgpsec.messages;
 
 public enum Op {
 	ZEBRA_INTERFACE_ADD	(0),

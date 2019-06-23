@@ -1,19 +1,14 @@
-package ar.strellis.com.bgp.messages;
+package ar.strellis.com.bgpsec.messages;
 
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class RoutingMessageFactory 
 {
 	private static RoutingMessageFactory me;
-	private MessageDecoder decoder;
 	
 	private RoutingMessageFactory()
 	{
-		decoder=new MessageDecoder();
 	}
 	public static RoutingMessageFactory getInstance()
 	{
@@ -21,7 +16,91 @@ public class RoutingMessageFactory
 			me=new RoutingMessageFactory();
 		return me;
 	}
-	
+	private InterfaceUpdate getInterfaceUpdateMessage(DataInputStream in,InterfaceUpdate interfaceUpdate) throws IOException
+	{				// the interface name has a FIXED SIZE of 20
+		byte[] interfaceNameBuffer=new byte[20];
+		in.read(interfaceNameBuffer,0,20);
+		String iff=new String(interfaceNameBuffer);
+		interfaceUpdate.setInterfaceName(iff);
+		/*
+		 * Fields of the "interface" message:
+		 * 
+		 * null-terminated string - interface name
+		 * integer 4 bytes - index
+		 * char 1 byte - status
+		 * long 8 bytes - flags
+		 * char 1 byte - ptm_enable
+		 * char 1 byte - ptm_status
+		 * integer 4 bytes - metric
+		 * integer 4 bytes - speed
+		 * integer 4 bytes - mtu
+		 * integer 4 bytes - mtu6
+		 * integer 4 bytes - bandwidth
+		 * integer 4 bytes - link_ifindex
+		 * integer 4 bytes - ll_type
+		 * integer 4 bytes - hadware address length
+		 * set of bytes - hardware address
+		 * char 1 byte - traffic engineering parameters present, 1 or 0
+		 * variable parameters - if traffic engineering parameters==1
+		 */
+		interfaceUpdate.setIndex(in.readInt());
+		interfaceUpdate.setStatus(in.readUnsignedByte());
+		interfaceUpdate.setFlags(in.readLong());
+		interfaceUpdate.setPtm_enable(in.readUnsignedByte());
+		interfaceUpdate.setPtm_status(in.readUnsignedByte());
+		interfaceUpdate.setMetric(in.readInt());
+		interfaceUpdate.setSpeed(in.readInt());
+		interfaceUpdate.setMtu(in.readInt());
+		interfaceUpdate.setMtu6(in.readInt());
+		interfaceUpdate.setBandwidth(in.readInt());
+		interfaceUpdate.setLink_ifindex(in.readInt());
+		interfaceUpdate.setLl_type(in.readInt());
+		int hwaddr_length=in.readInt();
+		interfaceUpdate.setHwaddr_length(hwaddr_length);
+		byte[] hwaddr=new byte[hwaddr_length];
+		in.read(hwaddr, 0, hwaddr_length);
+		interfaceUpdate.setTraffic_eng_params(in.readUnsignedByte());
+		return interfaceUpdate;
+	}
+	private AddressUpdate getAddressUpdateMessage(DataInputStream in,AddressUpdate address) throws IOException
+	{
+		// Now comes the data specific to the address.
+		Address a=new Address();
+		a.setFlags(in.readUnsignedByte());
+		// According to the family the IP will be IPv4 or 6
+		int addressFamily=in.readUnsignedByte(); 
+		// With the address family, which can be AF_INET (IPv4), AF_INET6 (IPv6) or AF_ETHERNET (Ethernet)
+		// I can deduce how long the prefix will be. 
+		int prefix=0;
+		if(addressFamily==Address.Type.AF_INET.getCode())
+			prefix=4;
+		if(addressFamily==Address.Type.AF_INET6.getCode())
+			prefix=16;
+		if(addressFamily==Address.Type.AF_ETHERNET.getCode())
+			prefix=6;
+		byte[] prefixToRead=new byte[prefix];
+		in.read(prefixToRead,0,prefix);
+		// Prefix length, 1 byte
+		int prefixLength=in.readUnsignedByte();
+		a.setPrefix(prefixToRead);
+		a.setPrefixLength(prefixLength);
+		// Destination address. Same lenght as the prefix that we have.
+		byte[] addressToRead=new byte[prefix];
+		in.read(addressToRead,0,prefix);
+		a.setAddress(addressToRead);
+		a.setAddressFamily(addressFamily);
+		StringBuilder b=new StringBuilder();
+		StringBuilder c=new StringBuilder();
+		for(int i=0;i<prefix;i++)
+		{
+			b.append(a.getPrefix()[i]+".");
+			c.append(a.getAddress()[i]+".");
+		}
+		System.out.println("Prefix: "+b.toString());
+		System.out.println("Destination: "+c.toString());
+		address.setAddress(a);
+		return address;
+	}
 	public RoutingMessage getMessage(DataInputStream in) throws IOException
 	{
 		RoutingMessage result=null;
@@ -44,7 +123,6 @@ public class RoutingMessageFactory
 		}
 		if(version>=5)
 		{
-			System.out.println("Zebra protocol Version "+version);
 			// Next comes the VRF ID - 4 bytes.
 			int vrf_id=in.readInt();
 			count-=4;
@@ -53,131 +131,36 @@ public class RoutingMessageFactory
 			count-=2;
 			// I know the command now. Let's decode it.
 			Op op=Op.values()[command];
-			System.out.println("The command value is "+command);
 			switch(op)
 			{
 			case ZEBRA_INTERFACE_ADD:
 			case ZEBRA_INTERFACE_DELETE:
 			case ZEBRA_INTERFACE_ADDRESS_ADD:
-				System.out.println("InterfaceRequest, of type "+op.name());
-				result=new InterfaceRequest();
-				((InterfaceRequest)result).setOp(op);
+				result=new AddressAdd();
+				result.setOp(op);
+				result.setVrf_id(vrf_id);
+				((AddressAdd)result).setIndex(in.readInt());
+				result=this.getAddressUpdateMessage(in,((AddressAdd)result));
 				break;
 			case ZEBRA_INTERFACE_ADDRESS_DELETE:
-				System.out.println("AddressDelete, of type "+op.name());
 				result=new AddressDelete();
-				((AddressDelete)result).setOp(op);
-				((AddressDelete)result).setVrf_id(vrf_id);
-				((AddressDelete)result).setIndex(in.readInt()); count=-4;
-				// Now comes the data specific to the address.
-				Address a=new Address();
-				a.setFlags(in.readUnsignedByte());count--;
-				Prefix p=new Prefix();
-				// According to the family the IP will be IPv4 or 6
-				int addressFamily=in.readUnsignedByte(); count--;
-				System.out.println("The address family is: "+addressFamily+", "+Address.Type.values()[addressFamily]);
-				// With the address family, which can be AF_INET (IPv4), AF_INET6 (IPv6) or AF_ETHERNET (Ethernet)
-				// I can deduce how long the prefix will be. 
-				int prefix=0;
-				if(addressFamily==Address.Type.AF_INET.getCode())
-					prefix=4;
-				if(addressFamily==Address.Type.AF_INET6.getCode())
-					prefix=16;
-				if(addressFamily==Address.Type.AF_ETHERNET.getCode())
-					prefix=6;
-				byte[] prefixToRead=new byte[prefix];
-				in.read(prefixToRead,0,prefix); count-=prefix;
-				// Prefix length, 1 byte
-				int prefixLength=in.readUnsignedByte(); count--;
-				System.out.println("The prefix for this address is "+prefixLength);
-				p.setAddr(prefixToRead);
-				p.setLength(prefixLength);
-				a.setPrefix(p);
-				// Destination address. Same lenght as the prefix that we have.
-				byte[] addressToRead=new byte[prefix];
-				in.read(addressToRead,0,prefix); count-=prefix;
-				a.setAddress(addressToRead);
-				a.setAddressFamily(addressFamily);
-				StringBuilder b=new StringBuilder();
-				StringBuilder c=new StringBuilder();
-				for(int i=0;i<prefix;i++)
-				{
-					b.append(p.getAddr()[i]+".");
-					c.append(a.getAddress()[i]+".");
-				}
-				System.out.println("Prefix: "+b.toString());
-				System.out.println("Destination: "+c.toString());
+				result.setOp(op);
+				result.setVrf_id(vrf_id);
+				((AddressDelete)result).setIndex(in.readInt());
+				result=this.getAddressUpdateMessage(in,((AddressDelete)result));
 				break;
 			case ZEBRA_INTERFACE_UP:
-				System.out.println("InterfaceRequest, of type "+op.name());
-				result=new InterfaceRequest();
-				((InterfaceRequest)result).setOp(op);
+				result=new InterfaceUp();
+				result.setOp(op);
+				result.setVrf_id(vrf_id);
+				result=this.getInterfaceUpdateMessage(in, (InterfaceUp)result);
 				break;
 			case ZEBRA_INTERFACE_DOWN:
-				System.out.println("InterfaceRequest, of type "+op.name());
-				result=new InterfaceRequest();
-				((InterfaceRequest)result).setOp(op);
+				result=new InterfaceDown();
+				result.setOp(op);
 				// vrf_id
-				((InterfaceRequest)result).setVrf_id(vrf_id);
-				// the interface name has a FIXED SIZE of 20
-				byte[] interfaceNameBuffer=new byte[20];
-				in.read(interfaceNameBuffer,0,20);
-				String iff=new String(interfaceNameBuffer);
-				System.out.println("String read: "+iff);
-				((InterfaceRequest)result).setInterfaceName(iff);
-				count-=20;
-				/*
-				 * Fields of the "interface" message:
-				 * 
-				 * null-terminated string - interface name
-				 * integer 4 bytes - index
-				 * char 1 byte - status
-				 * long 8 bytes - flags
-				 * char 1 byte - ptm_enable
-				 * char 1 byte - ptm_status
-				 * integer 4 bytes - metric
-				 * integer 4 bytes - speed
-				 * integer 4 bytes - mtu
-				 * integer 4 bytes - mtu6
-				 * integer 4 bytes - bandwidth
-				 * integer 4 bytes - link_ifindex
-				 * integer 4 bytes - ll_type
-				 * integer 4 bytes - hadware address length
-				 * set of bytes - hardware address
-				 * char 1 byte - traffic engineering parameters present, 1 or 0
-				 * variable parameters - if traffic engineering parameters==1
-				 */
-				((InterfaceRequest)result).setIndex(in.readInt()); count-=4;
-				System.out.println("Index: "+((InterfaceRequest)result).getIndex());
-				((InterfaceRequest)result).setStatus(in.readUnsignedByte()); count--;
-				System.out.println("Status: "+((InterfaceRequest)result).getStatus());
-				((InterfaceRequest)result).setFlags(in.readLong());count-=8;
-				System.out.println("Flags: "+((InterfaceRequest)result).getFlags());
-				((InterfaceRequest)result).setPtm_enable(in.readUnsignedByte()); count--;
-				System.out.println("PTM Enable: "+((InterfaceRequest)result).getPtm_enable());
-				((InterfaceRequest)result).setPtm_status(in.readUnsignedByte()); count--;
-				System.out.println("PTM Status: "+((InterfaceRequest)result).getPtm_status());
-				((InterfaceRequest)result).setMetric(in.readInt()); count-=4;
-				System.out.println("Metric: "+((InterfaceRequest)result).getMetric());
-				((InterfaceRequest)result).setSpeed(in.readInt()); count-=4;
-				System.out.println("Speed: "+((InterfaceRequest)result).getSpeed());
-				((InterfaceRequest)result).setMtu(in.readInt()); count-=4;
-				System.out.println("MTU: "+((InterfaceRequest)result).getMtu());
-				((InterfaceRequest)result).setMtu6(in.readInt()); count-=4;
-				System.out.println("MTU6: "+((InterfaceRequest)result).getMtu6());
-				((InterfaceRequest)result).setBandwidth(in.readInt()); count-=4;
-				System.out.println("Bandwidth: "+((InterfaceRequest)result).getBandwidth());
-				((InterfaceRequest)result).setLink_ifindex(in.readInt()); count-=4;
-				System.out.println("Link: "+((InterfaceRequest)result).getLink_ifindex());
-				((InterfaceRequest)result).setLl_type(in.readInt()); count-=4;
-				System.out.println("Ll type: "+((InterfaceRequest)result).getLl_type());
-				int hwaddr_length=in.readInt(); count-=4;
-				System.out.println("Hw addr length: "+hwaddr_length+", count:"+count);
-				((InterfaceRequest)result).setHwaddr_length(hwaddr_length);
-				byte[] hwaddr=new byte[hwaddr_length];
-				in.read(hwaddr, 0, hwaddr_length);count-=hwaddr_length;
-				((InterfaceRequest)result).setTraffic_eng_params(in.readUnsignedByte()); count--;
-				System.out.println("Traffic eng params: "+((InterfaceRequest)result).getTraffic_eng_params());
+				result.setVrf_id(vrf_id);
+				result=this.getInterfaceUpdateMessage(in, (InterfaceDown)result);
 				break;
 			case ZEBRA_INTERFACE_SET_MASTER:
 			case ZEBRA_ROUTE_ADD:
@@ -267,6 +250,8 @@ public class RoutingMessageFactory
 			case ZEBRA_IPTABLE_NOTIFY_OWNER:
 			case ZEBRA_VXLAN_FLOOD_CONTROL:
 			default:
+				System.out.println("The message was "+length+" bytes long. Still "+count+" bytes unread remain");
+				in.skip(count);
 				System.out.println("Unhandled op of type "+op.name());
 				break;
 			}
@@ -377,6 +362,8 @@ public class RoutingMessageFactory
 			case ZEBRA_VXLAN_FLOOD_CONTROL:
 			default:
 				System.out.println("Unhandled op of type "+op.name());
+				System.out.println("The message was "+length+" bytes long. Still "+count+" bytes unread remain");
+				in.skip(count);
 				break;
 			}
 		}
@@ -490,8 +477,6 @@ public class RoutingMessageFactory
 				break;
 			}
 		}
-		System.out.println("The message was "+length+" bytes long. Still "+count+" bytes unread remain");
-		in.skip(count);
 		return result;
 	}
 }

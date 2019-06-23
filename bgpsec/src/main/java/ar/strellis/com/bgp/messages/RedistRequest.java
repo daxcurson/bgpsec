@@ -1,5 +1,8 @@
 package ar.strellis.com.bgp.messages;
 
+import ar.strellis.com.bgpsec.messages.Op;
+import ar.strellis.com.bgpsec.messages.RoutingMessage;
+
 public class RedistRequest extends RoutingMessage
 {
 	/**

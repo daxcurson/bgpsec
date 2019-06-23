@@ -1,4 +1,4 @@
-package ar.strellis.com.bgp.messages;
+package ar.strellis.com.bgpsec.messages;
 
 import java.io.Serializable;
 
