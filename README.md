@@ -23,6 +23,8 @@ The consequence of this lack of validation of BGP messages results in frequent e
 - Serve as a thesis in information security, that would explore the weaknesses of BGP as implemented in the currently-existing RFCs previous to the approval of RFC 8205, and analyze how the security of the protocol is improved with the newer RFCs.
 - Become an opportunity to learn Java, low-level implementation of routing changes, operation of an Internet-facing networking service, and have fun ;-).
 - Provide yet another example of a networking service using [Apache MINA](https://mina.apache.org/), which is a very interesting networking library, that is very powerful, yet not very well understood.
+- Use the FRR's subdaemon Zebra as an interface to the kernel. Communication using Unix Sockets via an external library.
+- Use of RabbitMQ as a message passing layer between the components of the router.
 
 ## Current status
 
