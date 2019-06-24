@@ -115,6 +115,8 @@ public class BgpHandler implements EventTransitionListener
 		InetAddress address=a.getAddress();
 		BgpNeighbor neighbor=configuration.getNeighbors().get(address.toString());
 		ioSession.setAttribute("neighbor", neighbor);
+		// The ioSession must have the BgpSession in it!!
+		ioSession.setAttributeIfAbsent("bgpSession", bgpSession);
 	}
 	@IoHandlerTransition(on=SESSION_CLOSED,in=CONNECT)
 	public void closeRunningSession(BgpSession bgpSession,IoSession ioSession)
@@ -255,7 +257,7 @@ public class BgpHandler implements EventTransitionListener
 	{
 		if(message instanceof BgpUpdate)
 		{
-			// Do something with the update.
+			// I have to send the message to the routing processor.
 			bgpDecisionProcess.processUpdate((BgpUpdate)message);
 		}
 		if(message instanceof BgpKeepAlive)

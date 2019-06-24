@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.mina.core.service.IoHandler;
+import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.statemachine.StateMachine;
@@ -106,5 +107,14 @@ public class BgpServer
 		acceptor.setHandler(createIoHandler());
 		acceptor.setDefaultLocalAddress(new InetSocketAddress(179));
 		acceptor.bind();
+	}
+	public List<IoSession> getSessions()
+	{
+		List<IoSession> sessions=new LinkedList<IoSession>();
+		for(IoSession session:acceptor.getManagedSessions().values())
+		{
+			sessions.add(session);
+		}
+		return sessions;
 	}
 }

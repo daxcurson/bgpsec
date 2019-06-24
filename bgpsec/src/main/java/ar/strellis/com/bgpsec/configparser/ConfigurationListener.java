@@ -1,5 +1,5 @@
+// Generated from ar/strellis/com/bgpsec/configparser/Configuration.g4 by ANTLR 4.7
 package ar.strellis.com.bgpsec.configparser;
-// Generated from Configuration.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
