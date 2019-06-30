@@ -1,6 +1,6 @@
 package ar.strellis.com.bgpsec.messages;
 
-public class InterfaceUpdate extends RoutingMessage
+public abstract class InterfaceUpdate extends RoutingMessage
 {
 
 	/**

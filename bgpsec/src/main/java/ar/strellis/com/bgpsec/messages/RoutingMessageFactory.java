@@ -1,6 +1,7 @@
 package ar.strellis.com.bgpsec.messages;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class RoutingMessageFactory 
@@ -478,5 +479,10 @@ public class RoutingMessageFactory
 			}
 		}
 		return result;
+	}
+	public void sendMessage(DataOutputStream out,RoutingMessage message)
+	{
+		// Send a message to the output stream.
+		message.encode(out);
 	}
 }

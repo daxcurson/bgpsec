@@ -1,9 +1,9 @@
 package ar.strellis.com.bgpsec.routingconfig;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.channels.Channels;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import jnr.unixsocket.UnixSocketChannel;
 public class RoutingConfigurerZebra extends RoutingConfigurer
 {
 	private String configurationFilename="/etc/bgpsec/bgpsec.conf";
-	private OutputStreamWriter out;
+	private DataOutputStream out;
 	private DataInputStream in;
 	public void openSocketZebra() throws IOException
 	{
@@ -26,7 +26,7 @@ public class RoutingConfigurerZebra extends RoutingConfigurer
 		UnixSocketAddress address = new UnixSocketAddress(zebraSocketFile);
         UnixSocketChannel channel = UnixSocketChannel.open(address);
         System.out.println("connected to " + channel.getRemoteSocketAddress());
-        out = new OutputStreamWriter(Channels.newOutputStream(channel));
+        out = new DataOutputStream(Channels.newOutputStream(channel));
         in=new DataInputStream(Channels.newInputStream(channel));
 	}
 	@Override
@@ -42,5 +42,9 @@ public class RoutingConfigurerZebra extends RoutingConfigurer
 	public DataInputStream getIn()
 	{
 		return this.in;
+	}
+	public DataOutputStream getOut()
+	{
+		return this.out;
 	}
 }

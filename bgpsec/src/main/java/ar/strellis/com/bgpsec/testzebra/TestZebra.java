@@ -53,7 +53,7 @@ public class TestZebra
 						}
 					}
 				};
-		t.start();
+			t.start();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
