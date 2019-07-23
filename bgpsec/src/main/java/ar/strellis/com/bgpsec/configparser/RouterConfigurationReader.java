@@ -44,7 +44,17 @@ public class RouterConfigurationReader
 	{
 		return configuration;
 	}
-	public MyConfiguration loadConfiguration(String configurationFilename) throws FileNotFoundException,IOException
+	public MyConfiguration loadConfiguration() throws IOException
+	{
+		if(configurationFilename.equals(""))
+			throw new FileNotFoundException();
+		return loadConfiguration(configurationFilename);
+	}
+	public void setConfigurationFilename(String configurationFilename)
+	{
+		this.configurationFilename=configurationFilename;
+	}
+	private MyConfiguration loadConfiguration(String configurationFilename) throws FileNotFoundException,IOException
 	{
 		this.configurationFilename=configurationFilename;
 		// I'll create the parser that I'll use to consume the configuration.

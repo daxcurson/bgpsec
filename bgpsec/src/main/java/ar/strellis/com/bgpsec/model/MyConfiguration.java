@@ -18,6 +18,7 @@ public class MyConfiguration
 	private int myHoldTime;
 	private int myKeepAliveTimer;
 	private String zebraSocket;
+	private String configurationFilename;
 	
 	public String getMyAS() {
 		return myAS;
@@ -84,5 +85,13 @@ public class MyConfiguration
 	}
 	public void setZebraSocket(String zebraSocket) {
 		this.zebraSocket = zebraSocket;
+	}
+	public void setConfigurationFilename(String configurationFilename) 
+	{
+		this.configurationFilename=configurationFilename;
+	}
+	public String getConfigurationFilename()
+	{
+		return this.configurationFilename;
 	}
 }

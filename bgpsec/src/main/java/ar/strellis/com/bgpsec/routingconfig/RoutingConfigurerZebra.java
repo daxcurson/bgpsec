@@ -21,8 +21,8 @@ public class RoutingConfigurerZebra extends RoutingConfigurer
 	public void openSocketZebra() throws IOException
 	{
 		RouterConfigurationReader routerConfiguration=RouterConfigurationReader.getInstance();
-		
-		File zebraSocketFile=new File(routerConfiguration.loadConfiguration(configurationFilename).getZebraSocket());
+		routerConfiguration.setConfigurationFilename(configurationFilename);
+		File zebraSocketFile=new File(routerConfiguration.loadConfiguration().getZebraSocket());
 		UnixSocketAddress address = new UnixSocketAddress(zebraSocketFile);
         UnixSocketChannel channel = UnixSocketChannel.open(address);
         System.out.println("connected to " + channel.getRemoteSocketAddress());

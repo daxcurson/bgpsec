@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.cli.ParseException;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
@@ -40,10 +41,13 @@ public class BgpServer
 	private List<EventTransitionListener> listeners;
 	private MyConfiguration configuration;
 	private RouterConfigurationReader configurationReader;
+	private BgpCommandLineProcessor commandLineProcessor;
+	private String[] commandLineArgs;
 	
-	public BgpServer()
+	public BgpServer(String[] commandLineArgs)
 	{
 		listeners=new LinkedList<EventTransitionListener>();
+		this.commandLineArgs=commandLineArgs;
 	}
 	private IoHandler createIoHandler() 
 	{
@@ -71,7 +75,7 @@ public class BgpServer
 	}
 	public static void main(String[] args) 
 	{
-		BgpServer s=new BgpServer();
+		BgpServer s=new BgpServer(args);
 		s.run();
 	}
 	
@@ -95,7 +99,17 @@ public class BgpServer
 	private void readConfiguration() throws FileNotFoundException, IOException
 	{
 		this.configurationReader=RouterConfigurationReader.getInstance();
-		this.configuration=configurationReader.loadConfiguration(this.configurationFilename);
+		// Let's read the command-line options, if any.
+		commandLineProcessor=BgpCommandLineProcessor.getInstance();
+		String filename=configurationFilename;
+		try {
+			filename=commandLineProcessor.applyCommandLineOptions(commandLineArgs);
+		} catch (ParseException e) {
+			// If no command line is present to override the configuration file,
+			// use the default value.
+		}
+		configurationReader.setConfigurationFilename(filename);
+		this.configuration=configurationReader.loadConfiguration();
 	}
 	private void openListener() throws IOException
 	{
