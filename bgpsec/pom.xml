@@ -58,7 +58,7 @@
 				<version>2.19.1</version>
 				<configuration>
 					<forkMode>once</forkMode>
-					<argLine>-Djava.library.path=/usr/local/lib</argLine>
+					<argLine>-Djava.library.path=/usr/local/lib -Dorg.apache.activemq.SERIALIZABLE_PACKAGES=*</argLine>
 				</configuration>
 				<dependencies>
 					<dependency>
