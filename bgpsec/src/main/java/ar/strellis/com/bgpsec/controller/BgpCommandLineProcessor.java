@@ -7,8 +7,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import ar.strellis.com.bgpsec.model.MyConfiguration;
-
 /**
  * 
  * Provides the values of configuration options, to override defaults, if any.
