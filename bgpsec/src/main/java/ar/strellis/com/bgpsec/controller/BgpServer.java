@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.cli.ParseException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
@@ -36,6 +38,7 @@ import ar.strellis.com.bgpsec.model.MyConfiguration;
  */
 public class BgpServer 
 {
+	private static Logger log=LogManager.getLogger(BgpServer.class); 
 	private String configurationFilename="/etc/bgpsec/bgpsec.conf";
 	private SocketAcceptor acceptor;
 	private List<EventTransitionListener> listeners;
@@ -78,7 +81,10 @@ public class BgpServer
 		BgpServer s=new BgpServer(args);
 		s.run();
 	}
-	
+	private void welcomeMessage()
+	{
+		log.info("The BgpSec server is Starting");
+	}
 	/**
 	 * Effectively starts the BGP server. It starts with the IDLE status and proceeds
 	 * according to the RFC, to create the listening socket and attempting
@@ -88,8 +94,10 @@ public class BgpServer
 	{
 		try
 		{
+			welcomeMessage();
 			readConfiguration();
 			openListener();
+			openZebraSocket();
 		}
 		catch(Exception e)
 		{
@@ -98,6 +106,7 @@ public class BgpServer
 	}
 	private void readConfiguration() throws FileNotFoundException, IOException
 	{
+		log.info("Reading configuration");
 		this.configurationReader=RouterConfigurationReader.getInstance();
 		// Let's read the command-line options, if any.
 		commandLineProcessor=BgpCommandLineProcessor.getInstance();
@@ -113,6 +122,7 @@ public class BgpServer
 	}
 	private void openListener() throws IOException
 	{
+		log.info("Opening listener");
 		acceptor=new NioSocketAcceptor();
 		acceptor.setReuseAddress(true);
 		ProtocolCodecFilter pcf=new ProtocolCodecFilter(new BgpCoder(),new BgpDecoder());
@@ -121,6 +131,10 @@ public class BgpServer
 		acceptor.setHandler(createIoHandler());
 		acceptor.setDefaultLocalAddress(new InetSocketAddress(179));
 		acceptor.bind();
+	}
+	private void openZebraSocket()
+	{
+		log.info("Opening socket with the Zebra daemon. It is assumed that it is already running");
 	}
 	public List<IoSession> getSessions()
 	{

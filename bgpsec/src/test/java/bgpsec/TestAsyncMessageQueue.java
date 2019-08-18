@@ -34,6 +34,9 @@ public class TestAsyncMessageQueue
 				channel.basicConsume("AsyncMQ", false,"ConsumerTag",consumer);
 				channel.basicPublish("", "AsyncMQ", new BasicProperties.Builder().type("RouteAdded").build(), SerializationUtils.serialize(m));
 				System.out.println(" [x] Sent '" + m.getMessage() + "'");
+				m.setMessage("AnotherHelloAsync");
+				channel.basicPublish("", "AsyncMQ", new BasicProperties.Builder().type("RouteAdded").build(), SerializationUtils.serialize(m));
+				System.out.println(" [y] Sent '"+m.getMessage()+"'");
 				Thread.sleep(3L * 1000L);
 			} catch (IOException e) {
 				e.printStackTrace();
