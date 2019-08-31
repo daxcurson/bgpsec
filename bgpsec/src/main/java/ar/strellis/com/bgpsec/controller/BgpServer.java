@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.LogManager;
@@ -23,6 +24,10 @@ import org.apache.mina.statemachine.context.StateContextFactory;
 import org.apache.mina.transport.socket.SocketAcceptor;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
 import ar.strellis.com.bgpsec.codec.BgpCoder;
 import ar.strellis.com.bgpsec.codec.BgpDecoder;
 import ar.strellis.com.bgpsec.configparser.RouterConfigurationReader;
@@ -30,6 +35,7 @@ import ar.strellis.com.bgpsec.event.EventTransitionListener;
 import ar.strellis.com.bgpsec.handler.BgpHandler;
 import ar.strellis.com.bgpsec.model.BgpSession;
 import ar.strellis.com.bgpsec.model.MyConfiguration;
+import ar.strellis.com.bgpsec.zebra.ZebraSocketMessenger;
 
 /**
  * Launcher class for the BGP server
@@ -46,6 +52,8 @@ public class BgpServer
 	private RouterConfigurationReader configurationReader;
 	private BgpCommandLineProcessor commandLineProcessor;
 	private String[] commandLineArgs;
+	private ZebraSocketMessenger zebra;
+	private Channel channel;
 	
 	public BgpServer(String[] commandLineArgs)
 	{
@@ -97,6 +105,7 @@ public class BgpServer
 			welcomeMessage();
 			readConfiguration();
 			openListener();
+			openChannelToRabbitMQ();
 			openZebraSocket();
 		}
 		catch(Exception e)
@@ -132,9 +141,34 @@ public class BgpServer
 		acceptor.setDefaultLocalAddress(new InetSocketAddress(179));
 		acceptor.bind();
 	}
-	private void openZebraSocket()
+	/**
+	 * Opens a connection to RabbitMQ, which is assumed to be already running, and declares
+	 * a new queue for use with Zebra.
+	 * @throws IOException
+	 * @throws TimeoutException
+	 */
+	private void openChannelToRabbitMQ() throws IOException, TimeoutException
 	{
-		log.info("Opening socket with the Zebra daemon. It is assumed that it is already running");
+		log.info("Opening RabbitMQ queue. It is assumed that RabbitMQ is already running");
+		ConnectionFactory factory = new ConnectionFactory();
+		factory.setHost("localhost");
+		Connection connection = factory.newConnection(); 
+		Channel channel = connection.createChannel();
+		this.channel=channel;
+		channel.queueDeclare("ZebraQueue", false, false, false, null);
+		log.info("Queue opened. Ready for sending messages");
+	}
+	/**
+	 * Opens a socket to the Zebra daemon. It is assumed that Zebra is already running. 
+	 * @throws IOException
+	 */
+	private void openZebraSocket() throws IOException
+	{
+		log.info("Opening Zebra socket. It is assumed that Zebra is already running");
+		zebra=new ZebraSocketMessenger(channel);
+		channel.basicConsume("ZebraQueue", false,"ConsumerTag",zebra);
+		Thread t=new Thread(zebra);
+		t.start();
 	}
 	public List<IoSession> getSessions()
 	{
