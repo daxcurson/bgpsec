@@ -13,6 +13,8 @@ import java.util.Map;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import ar.strellis.com.bgpsec.model.BgpInterface;
 import ar.strellis.com.bgpsec.model.BgpNeighbor;
@@ -26,6 +28,8 @@ import ar.strellis.com.bgpsec.model.MyConfiguration;
  */
 public class RouterConfigurationReader
 {
+	private static Logger log=LogManager.getLogger(RouterConfigurationReader.class); 
+
 	private static RouterConfigurationReader me;
 	private MyConfiguration configuration;
 	private String configurationFilename;
@@ -53,10 +57,12 @@ public class RouterConfigurationReader
 	public void setConfigurationFilename(String configurationFilename)
 	{
 		this.configurationFilename=configurationFilename;
+		log.info("Reading configuration file at "+configurationFilename);
 	}
 	private MyConfiguration loadConfiguration(String configurationFilename) throws FileNotFoundException,IOException
 	{
 		this.configurationFilename=configurationFilename;
+		log.info("Reading configuration file at "+configurationFilename);
 		// I'll create the parser that I'll use to consume the configuration.
 		File f=new File(this.configurationFilename);
 		InputStream inputStream=new FileInputStream(f);

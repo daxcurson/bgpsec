@@ -51,6 +51,7 @@ public class BgpCommandLineProcessor
 	 */
 	public String applyCommandLineOptions(String[] args) throws ParseException
 	{
+		parseCommandLineOptions(args);
 		if(cmdline.hasOption("f"))
 			return cmdline.getOptionValue("f");
 		else

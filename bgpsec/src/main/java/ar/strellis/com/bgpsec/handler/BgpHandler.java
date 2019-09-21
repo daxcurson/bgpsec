@@ -3,8 +3,15 @@ package ar.strellis.com.bgpsec.handler;
 import org.apache.mina.statemachine.StateControl;
 import org.apache.mina.statemachine.annotation.IoHandlerTransition;
 import org.apache.mina.statemachine.annotation.State;
+
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Envelope;
+
 import static org.apache.mina.statemachine.event.IoHandlerEvents.*;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
@@ -12,8 +19,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang.SerializationUtils;
 import org.apache.mina.core.session.IoSession;
 
+import ar.strellis.com.bgp.messages.RouteAdded;
 import ar.strellis.com.bgpsec.event.EventTransitionListener;
 import ar.strellis.com.bgpsec.model.BgpKeepAlive;
 import ar.strellis.com.bgpsec.model.BgpMessage;
@@ -30,7 +39,7 @@ import ar.strellis.com.bgpsec.util.NetworkConverter;
  * @author daxcurson
  *
  */
-public class BgpHandler implements EventTransitionListener
+public class BgpHandler extends DefaultConsumer implements EventTransitionListener
 {
 	@State public static final String ROOT="Root";
 	@State(ROOT) public static final String IDLE="Idle";
@@ -43,6 +52,7 @@ public class BgpHandler implements EventTransitionListener
 	private MyConfiguration configuration;
 	private BgpDecisionProcess bgpDecisionProcess;
 	private ScheduledExecutorService keepAliveScheduler;
+	private Channel channelToBgpsec;
 	//private ScheduledExecutorService holdScheduler;
 	//private ScheduledFuture<Void> holdTimerRunning;
 	
@@ -73,13 +83,21 @@ public class BgpHandler implements EventTransitionListener
 		}
 	}
 	
-	public BgpHandler(MyConfiguration configuration)
+	public BgpHandler(MyConfiguration configuration,Channel channelToBgpsec) throws IOException
 	{
+		super(channelToBgpsec);
 		this.configuration=configuration;
 		// Start the keepalive timer.
 		keepAliveScheduler=Executors.newScheduledThreadPool(3);
 		// Get a new decision process
 		this.bgpDecisionProcess=new BgpDecisionProcess(configuration);
+		this.channelToBgpsec=channelToBgpsec;
+		
+		openChannelToBgpsec();
+	}
+	private void openChannelToBgpsec() throws IOException
+	{
+		channelToBgpsec.basicConsume("BgpsecQueue", false,"ConsumerTag",this);
 	}
 	/*
 	 * State changes
@@ -279,5 +297,23 @@ public class BgpHandler implements EventTransitionListener
 	public void messageSentEstablished(BgpSession bgpSession,IoSession ioSession,BgpMessage message)
 	{
 		System.out.println("Message sent in session established");
+	}
+	/**
+	 * Receives a message on the channelToBgpsec channel. This is a message from Zebra
+	 * about changes to routing. Messages here should be communicated to our BGP peers.
+	 */
+	public void handleDelivery(String consumerTag,Envelope envelope,AMQP.BasicProperties properties,byte[] body) throws IOException
+	{
+		long deliveryTag = envelope.getDeliveryTag();
+		// (process the message components here ...)
+		
+		String type=properties.getType();
+		if(type.equals("RouteAdded"))
+		{
+			RouteAdded ra=(RouteAdded)SerializationUtils.deserialize(body);
+			System.out.println("Message received asynchronously: "+ra.getMessage());
+		}
+		channelToBgpsec.basicAck(deliveryTag, false);
+		// Here we have to send a message to our peers related to this event.
 	}
 }

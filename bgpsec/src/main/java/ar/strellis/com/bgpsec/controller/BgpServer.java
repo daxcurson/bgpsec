@@ -53,16 +53,17 @@ public class BgpServer
 	private BgpCommandLineProcessor commandLineProcessor;
 	private String[] commandLineArgs;
 	private ZebraSocketMessenger zebra;
-	private Channel channel;
+	private Channel channelToZebra;
+	private Channel channelToBgpsec;
 	
 	public BgpServer(String[] commandLineArgs)
 	{
 		listeners=new LinkedList<EventTransitionListener>();
 		this.commandLineArgs=commandLineArgs;
 	}
-	private IoHandler createIoHandler() 
+	private IoHandler createIoHandler() throws IOException 
 	{
-		BgpHandler b=new BgpHandler(this.configuration);
+		BgpHandler b=new BgpHandler(this.configuration,this.channelToBgpsec);
 		addTransitionListener(b);
 		StateMachine sm = StateMachineFactory.getInstance(IoHandlerTransition.class).create(BgpHandler.IDLE, b);
 
@@ -104,9 +105,9 @@ public class BgpServer
 		{
 			welcomeMessage();
 			readConfiguration();
-			openListener();
 			openChannelToRabbitMQ();
 			openZebraSocket();
+			openListener();
 		}
 		catch(Exception e)
 		{
@@ -153,10 +154,16 @@ public class BgpServer
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost("localhost");
 		Connection connection = factory.newConnection(); 
-		Channel channel = connection.createChannel();
-		this.channel=channel;
-		channel.queueDeclare("ZebraQueue", false, false, false, null);
-		log.info("Queue opened. Ready for sending messages");
+		Channel channelToZebra = connection.createChannel();
+		this.channelToZebra=channelToZebra;
+		channelToZebra.queueDeclare("ZebraQueue", false, false, false, null);
+		log.info("Queue to Zebra opened. Ready for sending messages");
+		
+		// Now we open another queue, so that Zebra talks to us.
+		Channel channelToBgpsec=connection.createChannel();
+		this.channelToBgpsec=channelToBgpsec;
+		channelToBgpsec.queueDeclare("BgpsecQueue",false,false,false,null);
+		log.info("Queue to Bgpsec opened");
 	}
 	/**
 	 * Opens a socket to the Zebra daemon. It is assumed that Zebra is already running. 
@@ -165,8 +172,9 @@ public class BgpServer
 	private void openZebraSocket() throws IOException
 	{
 		log.info("Opening Zebra socket. It is assumed that Zebra is already running");
-		zebra=new ZebraSocketMessenger(channel);
-		channel.basicConsume("ZebraQueue", false,"ConsumerTag",zebra);
+		zebra=new ZebraSocketMessenger(channelToZebra,channelToBgpsec,configuration.getZebraSocket());
+		zebra.openZebraSocket();
+		channelToZebra.basicConsume("ZebraQueue", false,"ConsumerTag",zebra);
 		Thread t=new Thread(zebra);
 		t.start();
 	}
