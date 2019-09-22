@@ -6,7 +6,7 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 
-import ar.strellis.com.bgp.messages.RouteAdded;
+import ar.strellis.com.zebra.messages.RouteAdded;
 
 public class ConsumerMessageListener implements MessageListener {
 	private String consumerName;

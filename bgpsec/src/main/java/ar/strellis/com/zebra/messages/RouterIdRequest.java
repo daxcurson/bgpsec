@@ -1,6 +1,4 @@
-package ar.strellis.com.bgp.messages;
-
-import java.io.DataOutputStream;
+package ar.strellis.com.zebra.messages;
 
 import ar.strellis.com.bgpsec.messages.Op;
 import ar.strellis.com.bgpsec.messages.RoutingMessage;
@@ -14,8 +12,8 @@ public class RouterIdRequest extends RoutingMessage
 	private Op op;
 	private int vrf_id;
 	@Override
-	public void encode(DataOutputStream out) {
+	public String getMessage() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }

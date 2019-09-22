@@ -21,7 +21,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ar.strellis.com.bgp.messages.RouteAdded;
+import ar.strellis.com.zebra.messages.RouteAdded;
 
 /**
  * Message queue test using Apache's ActiveMQ

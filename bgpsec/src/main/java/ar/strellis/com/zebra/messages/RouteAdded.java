@@ -1,6 +1,4 @@
-package ar.strellis.com.bgp.messages;
-
-import java.io.DataOutputStream;
+package ar.strellis.com.zebra.messages;
 
 import ar.strellis.com.bgpsec.messages.RoutingMessage;
 
@@ -25,9 +23,4 @@ public class RouteAdded extends RoutingMessage
 		this.message = message;
 	}
 
-	@Override
-	public void encode(DataOutputStream out) {
-		// TODO Auto-generated method stub
-		
-	}
 }

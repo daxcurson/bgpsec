@@ -63,7 +63,7 @@ public class BgpServer
 	}
 	private IoHandler createIoHandler() throws IOException 
 	{
-		BgpHandler b=new BgpHandler(this.configuration,this.channelToBgpsec);
+		BgpHandler b=new BgpHandler(this.configuration,this.channelToBgpsec,this.channelToZebra);
 		addTransitionListener(b);
 		StateMachine sm = StateMachineFactory.getInstance(IoHandlerTransition.class).create(BgpHandler.IDLE, b);
 

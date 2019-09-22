@@ -1,6 +1,5 @@
 package ar.strellis.com.bgpsec.messages;
 
-import java.io.DataOutputStream;
 import java.io.Serializable;
 
 public abstract class RoutingMessage implements Serializable
@@ -24,5 +23,5 @@ public abstract class RoutingMessage implements Serializable
 	public void setVrf_id(int vrf_id) {
 		this.vrf_id = vrf_id;
 	}
-	public abstract void encode(DataOutputStream out);
+	public abstract String getMessage();
 }

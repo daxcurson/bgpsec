@@ -1,20 +1,29 @@
-package ar.strellis.com.bgpsec.messages;
+package ar.strellis.com.bgpsec.zebra;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class RoutingMessageFactory 
+import ar.strellis.com.bgpsec.messages.Address;
+import ar.strellis.com.bgpsec.messages.AddressAdd;
+import ar.strellis.com.bgpsec.messages.AddressDelete;
+import ar.strellis.com.bgpsec.messages.AddressUpdate;
+import ar.strellis.com.bgpsec.messages.InterfaceDown;
+import ar.strellis.com.bgpsec.messages.InterfaceUp;
+import ar.strellis.com.bgpsec.messages.InterfaceUpdate;
+import ar.strellis.com.bgpsec.messages.Op;
+import ar.strellis.com.bgpsec.messages.RoutingMessage;
+
+public class ZebraSocketMessageDecoder
 {
-	private static RoutingMessageFactory me;
+	private static ZebraSocketMessageDecoder me;
 	
-	private RoutingMessageFactory()
+	private ZebraSocketMessageDecoder()
 	{
 	}
-	public static RoutingMessageFactory getInstance()
+	public static ZebraSocketMessageDecoder getInstance()
 	{
 		if(me==null)
-			me=new RoutingMessageFactory();
+			me=new ZebraSocketMessageDecoder();
 		return me;
 	}
 	private InterfaceUpdate getInterfaceUpdateMessage(DataInputStream in,InterfaceUpdate interfaceUpdate) throws IOException
@@ -479,10 +488,5 @@ public class RoutingMessageFactory
 			}
 		}
 		return result;
-	}
-	public void sendMessage(DataOutputStream out,RoutingMessage message)
-	{
-		// Send a message to the output stream.
-		message.encode(out);
 	}
 }

@@ -13,7 +13,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.AMQP.BasicProperties;
 
-import ar.strellis.com.bgp.messages.RouteAdded;
+import ar.strellis.com.zebra.messages.RouteAdded;
 
 public class TestMessageQueue 
 {

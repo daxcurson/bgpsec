@@ -16,13 +16,12 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.AMQP.BasicProperties;
 
-import ar.strellis.com.bgp.messages.RouteAdded;
 import ar.strellis.com.bgpsec.messages.AddressAdd;
 import ar.strellis.com.bgpsec.messages.AddressDelete;
 import ar.strellis.com.bgpsec.messages.InterfaceDown;
 import ar.strellis.com.bgpsec.messages.InterfaceUp;
 import ar.strellis.com.bgpsec.messages.RoutingMessage;
-import ar.strellis.com.bgpsec.messages.RoutingMessageFactory;
+import ar.strellis.com.zebra.messages.RouteAdded;
 import jnr.unixsocket.UnixSocketAddress;
 import jnr.unixsocket.UnixSocketChannel;
 
@@ -64,11 +63,12 @@ public class ZebraSocketMessenger extends DefaultConsumer implements Runnable
 	{
 		long deliveryTag = envelope.getDeliveryTag();
 		// (process the message components here ...)
-		
+		RoutingMessage message=null;
 		String type=properties.getType();
 		if(type.equals("RouteAdded"))
 		{
-			RouteAdded ra=(RouteAdded)SerializationUtils.deserialize(body);
+			message=(RouteAdded)SerializationUtils.deserialize(body);
+			log.info("Received a RouteAdded message: "+message.getMessage());
 		}
 		channelToZebra.basicAck(deliveryTag, false);
 		// Now we should inform Zebra that there is a message coming.
@@ -78,7 +78,7 @@ public class ZebraSocketMessenger extends DefaultConsumer implements Runnable
 	{
 		running=true;
 		DataInputStream r=in;
-		RoutingMessageFactory factory=RoutingMessageFactory.getInstance();
+		ZebraSocketMessageDecoder factory=ZebraSocketMessageDecoder.getInstance();
 		while(running)
 		{
 			try {

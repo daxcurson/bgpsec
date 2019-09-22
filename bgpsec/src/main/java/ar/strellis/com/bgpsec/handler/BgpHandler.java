@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.mina.core.session.IoSession;
 
-import ar.strellis.com.bgp.messages.RouteAdded;
 import ar.strellis.com.bgpsec.event.EventTransitionListener;
 import ar.strellis.com.bgpsec.model.BgpKeepAlive;
 import ar.strellis.com.bgpsec.model.BgpMessage;
@@ -33,6 +32,7 @@ import ar.strellis.com.bgpsec.model.BgpSession;
 import ar.strellis.com.bgpsec.model.BgpUpdate;
 import ar.strellis.com.bgpsec.model.MyConfiguration;
 import ar.strellis.com.bgpsec.util.NetworkConverter;
+import ar.strellis.com.zebra.messages.RouteAdded;
 
 /**
  * MINA BGP handler
@@ -50,9 +50,9 @@ public class BgpHandler extends DefaultConsumer implements EventTransitionListen
 	@State(ROOT) public static final String ESTABLISHED="Established";
 	
 	private MyConfiguration configuration;
-	private BgpDecisionProcess bgpDecisionProcess;
 	private ScheduledExecutorService keepAliveScheduler;
 	private Channel channelToBgpsec;
+	private Channel channelToZebra;
 	//private ScheduledExecutorService holdScheduler;
 	//private ScheduledFuture<Void> holdTimerRunning;
 	
@@ -83,16 +83,18 @@ public class BgpHandler extends DefaultConsumer implements EventTransitionListen
 		}
 	}
 	
-	public BgpHandler(MyConfiguration configuration,Channel channelToBgpsec) throws IOException
+	public BgpHandler(MyConfiguration configuration,Channel channelToBgpsec,Channel channelToZebra) throws IOException
 	{
 		super(channelToBgpsec);
 		this.configuration=configuration;
 		// Start the keepalive timer.
 		keepAliveScheduler=Executors.newScheduledThreadPool(3);
 		// Get a new decision process
-		this.bgpDecisionProcess=new BgpDecisionProcess(configuration);
+		//this.bgpDecisionProcess=new BgpDecisionProcess(configuration);
+		// Instead of using our bgpDecisionProcess which is incomplete,
+		// I'll trust Zebra to keep all the routing information.
 		this.channelToBgpsec=channelToBgpsec;
-		
+		this.channelToZebra=channelToZebra;
 		openChannelToBgpsec();
 	}
 	private void openChannelToBgpsec() throws IOException
@@ -275,8 +277,8 @@ public class BgpHandler extends DefaultConsumer implements EventTransitionListen
 	{
 		if(message instanceof BgpUpdate)
 		{
-			// I have to send the message to the routing processor.
-			bgpDecisionProcess.processUpdate((BgpUpdate)message);
+			// Do something with the update
+			
 		}
 		if(message instanceof BgpKeepAlive)
 		{

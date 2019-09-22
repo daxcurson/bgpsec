@@ -9,7 +9,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
-import ar.strellis.com.bgp.messages.RouteAdded;
+import ar.strellis.com.zebra.messages.RouteAdded;
 
 public class AsyncMessageConsumer extends DefaultConsumer
 {

@@ -1,4 +1,4 @@
-package ar.strellis.com.bgp.messages;
+package ar.strellis.com.zebra.messages;
 
 public class HwAddr 
 {

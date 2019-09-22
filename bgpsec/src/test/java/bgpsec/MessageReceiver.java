@@ -6,14 +6,15 @@ import java.util.concurrent.TimeoutException;
 import org.apache.commons.lang.SerializationUtils;
 
 import com.rabbitmq.client.AMQP.BasicProperties;
+
+import ar.strellis.com.zebra.messages.RouteAdded;
+
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
-
-import ar.strellis.com.bgp.messages.RouteAdded;
 
 /**
  * Simple Message receiver, implements Runnable because it will be launched as a

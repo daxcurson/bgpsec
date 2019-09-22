@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang3.SerializationUtils;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.rabbitmq.client.Channel;
@@ -12,12 +11,11 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.AMQP.BasicProperties;
 
-import ar.strellis.com.bgp.messages.RouteAdded;
+import ar.strellis.com.zebra.messages.RouteAdded;
 
 public class TestAsyncMessageQueue 
 {
 	private AsyncMessageConsumer consumer;
-	private Channel channel;
 	@Test
 	public void testAsyncMessage()
 	{
@@ -27,7 +25,6 @@ public class TestAsyncMessageQueue
 			Channel channel = connection.createChannel()) 
 		{
 			consumer=new AsyncMessageConsumer(channel);
-			this.channel=channel;
 				channel.queueDeclare("AsyncMQ", false, false, false, null);
 				RouteAdded m=new RouteAdded();
 				m.setMessage("HelloAsync");
